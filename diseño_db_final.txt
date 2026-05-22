@@ -1,0 +1,392 @@
+DOCUMENTO DE DISEÑO DE BASE DE DATOS FINAL - ELECTROSMART
+==========================================================
+
+Este documento detalla el diseño de base de datos relacional consolidado para la plataforma SaaS ElectroSmart. El diseño se basa en una arquitectura multi-tenant con aislamiento de datos, catálogo de normativas y componentes versionados, trazabilidad e historial de cálculos, y congelamiento de precios para presupuestación.
+
+1. PRINCIPIOS DE DISEÑO
+-----------------------
+* Multi-tenencia con aislamiento: Los usuarios son globales y se vinculan a uno o más tenants mediante roles asignados en tablas intermedias, facilitando el acceso multi-empresa.
+* Aislamiento de datos de cálculo: Los resultados de cálculos activos se almacenan separados de la estructura física del circuito.
+* Trazabilidad histórica: Cada corrida de cálculo genera un snapshot inmutable para auditorías de ingeniería.
+* Integridad y precisión: Tipos de datos numeric para magnitudes eléctricas y monetarias para evitar errores de coma flotante.
+* Claves primarias robustas: Uso de UUIDs en todas las tablas para permitir alta distribución.
+
+2. MÓDULOS DE LA BASE DE DATOS
+-----------------------------
+
+MÓDULO 1: IDENTIDAD Y ACCESO MULTI-TENANT
+* tenants: Organizaciones suscritas al SaaS. Configuración JSONB independiente.
+* users: Cuentas de usuario globales en la plataforma.
+* roles: Roles dentro del sistema (ej. admin, engineer, client).
+* permissions: Permisos específicos por recurso y acción.
+* user_tenant_roles: Vinculación N:M de usuario-tenant con un rol específico.
+* role_permissions: Vinculación de roles y permisos.
+
+MÓDULO 2: NORMAS Y CATÁLOGOS TÉCNICOS GLOBALES
+* norms: Normas eléctricas base (ej. NEC, IEC, RETIE).
+* norm_versions: Versiones específicas de las normas (ej. NEC 2020, NEC 2023) con periodos de vigencia.
+* voltage_levels: Tensiones de servicio nominales, tipo de acometida y frecuencia.
+* phase_configs: Configuración de conductores activos y neutro (monofásica, bifásica, trifásica).
+* wire_materials: Catálogo de materiales conductores (cobre, aluminio) y resistividades.
+* insulation_types: Tipos de aislamiento del conductor y sus límites térmicos.
+* conductor_catalog: Ampacidad de conductores según calibre, aislamiento y norma.
+* breaker_catalog: Interruptores termomagnéticos (breakers) con su corriente nominal, polos y curva de disparo.
+* load_types: Catálogo de tipos de carga (iluminación, tomas, motores) con su factor de potencia típico.
+* material_catalog: Catálogo unificado de materiales físicos (tuberías, canalizaciones, etc.) con sus precios de referencia.
+* material_unit_measures: Unidades de medida para el control de inventario de presupuestos.
+
+MÓDULO 3: ESTRUCTURA FÍSICA Y ELÉCTRICA DEL PROYECTO
+* projects: Proyectos eléctricos creados bajo un tenant.
+* project_parameters: Parámetros ambientales y factores del proyecto (temperatura ambiente, altitud).
+* zones: Zonas o áreas físicas del proyecto (ej. Planta Baja, Cocina).
+* electrical_panels: Tableros de distribución de energía eléctrica.
+* circuits: Circuitos ramales derivados de un tablero. Incluye la longitud del tramo y la asignación de fase para balanceo.
+* loads: Cargas eléctricas asociadas a un circuito. Cada carga define su consumo individual, cantidad, voltaje y factor de potencia.
+
+MÓDULO 4: MOTOR DE CÁLCULO E HISTORIAL
+* circuit_calculations: Resultados del último cálculo activo de cada circuito (corriente de diseño, calibre recomendado, breaker y caída de tensión).
+* calculation_history: Historial completo de corridas de cálculo con snapshots JSONB de entradas y salidas para auditoría.
+* calculation_alerts: Alertas y advertencias normativas generadas por incumplimiento.
+
+MÓDULO 5: PRESUPUESTO Y MATERIALES (BOM)
+* bill_of_materials: Lista consolidada de materiales cuantificados con precios congelados al momento de la presupuestación.
+* budgets: Versiones de cotizaciones y presupuestos del proyecto.
+* budget_items: Partidas organizativas del presupuesto.
+* budget_item_materials: Asociación N:M entre partidas y materiales del presupuesto.
+
+MÓDULO 6: DOCUMENTOS Y AUDITORÍA
+* documents: Documentos oficiales generados (PDF de memoria de cálculo, archivos de presupuesto).
+* audit_log: Bitácora detallada de operaciones sobre tablas críticas.
+
+3. DDL DE ESTRUCTURA COMPLETA (PostgreSQL 14+)
+-----------------------------------------------
+
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- ==========================================
+-- MÓDULO 1: IDENTIDAD Y MULTI-TENANT
+-- ==========================================
+
+CREATE TABLE tenants (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    subdomain TEXT UNIQUE NOT NULL,
+    settings JSONB DEFAULT '{}'::jsonb,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at TIMESTAMPTZ
+);
+
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    first_name TEXT,
+    last_name TEXT,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at TIMESTAMPTZ
+);
+
+CREATE TABLE roles (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT UNIQUE NOT NULL,
+    description TEXT
+);
+
+CREATE TABLE permissions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    resource TEXT NOT NULL,
+    action TEXT NOT NULL,
+    UNIQUE(resource, action)
+);
+
+CREATE TABLE user_tenant_roles (
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    tenant_id UUID REFERENCES tenants(id) ON DELETE CASCADE,
+    role_id UUID REFERENCES roles(id) ON DELETE RESTRICT,
+    granted_at TIMESTAMPTZ DEFAULT now(),
+    PRIMARY KEY (user_id, tenant_id, role_id)
+);
+
+CREATE TABLE role_permissions (
+    role_id UUID REFERENCES roles(id) ON DELETE CASCADE,
+    permission_id UUID REFERENCES permissions(id) ON DELETE CASCADE,
+    PRIMARY KEY (role_id, permission_id)
+);
+
+-- ==========================================
+-- MÓDULO 2: NORMAS Y CATÁLOGOS TÉCNICOS
+-- ==========================================
+
+CREATE TABLE norms (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE norm_versions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    norm_id UUID NOT NULL REFERENCES norms(id) ON DELETE RESTRICT,
+    version_name TEXT NOT NULL,
+    effective_from DATE NOT NULL,
+    effective_to DATE,
+    is_current BOOLEAN DEFAULT false,
+    UNIQUE(norm_id, version_name)
+);
+
+CREATE TABLE voltage_levels (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    voltage_numeric NUMERIC(6,1) NOT NULL,
+    phase_type TEXT CHECK (phase_type IN ('single', 'split', 'three')),
+    frequency NUMERIC(4,1) DEFAULT 60.0,
+    UNIQUE(voltage_numeric, phase_type, frequency)
+);
+
+CREATE TABLE phase_configs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL, -- ej. "1 Phase 2 Wire", "3 Phase 4 Wire"
+    active_conductors INT NOT NULL,
+    has_neutral BOOLEAN DEFAULT true
+);
+
+CREATE TABLE wire_materials (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    material_name TEXT UNIQUE NOT NULL, -- Cobre, Aluminio
+    resistivity_ohm_mm2_m NUMERIC(10,8) NOT NULL
+);
+
+CREATE TABLE insulation_types (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code TEXT UNIQUE NOT NULL, -- THHN, THWN, XLPE
+    max_temperature_c INT NOT NULL
+);
+
+CREATE TABLE conductor_catalog (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    norm_version_id UUID NOT NULL REFERENCES norm_versions(id) ON DELETE RESTRICT,
+    wire_material_id UUID NOT NULL REFERENCES wire_materials(id) ON DELETE RESTRICT,
+    insulation_type_id UUID NOT NULL REFERENCES insulation_types(id) ON DELETE RESTRICT,
+    gauge_awg TEXT NOT NULL,
+    cross_section_mm2 NUMERIC(8,2) NOT NULL,
+    ampacity_30c NUMERIC(6,1) NOT NULL
+);
+
+CREATE TABLE breaker_catalog (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    norm_version_id UUID NOT NULL REFERENCES norm_versions(id) ON DELETE RESTRICT,
+    poles SMALLINT NOT NULL CHECK (poles IN (1, 2, 3)),
+    ampacity NUMERIC(6,1) NOT NULL, -- 15A, 20A, 30A...
+    trip_curve TEXT CHECK (trip_curve IN ('B', 'C', 'D', 'K', 'Z')),
+    ka_rating NUMERIC(5,1) -- Poder de corte en kA
+);
+
+CREATE TABLE load_types (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    category TEXT,
+    default_power_factor NUMERIC(3,2) DEFAULT 0.90,
+    default_demand_factor NUMERIC(3,2) DEFAULT 1.00
+);
+
+CREATE TABLE material_unit_measures (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT UNIQUE NOT NULL -- metro, unidad, caja
+);
+
+CREATE TABLE material_catalog (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    sku TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    unit_measure_id UUID REFERENCES material_unit_measures(id) ON DELETE RESTRICT,
+    unit_price NUMERIC(12,4) NOT NULL
+);
+
+-- ==========================================
+-- MÓDULO 3: ESTRUCTURA DEL PROYECTO
+-- ==========================================
+
+CREATE TABLE projects (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID NOT NULL REFERENCES tenants(id) ON DELETE CASCADE,
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
+    name TEXT NOT NULL,
+    description TEXT,
+    norm_version_id UUID NOT NULL REFERENCES norm_versions(id) ON DELETE RESTRICT,
+    voltage_level_id UUID NOT NULL REFERENCES voltage_levels(id) ON DELETE RESTRICT,
+    phase_config_id UUID NOT NULL REFERENCES phase_configs(id) ON DELETE RESTRICT,
+    status TEXT DEFAULT 'draft' CHECK (status IN ('draft', 'active', 'calculated', 'budgeted', 'archived')),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    deleted_at TIMESTAMPTZ
+);
+
+CREATE TABLE project_parameters (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    project_id UUID NOT NULL UNIQUE REFERENCES projects(id) ON DELETE CASCADE,
+    ambient_temp_c NUMERIC(4,1) DEFAULT 30.0,
+    altitude_m NUMERIC(6,1) DEFAULT 0.0,
+    max_voltage_drop_pct NUMERIC(3,1) DEFAULT 3.0,
+    safety_factor NUMERIC(3,2) DEFAULT 1.25
+);
+
+CREATE TABLE zones (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+    name TEXT NOT NULL,
+    sort_order INTEGER DEFAULT 0,
+    UNIQUE(project_id, name)
+);
+
+CREATE TABLE electrical_panels (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+    zone_id UUID REFERENCES zones(id) ON DELETE SET NULL,
+    name TEXT NOT NULL,
+    location TEXT,
+    main_breaker_ampacity NUMERIC(6,1),
+    is_subpanel BOOLEAN DEFAULT false,
+    parent_panel_id UUID REFERENCES electrical_panels(id) ON DELETE SET NULL
+);
+
+CREATE TABLE circuits (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    panel_id UUID NOT NULL REFERENCES electrical_panels(id) ON DELETE CASCADE,
+    circuit_number SMALLINT NOT NULL,
+    length_meters NUMERIC(8,2) NOT NULL,
+    is_three_phase BOOLEAN DEFAULT false,
+    phase_assignment TEXT CHECK (phase_assignment IN ('A', 'B', 'C', 'AB', 'BC', 'CA', 'ABC')),
+    UNIQUE(panel_id, circuit_number)
+);
+
+CREATE TABLE loads (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    circuit_id UUID NOT NULL REFERENCES circuits(id) ON DELETE CASCADE,
+    load_type_id UUID NOT NULL REFERENCES load_types(id) ON DELETE RESTRICT,
+    name TEXT NOT NULL,
+    quantity SMALLINT DEFAULT 1,
+    power_watts NUMERIC(10,2) NOT NULL,
+    voltage_v NUMERIC(5,1) NOT NULL DEFAULT 120.0,
+    power_factor NUMERIC(3,2) NOT NULL DEFAULT 0.90,
+    is_continuous BOOLEAN DEFAULT false
+);
+
+-- ==========================================
+-- MÓDULO 4: CÁLCULOS E HISTORIAL
+-- ==========================================
+
+CREATE TABLE circuit_calculations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    circuit_id UUID NOT NULL UNIQUE REFERENCES circuits(id) ON DELETE CASCADE,
+    calculation_version INT NOT NULL DEFAULT 1,
+    total_load_amps NUMERIC(8,2),
+    demand_load_amps NUMERIC(8,2),
+    conductor_catalog_id UUID REFERENCES conductor_catalog(id) ON DELETE SET NULL,
+    breaker_catalog_id UUID REFERENCES breaker_catalog(id) ON DELETE SET NULL,
+    voltage_drop_percent NUMERIC(5,2),
+    is_compliant BOOLEAN,
+    parameters_snapshot JSONB,
+    calculation_date TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE calculation_history (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    circuit_id UUID NOT NULL REFERENCES circuits(id) ON DELETE CASCADE,
+    calculation_version INT NOT NULL,
+    total_load_amps NUMERIC(8,2),
+    demand_load_amps NUMERIC(8,2),
+    conductor_catalog_id UUID,
+    breaker_catalog_id UUID,
+    voltage_drop_percent NUMERIC(5,2),
+    is_compliant BOOLEAN,
+    full_input_snapshot JSONB,
+    full_output_snapshot JSONB,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    created_by UUID REFERENCES users(id) ON DELETE SET NULL
+);
+
+CREATE TABLE calculation_alerts (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    calculation_history_id UUID NOT NULL REFERENCES calculation_history(id) ON DELETE CASCADE,
+    alert_type TEXT CHECK (alert_type IN ('overcurrent', 'voltage_drop', 'short_circuit', 'temperature')),
+    severity TEXT CHECK (severity IN ('warning', 'error')),
+    message TEXT NOT NULL,
+    details JSONB
+);
+
+-- ==========================================
+-- MÓDULO 5: MATERIALES Y PRESUPUESTACIÓN
+-- ==========================================
+
+CREATE TABLE bill_of_materials (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+    material_catalog_id UUID NOT NULL REFERENCES material_catalog(id) ON DELETE RESTRICT,
+    circuit_id UUID REFERENCES circuits(id) ON DELETE SET NULL,
+    quantity NUMERIC(12,4) NOT NULL,
+    unit_price NUMERIC(12,4) NOT NULL, -- Congelado al presupuestar
+    total_price NUMERIC(14,4) GENERATED ALWAYS AS (quantity * unit_price) STORED,
+    notes TEXT
+);
+
+CREATE TABLE budgets (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+    version INTEGER NOT NULL DEFAULT 1,
+    subtotal NUMERIC(14,4) NOT NULL DEFAULT 0.0000,
+    tax_percent NUMERIC(5,2) DEFAULT 0.00,
+    total NUMERIC(14,4) GENERATED ALWAYS AS (subtotal * (1 + tax_percent/100)) STORED,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    UNIQUE(project_id, version)
+);
+
+CREATE TABLE budget_items (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    budget_id UUID NOT NULL REFERENCES budgets(id) ON DELETE CASCADE,
+    name TEXT NOT NULL, -- ej. "Canalización y tuberías", "Breakers"
+    sort_order INT DEFAULT 0
+);
+
+CREATE TABLE budget_item_materials (
+    budget_item_id UUID REFERENCES budget_items(id) ON DELETE CASCADE,
+    bill_of_materials_id UUID REFERENCES bill_of_materials(id) ON DELETE CASCADE,
+    PRIMARY KEY (budget_item_id, bill_of_materials_id)
+);
+
+-- ==========================================
+-- MÓDULO 6: DOCUMENTOS Y AUDITORÍA
+-- ==========================================
+
+CREATE TABLE documents (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+    calculation_version INT,
+    document_type TEXT NOT NULL, -- ej. "pdf_memory", "xlsx_budget"
+    file_name TEXT NOT NULL,
+    storage_url TEXT NOT NULL,
+    generated_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE audit_log (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    tenant_id UUID REFERENCES tenants(id) ON DELETE SET NULL,
+    table_name TEXT NOT NULL,
+    record_id UUID NOT NULL,
+    action TEXT CHECK (action IN ('INSERT','UPDATE','DELETE','SOFT_DELETE')),
+    old_data JSONB,
+    new_data JSONB,
+    changed_by UUID REFERENCES users(id) ON DELETE SET NULL,
+    changed_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Índices recomendados por rendimiento
+CREATE INDEX idx_projects_tenant_status ON projects(tenant_id, status) WHERE deleted_at IS NULL;
+CREATE INDEX idx_panels_project ON electrical_panels(project_id);
+CREATE INDEX idx_circuits_panel ON circuits(panel_id);
+CREATE INDEX idx_loads_circuit ON loads(circuit_id);
+CREATE INDEX idx_calculation_history_circuit ON calculation_history(circuit_id, created_at DESC);
+CREATE INDEX idx_bom_project ON bill_of_materials(project_id);
+CREATE INDEX idx_audit_log_record ON audit_log(record_id, changed_at);
