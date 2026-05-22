@@ -1,0 +1,2079 @@
+Electrical Design Platform | Documentacion Tecnica
+
+
+
+
+
+ELECTRICAL DESIGN PLATFORM
+
+Sistema Inteligente de Diseno Electrico
+
+Documentacion Tecnica Completa | Arquitectura de Software | SaaS Escalable
+
+—————  ⚡  —————
+
+Version 1.0 | Clasificacion: Documento de Arquitectura
+
+2025
+
+
+
+Tabla de Contenido
+
+Clic derecho > Actualizar campo para refrescar numeros de pagina
+
+
+
+1. Introduccion	3
+
+2. Descripcion General del Sistema	5
+
+3. Vision del Proyecto	7
+
+4. Problema que Resuelve	9
+
+5. Justificacion	11
+
+6. Objetivo General	13
+
+7. Objetivos Especificos	14
+
+8. Alcance	16
+
+9. Publico Objetivo	18
+
+10. Casos de Uso	20
+
+11. Arquitectura del Sistema	22
+
+11.1 Diagrama de Arquitectura	22
+
+12. Modulos del Sistema	24
+
+13. Flujo Completo del Usuario	26
+
+14. Experiencia de Usuario (UX/UI)	28
+
+15. Arquitectura Tecnica	30
+
+16. Diseno Frontend y Backend	32
+
+17. Base de Datos Propuesta	34
+
+18. Motor de Calculos Electricos	36
+
+19. Sistema Inteligente de Recomendaciones	38
+
+20. Generacion de Diagramas y Planos	40
+
+21. Sistema de Costos y Presupuestos	42
+
+22. Generacion de Documentacion Tecnica	44
+
+23. Inteligencia Artificial Aplicada	46
+
+24. Escalabilidad	48
+
+25. Seguridad	50
+
+26. Riesgos Tecnicos	52
+
+27. Complejidad del Proyecto	54
+
+28. Roadmap por Fases	56
+
+29. MVP Inicial	58
+
+30. Futuras Funcionalidades	60
+
+31. Modelo SaaS	62
+
+32. Monetizacion	64
+
+33. Diferencial Competitivo	66
+
+34. Requerimientos Funcionales	68
+
+35. Requerimientos No Funcionales	70
+
+36. Tecnologias Recomendadas	72
+
+37. APIs y Librerias Sugeridas	74
+
+38. Diseno Conceptual de Interfaces	76
+
+39. Diagramas Conceptuales	78
+
+40. Flujo de Datos	80
+
+41. Conclusiones	82
+
+42. Recomendaciones Tecnicas	84
+
+
+
+
+
+1. Introduccion
+
+El presente documento constituye la especificacion tecnica completa de la Electrical Design Platform (EDP), una plataforma inteligente de software como servicio (SaaS) disenada para revolucionar el campo del diseno, calculo, planificacion y documentacion de instalaciones electricas. Este sistema representa la convergencia entre la ingenieria electrica tradicional y las tecnologias modernas de computacion, inteligencia artificial y visualizacion interactiva.
+
+La complejidad inherentemente tecnica de los proyectos electricos — que abarcan desde instalaciones residenciales simples hasta sistemas industriales de alta potencia — ha generado una necesidad critica de herramientas que no solo realicen calculos precisos, sino que tambien traduzcan esos calculos en informacion comprensible, accionable y visualmente intuitiva. La mayoria de las soluciones existentes en el mercado se especializan en segmentos especificos: o bien son calculadoras tecnicas aisladas que requieren conocimiento experto, o bien son suites CAD complejas con curvas de aprendizaje pronunciadas y costos prohibitivos.
+
+La Electrical Design Platform se posiciona estrategicamente en el espacio intermedio entre estas dos extremos. Su proposito fundamental es democratizar el acceso al diseno electrico profesional, permitiendo que tanto ingenieros electricos experimentados como tecnicos, contratistas y personas sin formacion tecnica avanzada puedan concebir, calcular, presupuestar y documentar instalaciones electricas con precision de ingenieria y claridad visual excepcional.
+
+1.1 Contexto del Proyecto
+
+El sector de la ingenieria electrica enfrenta desafios sistemicos que afectan la productividad, la precision y la accesibilidad. Los calculos electricos manuales, aunque fundamentales, son propensos a errores humanos, consumen tiempo valioso y requieren dominio de normativas tecnicas complejas como el RETIE (Reglamento Tecnico de Instalaciones Electricas), la NEC (National Electrical Code) y las tablas AWG para seleccion de conductores.
+
+Las herramientas existentes presentan limitaciones significativas. Las hojas de calculo tradicionales carecen de validacion inteligente de datos, no ofrecen guia visual para la ejecucion fisica y no integran estimacion de costos con seleccion de materiales. Los software CAD electrico, si bien potentes, demandan formacion especializada y no proporcionan asistencia inteligente para la toma de decisiones tecnicas. Las aplicaciones moviles simplificadas carecen de la profundidad tecnica necesaria para proyectos de escala comercial e industrial.
+
+La Electrical Design Platform aborda estas deficiencias mediante un enfoque holistico que integra calculo de ingenieria, seleccion inteligente de materiales, generacion automatica de diagramas, estimacion de costos y tiempos, y documentacion tecnica completa en una unica plataforma cohesiva y visualmente atractiva.
+
+1.2 Fundamento de la Solucion
+
+El sistema se fundamenta en tres pilares tecnologicos estrategicos. El primero es un motor de calculos electricos desarrollado en Python que implementa algoritmos de ingenieria basados en normativas internacionales, capaz de procesar desde calculos basicos de corriente hasta analisis complejos de caida de tension, balance de fases, armonicos y coordinacion de protecciones.
+
+El segundo pilar es una arquitectura de inteligencia artificial que analiza los requerimientos del proyecto, identifica patrones en las configuraciones electricas, sugiere optimizaciones tecnicas y predice costos y tiempos con precision mejorada a traves del aprendizaje continuo. Este sistema experto no reemplaza el juicio del ingeniero, sino que lo potencia con recomendaciones fundamentadas tecnicamente.
+
+El tercer pilar es una interfaz de usuario moderna construida con React y Next.js, disenada siguiendo principios avanzados de experiencia de usuario (UX) y diseno de interfaz (UI), que presenta informacion tecnica compleja de manera intuitiva, visual y guiada paso a paso. La interfaz elimina la sensacion de complejidad tipica del software de ingenieria, reemplazandola por una experiencia fluida y natural.
+
+1.3 Estructura del Documento
+
+Este documento de arquitectura esta organizado en 42 secciones tecnicas que cubren todos los aspectos del sistema: desde la vision estrategica y el analisis de problemas hasta la arquitectura tecnica detallada, los requerimientos funcionales y no funcionales, el roadmap de desarrollo, el modelo de negocio SaaS y las recomendaciones de implementacion. Cada seccion profundiza en su tema con el nivel de detalle necesario para servir como base oficial del proyecto, apto para presentaciones a inversionistas, comites academicos o equipos de desarrollo.
+
+2. Descripcion General del Sistema
+
+La Electrical Design Platform es una plataforma web inteligente que funciona como asistente experto en el diseno de instalaciones electricas. El sistema guia al usuario a traves de un proceso estructurado que comienza con la definicion de los requerimientos del proyecto y culmina con la entrega de documentacion tecnica completa, diagramas profesionales, listas de materiales detalladas, presupuestos estimados y guias visuales de ejecucion.
+
+2.1 Naturaleza del Sistema
+
+El sistema no es meramente una calculadora electrica avanzada. Es una plataforma integral que combina multiples capacidades: motor de calculos de ingenieria, sistema experto de recomendaciones, generador automatico de diagramas, estimador de costos y tiempos, y herramienta de documentacion tecnica. Su naturaleza es hibrida, fusionando lo mejor de la ingenieria electrica tradicional con las capacidades de la inteligencia artificial y el diseno de software moderno.
+
+El sistema opera bajo un modelo de asistencia inteligente. A diferencia de las herramientas tradicionales donde el usuario debe conocer exactamente que calcular y como hacerlo, la plataforma analiza el contexto completo del proyecto — tipo de instalacion, caracteristicas del entorno, cargas conectadas, distancias, normativa aplicable — y genera automaticamente todas las recomendaciones tecnicas relevantes, explicando cada decision con claridad.
+
+2.2 Capacidades Principales
+
+La plataforma ofrece capacidades organizadas en cinco dominios fundamentales. En el dominio del calculo, el sistema determina la demanda electrica total, calcula las corrientes por circuito, evalua la caida de tension en cada trayectoria, selecciona conductores segun tablas AWG y factores de correccion, dimensiona breakers y protecciones, calcula la capacidad requerida de tableros de distribucion, determina simultaneidad de cargas, analiza el balance de fases, y valida el cumplimiento normativo completo.
+
+En el dominio de la seleccion de materiales, el sistema genera automaticamente listas de materiales (BOM) completas con referencias especificas, cantidades exactas, especificaciones tecnicas y costos unitarios y totales. Considera factores como el tipo de canalizacion, las condiciones ambientales, el metodo de instalacion y las preferencias del usuario.
+
+En el dominio de la visualizacion, el sistema genera diagramas unifilares profesionales, esquemas de conexion detallados, planos simplificados de distribucion, y representaciones visuales de como debe ejecutarse fisicamente la instalacion. Estos diagramas son interactivos, permitiendo al usuario explorar diferentes escenarios y obtener informacion adicional de cada componente.
+
+En el dominio de la estimacion, el sistema calcula costos totales del proyecto desglosados por categoria, estima tiempos de ejecucion basados en la complejidad y el tipo de instalacion, evalua el nivel de dificultad del proyecto, e identifica riesgos tecnicos potenciales con recomendaciones de mitigacion.
+
+En el dominio de la documentacion, el sistema genera reportes tecnicos completos exportables en multiples formatos (PDF, Word, Excel), incluyendo memorias de calculo, especificaciones tecnicas, planos, listas de materiales, presupuestos detallados y recomendaciones de ejecucion.
+
+2.3 Filosofia de Diseno
+
+La filosofia de diseno de la plataforma se fundamenta en el principio de que la complejidad tecnica debe ser manejada por el sistema, no impuesta al usuario. Cada calculo, cada seleccion de material, cada recomendacion esta acompanada de una explicacion clara que responde a tres preguntas fundamentales: que se necesita, por que se necesita, y como debe instalarse.
+
+El usuario no necesita ser experto en ingenieria electrica para utilizar el sistema de manera efectiva. La interfaz guia paso a paso, las explicaciones en lenguaje natural, las representaciones visuales intuitivas y las recomendaciones contextuales permiten que incluso usuarios sin formacion tecnica avanzada puedan comprender completamente el proyecto electrico que estan disenando.
+
+2.4 Modelo de Operacion
+
+El sistema opera bajo un modelo freemium. La version gratuita permite calculos basicos para proyectos residenciales pequenos con funcionalidades esenciales. La version premium desbloquea capacidades avanzadas para proyectos comerciales e industriales, incluyendo inteligencia artificial avanzada, planos completos, reportes profesionales, colaboracion en equipo y almacenamiento ilimitado de proyectos.
+
+3. Vision del Proyecto
+
+La vision de la Electrical Design Platform es convertirse en la herramienta de referencia global para el diseno, calculo y documentacion de instalaciones electricas, eliminando las barreras tecnicas y economicas que actualmente limitan el acceso a soluciones de ingenieria electrica de calidad profesional.
+
+3.1 Declaracion de Vision
+
+Ser la plataforma tecnologica lider que empodere a profesionales, tecnicos y usuarios finales para disenar instalaciones electricas con precision de ingenieria, claridad visual y accesibilidad universal, reduciendo drasticamente el tiempo, los errores y los costos asociados al diseno electrico tradicional.
+
+3.2 Objetivos Estrategicos
+
+Los objetivos estrategicos se articulan en tres horizontes temporales. En el horizonte de corto plazo (anos 1-2), el objetivo es establecer la plataforma como la solucion de referencia para proyectos electricos residenciales y comerciales pequenos, capturando una base de usuarios significativa que valide el modelo de negocio y genere retroalimentacion para la mejora continua del producto.
+
+En el horizonte de mediano plazo (anos 3-5), la plataforma debe expandirse para cubrir proyectos industriales y sistemas electricos complejos, integrar capacidades de inteligencia artificial avanzada, establecer alianzas estrategicas con fabricantes de materiales electricos y normativas tecnicas, y consolidar su presencia en mercados internacionales con soporte multi-normativa.
+
+En el horizonte de largo plazo (anos 5+), la vision es transformar la Electrical Design Platform en un ecosistema abierto que integre fabricantes, distribuidores, contratistas, inspectores y autoridades reguladoras, creando una cadena de valor digital completa para el sector electrico. Esto incluye la integracion con sistemas de Internet de las Cosas (IoT) para monitoreo post-instalacion y la evolucion hacia gemelos digitales de instalaciones electricas.
+
+3.3 Principios Rectores
+
+El desarrollo y la operacion de la plataforma se rigen por cinco principios fundamentales. El principio de precision tecnica garantiza que todos los calculos y recomendaciones cumplen con normativas reconocidas internacionalmente y estan validados por ingenieria electrica profesional.
+
+El principio de accesibilidad asegura que la complejidad tecnica nunca sea una barrera para el usuario. Cada funcion debe ser comprensible sin requerir conocimiento experto previo. El principio de transparencia exige que el sistema explique cada decision y recomendacion, permitiendo al usuario entender el fundamento tecnico de cada resultado.
+
+El principio de escalabilidad garantiza que la arquitectura tecnica y el modelo de negocio puedan crecer desde proyectos residenciales simples hasta instalaciones industriales complejas sin degradacion del rendimiento ni de la experiencia de usuario. El principio de colaboracion promueve que la plataforma facilite el trabajo conjunto entre multiples actores del proyecto electrico: disenadores, instaladores, inspectores y clientes finales.
+
+3.4 Impacto Esperado
+
+Se proyecta que la plataforma reducira el tiempo de diseno electrico en un 70% para proyectos residenciales y un 50% para proyectos comerciales. La reduccion de errores de calculo y seleccion de materiales se estima en un 90%, mientras que la optimizacion de materiales puede generar ahorros de costos del 15-25% mediante la seleccion precisa sin sobre-dimensionamiento.
+
+4. Problema que Resuelve
+
+El diseno de instalaciones electricas es un proceso criticamente importante que actualmente presenta multiples deficiencias sistémicas que afectan a todos los actores involucrados: ingenieros, electricistas, contratistas, propietarios y autoridades reguladoras. La Electrical Design Platform aborda estos problemas de manera integral y sistematica.
+
+4.1 Analisis del Problema Actual
+
+El problema fundamental radica en la fragmentacion de herramientas y procesos. Un profesional electrico tipico utiliza multiples aplicaciones y metodos no integrados: hojas de calculo para matematicas basicas, tablas impresas para seleccion de conductores, catalogos de fabricantes para especificaciones, software CAD para diagramas, y estimacion manual para costos y tiempos. Esta fragmentacion genera inconsistencias, errores de transcripcion, perdida de tiempo y dificultad para mantener la trazabilidad de decisiones tecnicas.
+
+El segundo problema critico es la alta dependencia de experticia individual. Los calculos electricos requieren conocimiento profundo de normativas, factores de correccion, tablas tecnicas y metodologias de calculo. Un error en un factor de correccion por temperatura o en la seleccion de una canalizacion puede comprometer toda la seguridad de la instalacion. Cuando el experto no esta disponible o comete un error, el proyecto se retrasa o se ejecuta incorrectamente.
+
+El tercer problema es la inaccesibilidad del conocimiento tecnico. Las personas sin formacion electrica avanzada — como arquitectos, constructores, propietarios o estudiantes — tienen dificultad para comprender las implicaciones tecnicas de las decisiones de diseno electrico. Esto genera comunicacion deficiente entre actores, malas decisiones basadas en desconocimiento y proyectos sub-optimos.
+
+4.2 Consecuencias del Problema
+
+Las consecuencias de estos problemas son significativas. En terminos economicos, los errores de diseno electrico generan costos adicionales por reprocesos, materiales mal dimensionados, sobre-dimensionamiento defensivo y tiempos de ejecucion extendidos. Estudios del sector indican que entre el 10% y el 20% del presupuesto de una instalacion electrica se pierde en ineficiencias atribuibles a problemas de diseno.
+
+En terminos de seguridad, los errores de calculo pueden resultar en conductores sub-dimensionados que se sobrecalientan, protecciones mal coordinadas que no actuan correctamente ante fallas, y configuraciones que violan normativas de seguridad. Estas situaciones representan riesgos de incendio, electrocucion y danos a equipos.
+
+En terminos de productividad, el tiempo dedicado a calculos manuales, busqueda en tablas, verificaciones cruzadas y documentacion es tiempo que no se dedica a actividades de mayor valor agregado. Un ingeniero electrico puede dedicar entre el 30% y el 50% de su tiempo a actividades de calculo y documentacion que podrian automatizarse parcialmente.
+
+4.3 Magnitud del Problema
+
+A nivel global, el mercado de servicios de ingenieria electrica supera los 200 mil millones de dolares anuales. El mercado de software para diseno electrico esta creciendo a una tasa anual compuesta del 12-15%, impulsado por la digitalizacion de la industria de la construccion y la creciente complejidad de las instalaciones electricas modernas.
+
+En America Latina especificamente, donde el sector de la construccion es uno de los principales motores economicos, existe una brecha significativa entre la disponibilidad de herramientas de diseno electrico avanzadas y las necesidades reales del mercado. Las soluciones existentes son predominantemente de origen anglosajon, con precios en dolares, curvas de aprendizaje pronunciadas y adaptacion limitada a normativas locales como el RETIE.
+
+4.4 Solucion Propuesta
+
+La Electrical Design Platform resuelve estos problemas mediante una integracion completa del flujo de trabajo de diseno electrico. Unifica en una sola plataforma todos los calculos, selecciones, diagramas, presupuestos y documentos. Elimina la dependencia exclusiva de experticia individual incorporando conocimiento tecnico validado en el motor de calculos. Democratiza el acceso al conocimiento electrico presentandolo de forma visual, intuitiva y explicativa.
+
+La plataforma no reemplaza al ingeniero electrico: lo potencia. Libera al profesional de las tareas repetitivas y propensas a error, permitiendole enfocarse en la toma de decisiones estrategicas, la supervision de calidad y la interaccion con el cliente. Para tecnicos y no expertos, la plataforma funciona como un tutor inteligente que guia cada decision con explicaciones claras y recomendaciones fundamentadas.
+
+5. Justificacion
+
+La justificacion del proyecto se fundamenta en cinco pilares interconectados: la necesidad de modernizacion del sector, la viabilidad tecnologica demostrada, la oportunidad de mercado identificada, el impacto social positivo proyectado y la viabilidad economica del modelo de negocio propuesto.
+
+5.1 Justificacion Tecnologica
+
+Las tecnologias necesarias para construir esta plataforma han alcanzado un nivel de madurez que hace viable su desarrollo y operacion a escala. Los frameworks frontend modernos como React y Next.js permiten crear interfaces interactivas y responsivas de complejidad arbitraria. Los frameworks backend como Django con Django REST Framework proporcionan infraestructura robusta para APIs escalables. Los motores de bases de datos como PostgreSQL ofrecen capacidades avanzadas de almacenamiento y consulta de datos tecnicos complejos.
+
+La inteligencia artificial, particularmente los modelos de lenguaje y los sistemas de recomendacion basados en aprendizaje automatico, ha demostrado capacidad para asistir en dominios tecnicos complejos. Las librerias de Python para calculo numerico (NumPy, SciPy) y aprendizaje automatico (scikit-learn, TensorFlow) proporcionan bases solidas para el motor de calculos y el sistema inteligente.
+
+La infraestructura cloud moderna permite operar una plataforma SaaS con alta disponibilidad, escalabilidad elastico y modelos de precios que se alinean con el crecimiento del negocio. La combinacion de estas tecnologias hace que el momento actual sea optimo para el desarrollo de esta plataforma.
+
+5.2 Justificacion de Mercado
+
+El mercado de software para diseno electrico esta en expansion acelerada, impulsado por tres tendencias macro. La primera es la transformacion digital de la industria de la construccion (construtech), que esta adoptando herramientas digitales en todas las fases del ciclo de vida de los proyectos. La segunda es la complejidad creciente de las instalaciones electricas debido a la electrificacion del transporte, la generacion distribuida de energia solar y el almacenamiento en baterias, que requieren herramientas de diseno mas sofisticadas.
+
+La tercera tendencia es la escasez de ingenieros electricos calificados en muchas regiones, que aumenta la demanda de herramientas que amplifiquen la productividad de los profesionales existentes y permitan a tecnicos menos especializados realizar trabajos de mayor complejidad bajo supervision.
+
+El analisis competitivo revela que el mercado esta fragmentado entre soluciones de alto costo orientadas a grandes empresas (AutoCAD Electrical, ETAP, SKM PowerTools) y aplicaciones simplificadas con capacidad limitada (calculadoras online, apps moviles basicas). No existe una solucion que combine precision profesional con accesibilidad y precio razonable para el segmento medio del mercado, que representa el 60-70% de los proyectos electricos globales.
+
+5.3 Justificacion Social
+
+Las instalaciones electricas seguras y bien disenadas son fundamentales para la calidad de vida y el desarrollo economico. Una plataforma que facilite el diseno electrico correcto contribuye indirectamente a la seguridad de edificaciones residenciales, comerciales e industriales. La reduccion de barreras de entrada para el diseno electrico profesional puede impulsar la electrificacion de comunidades desatendidas y mejorar la calidad de instalaciones en regiones con acceso limitado a ingenieria especializada.
+
+Adicionalmente, la plataforma servira como herramienta educativa, permitiendo que estudiantes de ingenieria electrica y tecnicos comprendan de manera interactiva los principios del diseno electrico, reforzando su formacion academica con una herramienta practica y visual.
+
+5.4 Justificacion Economica
+
+El modelo de negocio SaaS freemium ofrece una via viable para la monetizacion escalable. Los usuarios gratuitos generan valor a traves del efecto de red y la retroalimentacion del producto, mientras que una proporcion convertida a usuarios premium genera los ingresos recurrentes necesarios para sostener y expandir la plataforma. Los costos de adquisicion de clientes en el segmento freemium son significativamente menores que en modelos enterprise tradicionales.
+
+La relacion entre el costo de desarrollo y el valor generado es favorable. Un equipo de desarrollo moderado puede construir y mantener la plataforma, mientras que el valor generado para los usuarios — en terminos de tiempo ahorrado, errores evitados y materiales optimizados — es significativamente mayor que el costo de suscripcion. Esto crea una propuesta de valor convincente que facilita la retencion y expansion del base de clientes.
+
+5.5 Justificacion Academica
+
+Desde la perspectiva academica, este proyecto representa una contribucion significativa al campo de la ingenieria de software aplicada a la ingenieria electrica. Integra conocimientos de calculo de potencia, sistemas de proteccion, normativas tecnicas, arquitectura de software, inteligencia artificial y diseno de experiencia de usuario en una solucion cohesiva que puede servir como caso de estudio y referencia para futuros desarrollos en el campo de las herramientas de ingenieria asistidas por computadora.
+
+6. Objetivo General
+
+Desarrollar una plataforma inteligente basada en web (SaaS) que asista a profesionales, tecnicos y usuarios en el diseno, calculo, planificacion, estimacion y documentacion de instalaciones electricas residenciales, comerciales e industriales, integrando motor de calculos de precision normativa, sistema experto de recomendaciones, generacion automatica de diagramas y documentacion tecnica, y estimacion de costos y tiempos, con una interfaz de usuario intuitiva y visualmente atractiva que haga accesible el conocimiento de ingenieria electrica avanzada.
+
+6.1 Caracteristicas del Objetivo
+
+El objetivo general presenta caracteristicas que lo definen como un proyecto de alta complejidad y alto impacto. Es multidisciplinario, requiriendo conocimientos de ingenieria electrica, ingenieria de software, ciencia de datos, diseno de experiencia de usuario y gestion de productos. Es escalable, disenado para crecer desde funcionalidades basicas hasta capacidades avanzadas de inteligencia artificial. Es transformador, buscando cambiar la forma en que se disenan las instalaciones electricas.
+
+El objetivo abarca tanto el aspecto tecnico del desarrollo como el aspecto humano de la experiencia de usuario. No se limita a construir software que funcione correctamente, sino que aspira a crear una herramienta que las personas disfruten usar, que les haga sentir mas capaces y que les ahorre tiempo y preocupaciones.
+
+7. Objetivos Especificos
+
+7.1 Objetivos de Calculo y Diseno
+
+Calculo de Demanda Electrica — Implementar algoritmos que calculen la demanda maxima estimada considerando simultaneidad, diversidad y factores de demanda por tipo de carga (iluminacion, tomacorrientes, motores, equipos especiales), de acuerdo con RETIE y NEC.
+
+Calculo de Corrientes — Desarrollar modulos de calculo de corriente nominal, corriente de diseno, corrientes de cortocircuito y corrientes de arranque para motores, con seleccion automatica de factor de seguridad segun el tipo de aplicacion.
+
+Caida de Tension — Implementar calculo de caida de tension en conductores monofasicos y trifasicos, considerando tipo de canalizacion, temperatura ambiente, material del conductor, factor de potencia y longitud del circuito.
+
+Seleccion de Conductores — Crear sistema de seleccion automatica de calibre de conductor segun tablas AWG, con aplicacion de factores de correccion por agrupamiento, temperatura y tipo de canalizacion.
+
+Seleccion de Protecciones — Desarrollar modulo de seleccion de breakers, interruptores diferenciales, fusibles y protecciones contra sobretensiones, con coordinacion de protecciones.
+
+Balance de Fases — Implementar algoritmo de distribucion optima de cargas entre fases para minimizar desequilibrios en sistemas trifasicos.
+
+7.2 Objetivos de Seleccion de Materiales
+
+Lista de Materiales (BOM) — Generar listas automaticas de materiales con cantidades exactas, referencias tecnicas y especificaciones normativas para conductores, canalizaciones, tableros, breakers, tomacorrientes, interruptores y accesorios.
+
+Base de Datos de Materiales — Construir base de datos extensible de materiales electricos con caracteristicas tecnicas, capacidades, limites normativos y costos de referencia.
+
+Optimizacion de Costos — Implementar algoritmos de optimizacion que seleccionen combinaciones de materiales que cumplan requisitos tecnicos al minimo costo.
+
+7.3 Objetivos de Visualizacion
+
+Diagramas Unifilares — Desarrollar generador automatico de diagramas unifilares que representen la arquitectura electrica completa del proyecto con simbolos estandarizados.
+
+Esquemas de Conexion — Crear modulo de generacion de esquemas de conexion punto a punto para circuitos especificos.
+
+Planos de Distribucion — Implementar representacion visual simplificada de la distribucion fisica de componentes electricos en el espacio del proyecto.
+
+Guia Visual de Ejecucion — Generar representaciones graficas que muestren como debe ejecutarse fisicamente la instalacion, incluyendo secuencia de trabajo.
+
+7.4 Objetivos de Estimacion
+
+Estimacion de Costos — Desarrollar sistema de estimacion de costos con precios actualizables, desglose por categorias y analisis de sensibilidad.
+
+Estimacion de Tiempos — Implementar modelo de estimacion de tiempos de ejecucion basado en complejidad, tipo de instalacion, cantidad de circuitos y condiciones de trabajo.
+
+Evaluacion de Complejidad — Crear sistema de evaluacion automatica de la complejidad del proyecto en escala categorica (baja, media, alta, critica).
+
+7.5 Objetivos de Documentacion
+
+Memoria de Calculo — Generar memoria de calculo completa con formulas aplicadas, valores intermedios, resultados y validaciones normativas.
+
+Reportes Exportables — Implementar exportacion de reportes en PDF, Excel y Word con formato profesional, tablas, graficos y diagramas.
+
+Especificaciones Tecnicas — Generar documentos de especificaciones tecnicas de materiales y equipos seleccionados.
+
+7.6 Objetivos de Inteligencia Artificial
+
+Sistema de Recomendaciones — Desarrollar motor de recomendaciones basado en reglas tecnicas y aprendizaje automatico que sugiera configuraciones optimas.
+
+Deteccion de Riesgos — Implementar sistema de identificacion automatica de riesgos tecnicos, violaciones normativas y condiciones anomalas.
+
+Prediccion de Costos — Crear modelo predictivo de costos que mejore su precision con la acumulacion de datos de proyectos historicos.
+
+7.7 Objetivos de Experiencia de Usuario
+
+Interfaz Intuitiva — Disenar interfaz de usuario que guie al usuario paso a paso sin requerir conocimiento previo del sistema.
+
+Explicaciones Contextuales — Implementar sistema de explicaciones en lenguaje natural que aclare cada decision y recomendacion tecnica.
+
+Visualizacion Interactiva — Crear componentes visuales interactivos que permitan explorar el proyecto electrico de multiples perspectivas.
+
+8. Alcance
+
+El alcance del proyecto define los limites dentro de los cuales se desarrollara la Electrical Design Platform en sus diferentes fases. Establecer un alcance claro es fundamental para gestionar expectativas, asignar recursos y medir el exito del proyecto.
+
+8.1 Alcance Funcional
+
+La plataforma cubrira los siguientes tipos de instalaciones electricas: instalaciones residenciales (apartamentos, casas, conjuntos residenciales), instalaciones comerciales (oficinas, tiendas, restaurantes, centros comerciales de mediano tamano), e instalaciones industriales ligeras (talleres, bodegas, plantas de pequena y mediana escala).
+
+En cuanto a calculos, el sistema incluira: demanda electrica, corrientes (nominal, diseno, cortocircuito), caida de tension, seleccion de conductores (AWG, mm2), seleccion de protecciones (breakers, diferenciales, fusibles), capacidad de tableros, balance de fases, canalizaciones (conduit, canal, bandeja), simultaneidad de cargas, y validaciones contra normativas (RETIE, NEC).
+
+En materia de documentacion, se generaran: diagramas unifilares, listas de materiales con costos, presupuestos desglosados, estimaciones de tiempo, memorias de calculo, especificaciones tecnicas, y reportes exportables en PDF y Excel.
+
+8.2 Alcance Tecnico
+
+El desarrollo incluira: frontend web responsive (React/Next.js), backend API REST (Django/Django REST Framework), base de datos relacional (PostgreSQL), motor de calculos (Python), sistema de autenticacion y autorizacion, panel de administracion, sistema de suscripcion freemium, y infraestructura cloud desplegable.
+
+8.3 Limitaciones Explicitas
+
+Las siguientes capacidades NO estan incluidas en el alcance inicial pero pueden considerarse para futuras fases: diseno de subestaciones de alta tension, analisis de sistemas de puesta a tierra detallado, estudios de calidad de potencia avanzados (armonicos, flicker), integracion con sistemas BIM (Building Information Modeling), y aplicacion movil nativa (aunque el frontend sera responsive).
+
+8.4 Alcance Geografico y Normativo
+
+La primera version del sistema estara calibrada para las normativas del RETIE (Colombia/Region Andina) y la NEC (Estados Unidos), con arquitectura extensible para incorporar normativas adicionales (IEC, NCh de Chile, IRAM de Argentina, etc.) en fases posteriores.
+
+8.5 Alcance de Usuarios
+
+El sistema estara disenado para: ingenieros electricos profesionales, tecnicos electricos y electricistas instaladores, contratistas de obra, estudiantes de ingenieria electrica, arquitectos y disenadores de interiores que requieren coordinacion electrica, y propietarios que desean comprender las instalaciones de sus propiedades.
+
+9. Publico Objetivo
+
+El publico objetivo de la Electrical Design Platform esta segmentado en cinco perfiles principales, cada uno con necesidades especificas, niveles de conocimiento tecnico distintos y patrones de uso diferentes. El diseno de la plataforma debe acomodar estas diferencias mediante personalizacion de la interfaz, nivel de detalle de las explicaciones y flujos de trabajo adaptados.
+
+9.1 Perfil: Ingeniero Electrico Profesional
+
+Este segmento representa aproximadamente el 25% del publico objetivo. Son profesionales con formacion academica en ingenieria electrica, dominio de normativas y experiencia en diseno de instalaciones. Sus necesidades principales son: velocidad en los calculos, precision tecnica, cumplimiento normativo, generacion de documentacion profesional, y optimizacion de sus flujos de trabajo.
+
+Para este perfil, la plataforma debe ofrecer modos avanzados donde el usuario pueda modificar parametros tecnicos, acceder a las formulas completas, personalizar las salidas y generar documentacion con el nivel de detalle requerido para presentacion a clientes y entidades reguladoras. El valor principal es la productividad: reducir el tiempo de calculo y documentacion manteniendo la calidad tecnica.
+
+9.2 Perfil: Tecnico Electrico / Instalador
+
+Este segmento representa aproximadamente el 35% del publico. Son profesionales con experiencia practica en instalacion electrica pero sin formacion academica de nivel profesional. Conocen los componentes, las tecnicas de instalacion y las reglas basicas, pero necesitan apoyo para los calculos complejos y la documentacion formal.
+
+Para este perfil, la plataforma debe funcionar como un asistente experto que guie cada decision, explique el porque de cada seleccion y genere la documentacion necesaria para presentar presupuestos profesionales a clientes. El valor principal es la capacitacion implicita y la credibilidad profesional que proporciona la documentacion generada.
+
+9.3 Perfil: Contratista de Obra
+
+Este segmento representa aproximadamente el 20% del publico. Son empresarios o gestores de proyectos de construccion que necesitan estimaciones rapidas y confiables para incluir en sus propuestas comerciales. Su interes principal esta en los presupuestos, los tiempos de ejecucion y la lista de materiales.
+
+Para este perfil, la plataforma debe ofrecer un flujo de trabajo simplificado orientado a la estimacion: pocos datos de entrada, resultados rapidos y reportes de presupuesto profesionales. El valor principal es la velocidad y la confianza en los numeros para presentar cotizaciones a clientes.
+
+9.4 Perfil: Estudiante de Ingenieria
+
+Este segmento representa aproximadamente el 10% del publico. Son estudiantes que estan aprendiendo los principios del diseno electrico y necesitan una herramienta que les permita experimentar, visualizar resultados y comprender las relaciones entre variables.
+
+Para este perfil, la plataforma debe ofrecer un modo educativo donde se muestren las formulas, se expliquen los conceptos y se permita la experimentacion libre con retroalimentacion inmediata. El valor principal es el aprendizaje activo y la comprension profunda de los principios de diseno electrico.
+
+9.5 Perfil: Usuario No Tecnico
+
+Este segmento representa aproximadamente el 10% del publico. Incluye arquitectos, propietarios, gestores de propiedades y cualquier persona que necesite comprender una instalacion electrica sin tener formacion tecnica.
+
+Para este perfil, la plataforma debe ofrecer la maxima simplificacion visual, explicaciones en lenguaje completamente natural, y representaciones graficas intuitivas. El valor principal es la comprension: entender que se necesita, por que se necesita y como debe verse la instalacion final.
+
+9.6 Mapa de Necesidades por Perfil
+
+Perfil
+
+Necesidad Principal
+
+Nivel de Detalle
+
+Flujo Preferido
+
+Ingeniero Electrico
+
+Productividad y precision
+
+Avanzado (formulas)
+
+Rapido con override manual
+
+Tecnico Electrico
+
+Guiado y aprendizaje
+
+Intermedio (explicado)
+
+Paso a paso guiado
+
+Contratista
+
+Presupuesto rapido
+
+Resumen ejecutivo
+
+Estimacion express
+
+Estudiante
+
+Comprension profunda
+
+Educativo (formulas visibles)
+
+Modo exploratorio
+
+No Tecnico
+
+Claridad visual
+
+Simplificado
+
+Asistente conversacional
+
+10. Casos de Uso
+
+Los casos de uso describen las interacciones especificas entre los usuarios y el sistema para alcanzar objetivos concretos. Cada caso de uso representa un escenario real de trabajo que la plataforma debe soportar de manera efectiva.
+
+10.1 Caso de Uso: Diseno de Instalacion Residencial
+
+Un electricista independiente recibe el encargo de disenar la instalacion electrica completa de una casa de dos pisos con 150 m2. Utiliza la plataforma para ingresar las caracteristicas de la vivienda, definir los espacios (habitaciones, banos, cocina, sala, garaje), especificar las cargas (iluminacion LED, tomacorrientes, electrodomesticos, aire acondicionado, calentador de agua), y el sistema calcula automaticamente: la demanda total, la corriente por circuito, los calibres de conductor necesarios, los breakers apropiados, la capacidad del tablero principal, y genera un diagrama unifilar, una lista de materiales con costos y un presupuesto estimado. El proceso completo toma 45 minutos en lugar de las 4-6 horas que requeriria manualmente.
+
+10.2 Caso de Uso: Presupuesto Comercial Rapido
+
+Un contratista debe presentar una cotizacion en 24 horas para la instalacion electrica de un local comercial de 200 m2 que incluye iluminacion, tomacorrientes, aire acondicionado split y sistema de alarmas. Usa la plataforma en modo estimacion express, ingresa datos basicos del local y los equipos principales. El sistema genera en 10 minutos un presupuesto desglosado por partidas, una estimacion de tiempo de 5 dias de trabajo y una lista de materiales. El contratista exporta el reporte en PDF con su logo y lo presenta al cliente, ganando el contrato por la rapidez y profesionalismo de la propuesta.
+
+10.3 Caso de Uso: Verificacion Normativa
+
+Un ingeniero electrico debe verificar que el diseno de una instalacion industrial cumple con el RETIE. Carga el proyecto en la plataforma, que analiza automaticamente cada circuito contra los requisitos normativos: separacion de circuitos, capacidad de conductores vs protecciones, caida de tension maxima permitida, sensibilidad de protecciones diferenciales, y coordinacion de protecciones. El sistema genera un reporte de cumplimiento normativo que identifica 3 incumplimientos menores con recomendaciones especificas de correccion. El ingeniero ajusta el diseno, vuelve a verificar y obtiene la certificacion de cumplimiento.
+
+10.4 Caso de Uso: Optimizacion de Materiales
+
+Un constructor tiene un presupuesto ajustado para la parte electrica de un edificio de 8 apartamentos. Utiliza la plataforma para explorar diferentes configuraciones: cambiar la distribucion de circuitos, evaluar diferentes marcas de materiales, ajustar la simultaneidad de cargas basada en habitos reales de uso. El sistema muestra en tiempo real el impacto de cada cambio en el costo total. Despues de varias iteraciones, logra una reduccion del 18% en el costo de materiales sin comprometer la seguridad ni el cumplimiento normativo.
+
+10.5 Caso de Uso: Aprendizaje de Diseno Electrico
+
+Un estudiante de ingenieria electrica utiliza la plataforma para entender como funciona el calculo de caida de tension. Selecciona el modo educativo, ingresa un circuito de ejemplo (distancia de 30 metros, carga de 20A, conductor de cobre #10), y el sistema muestra no solo el resultado (caida de tension del 2.8%), sino la formula completa aplicada paso a paso, una explicacion de que significa el resultado, una comparacion con el limite permitido (3%), y una grafica visual de como varia la caida con diferentes calibres de conductor. El estudiante experimenta cambiando parametros y observa los efectos en tiempo real.
+
+10.6 Caso de Uso: Colaboracion en Equipo
+
+Un equipo de 3 ingenieros trabaja en el diseno electrico de un centro comercial. El ingeniero senior define la arquitectura general y los parametros del proyecto en la plataforma, compartiendo acceso con los otros dos ingenieros. Cada uno trabaja en diferentes areas del proyecto simultaneamente. El sistema mantiene version control de todos los cambios, detecta conflictos en tiempo real (por ejemplo, dos ingenieros asignando el mismo breaker), y genera un documento consolidado con todas las areas integradas. El proyecto se completa en una semana en lugar de tres.
+
+10.7 Caso de Uso: Inspeccion y Mantenimiento
+
+El propietario de un edificio comercial necesita actualizar los planos electricos despues de varias modificaciones no documentadas. Utiliza la plataforma para reconstruir el modelo digital de la instalacion actual, ingresando los componentes identificados durante una inspeccion fisica. El sistema genera diagramas actualizados, identifica sobrecargas potenciales causadas por las modificaciones, y recomienda actualizaciones de protecciones. El propietario tiene documentacion actualizada para su seguro y para futuras intervenciones.
+
+11. Arquitectura del Sistema
+
+La arquitectura de la Electrical Design Platform sigue un modelo de aplicacion web moderna basada en microservicios funcionales, disenada para escalabilidad horizontal, alta disponibilidad y despliegue continuo. La arquitectura separa claramente las responsabilidades entre presentacion, logica de negocio, motor de calculos y persistencia de datos.
+
+11.1 Diagrama de Arquitectura
+
+El siguiente diagrama ilustra la arquitectura de capas del sistema, mostrando la relacion entre los componentes principales y el flujo de datos entre ellos:
+
+
+
+Figura 1: Arquitectura de Capas de la Electrical Design Platform
+
+11.2 Capa de Presentacion (Frontend)
+
+La capa de presentacion esta construida con Next.js (React) y es responsable de toda la interaccion con el usuario. Incluye: la interfaz de entrada de datos de proyecto, los paneles de visualizacion de resultados, los componentes interactivos de diagramas, el editor de propiedades de cargas, el visualizador de diagramas unifilares, el generador de reportes y el panel de administracion de usuario. Comunica con el backend exclusivamente a traves de la API REST.
+
+11.3 Capa de API (Backend)
+
+La capa de API esta construida con Django y Django REST Framework. Expone endpoints RESTful que reciben peticiones del frontend, orquestan la logica de negocio, invocan el motor de calculos cuando es necesario, y persisten los resultados en la base de datos. Implementa autenticacion JWT, autorizacion basada en roles, validacion de datos, rate limiting y logging completo de operaciones.
+
+11.4 Capa de Motor de Calculos
+
+El motor de calculos es un servicio Python independiente que expone una API interna. Contiene todos los algoritmos de ingenieria electrica: calculo de demandas, seleccion de conductores, caida de tension, seleccion de protecciones, etc. Opera de manera stateless, recibiendo parametros de entrada y devolviendo resultados calculados. Este aislamiento permite escalar el motor de calculos independientemente del resto de la aplicacion y facilita la implementacion de pruebas unitarias exhaustivas.
+
+11.5 Capa de Datos
+
+La capa de datos utiliza PostgreSQL como base de datos principal para almacenar usuarios, proyectos, configuraciones, resultados de calculos y metadatos. Incluye tablas normalizadas para materiales electricos, normativas, factores de correccion y catalogos de referencia. Para datos de sesion y cache se utiliza Redis, mejorando el rendimiento de operaciones frecuentes.
+
+11.6 Capa de Inteligencia Artificial
+
+El modulo de IA opera como un servicio complementario que consume datos de los calculos realizados y proyectos historicos para generar recomendaciones inteligentes. Incluye modelos de reglas expertas para recomendaciones tecnicas inmediatas y modelos de aprendizaje automatico para prediccion de costos y deteccion de patrones optimos.
+
+11.7 Capa de Infraestructura
+
+La infraestructura se despliega en la nube (AWS/GCP) utilizando contenedores Docker orquestados con Kubernetes. Incluye balanceo de carga, autoescalado, monitoreo con Prometheus/Grafana, logging centralizado con ELK Stack, y CI/CD con GitHub Actions. Los activos estaticos se sirven a traves de CDN para minimizar latencia.
+
+12. Modulos del Sistema
+
+El sistema esta organizado en 12 modulos funcionales independientes pero interconectados, cada uno responsable de un dominio especifico de la funcionalidad total. Esta modularizacion facilita el desarrollo incremental, las pruebas aisladas y la mantenibilidad a largo plazo.
+
+12.1 Modulo de Gestion de Proyectos
+
+Gestiona el ciclo de vida completo de los proyectos electricos. Permite crear, configurar, duplicar, versionar y archivar proyectos. Almacena metadatos del proyecto (nombre, ubicacion, cliente, normativa aplicable, tipo de instalacion) y controla el acceso por usuarios y permisos.
+
+12.2 Modulo de Entrada de Datos
+
+Proporciona la interfaz para ingresar toda la informacion necesaria del proyecto: tipo de alimentacion (monofasica, trifasica), caracteristicas del entorno (temperatura, humedad, altitud, tipo de construccion), distancias entre puntos, y el catalogo completo de cargas electricas con sus especificaciones tecnicas individuales (potencia, voltaje, factor de potencia, eficiencia, tiempo de uso, cantidad).
+
+12.3 Modulo de Calculo Electrico
+
+Contiene todos los algoritmos de calculo de ingenieria electrica. Calcula demanda electrica, corrientes, caida de tension, selecciona conductores segun tablas AWG con factores de correccion, selecciona protecciones, evalua simultaneidad, balancea cargas entre fases, valida contra normativas y genera una memoria de calculo completa. Este modulo invoca el motor de calculos Python.
+
+12.4 Modulo de Seleccion de Materiales
+
+Mantiene la base de datos de materiales electricos y genera la lista de materiales (BOM) automaticamente basandose en los resultados del modulo de calculo. Permite ajustar selecciones, comparar alternativas, y optimizar costos. Incluye precios de referencia actualizables y especificaciones tecnicas detalladas de cada componente.
+
+12.5 Modulo de Costos y Presupuestos
+
+Calcula costos totales del proyecto desglosados por categorias (conductores, protecciones, canalizaciones, mano de obra, equipos especiales). Aplica factores de mano de obra segun la complejidad y la region. Genera presupuestos profesionales con formato exportable. Incluye analisis de sensibilidad de costos ante cambios en materiales o configuraciones.
+
+12.6 Modulo de Diagramas
+
+Genera representaciones visuales del sistema electrico: diagramas unifilares con simbolos estandarizados, esquemas de conexion punto a punto, planos de distribucion de cargas, y representaciones visuales de la secuencia de instalacion. Los diagramas son interactivos, permitiendo explorar componentes y obtener informacion detallada.
+
+12.7 Modulo de Documentacion
+
+Consolida toda la informacion del proyecto en documentos tecnicos profesionales: memoria de calculo, especificaciones tecnicas, listas de materiales, presupuesto, planos y recomendaciones de ejecucion. Soporta exportacion en PDF, Word y Excel con formato profesional y personalizable.
+
+12.8 Modulo de Recomendaciones Inteligentes
+
+Analiza la configuracion del proyecto y genera recomendaciones contextuales: optimizaciones tecnicas, advertencias de riesgo, sugerencias de mejora, alternativas de diseno y mejores practicas aplicables al caso especifico. Utiliza una combinacion de reglas expertas codificadas y aprendizaje automatico basado en proyectos historicos.
+
+12.9 Modulo de Validacion Normativa
+
+Verifica automaticamente el cumplimiento de la normativa seleccionada (RETIE, NEC) en todos los aspectos del proyecto. Identifica violaciones, sugiere correcciones y genera un reporte de cumplimiento normativo que puede incluirse en la documentacion del proyecto.
+
+12.10 Modulo de Colaboracion
+
+Permite que multiples usuarios trabajen simultaneamente en el mismo proyecto con control de versiones, comentarios, asignacion de tareas y notificaciones de cambios. Incluye flujo de aprobacion para cambios criticos y auditoria completa de modificaciones.
+
+12.11 Modulo de Administracion
+
+Panel de administracion para gestion de usuarios, suscripciones, facturacion, reportes de uso, configuracion del sistema y mantenimiento de la base de datos de materiales. Accesible solo para usuarios con rol de administrador.
+
+12.12 Modulo de API y Integraciones
+
+Expone la API REST documentada con OpenAPI/Swagger para integraciones de terceros. Permite que otros sistemas (ERP, CRM, software de gestion de obra) invoquen funcionalidades de la plataforma y que la plataforma consuma datos externos (precios de proveedores, actualizaciones normativas).
+
+13. Flujo Completo del Usuario
+
+El flujo de usuario describe el recorrido completo que un usuario realiza desde el inicio de un proyecto hasta la obtencion de la documentacion final. Esta disenado para ser intuitivo, guiado y eficiente, minimizando la friccion y maximizando la comprension en cada etapa.
+
+13.1 Etapa 1: Configuracion del Proyecto
+
+El usuario inicia creando un nuevo proyecto. El sistema presenta un wizard de configuracion en 3 pasos. Paso 1: Informacion basica (nombre del proyecto, cliente, ubicacion georgrafica). Paso 2: Tipo de instalacion (residencial, comercial, industrial) y normativa a aplicar (RETIE, NEC). Paso 3: Tipo de alimentacion (monofasica 120V, bifasica 120/240V, trifasica 208/120V, trifasica 480/277V) y caracteristicas del entorno (temperatura ambiente, tipo de construccion, nivel de complejidad esperado).
+
+El sistema utiliza esta informacion para calibrar automaticamente los parametros de calculo, los limites normativos y las recomendaciones por defecto. Por ejemplo, si el usuario selecciona una instalacion industrial en clima calido, el sistema aplicara automaticamente los factores de correccion por temperatura correspondientes y sugerira canalizaciones adecuadas para ambientes agresivos.
+
+13.2 Etapa 2: Definicion de Espacios
+
+El usuario define los espacios fisicos del proyecto (habitaciones, areas, pisos). Para cada espacio, especifica las dimensiones aproximadas y las condiciones particulares (humedad, polvo, temperatura). Esta informacion se utiliza posteriormente para estimar longitudes de circuitos y evaluar condiciones ambientales especificas.
+
+13.3 Etapa 3: Ingreso de Cargas
+
+Esta es la etapa mas detallada. El usuario ingresa cada carga electrica del proyecto. El sistema ofrece un catalogo predefinido de cargas comunes (iluminacion LED, tomacorrientes generales, tomacorrientes de cocina, aire acondicionado, calentador de agua, motores, equipos especiales) pero tambien permite cargas personalizadas.
+
+Para cada carga, el usuario especifica: potencia (W), voltaje (V), factor de potencia, eficiencia (para motores), tipo de conexion, cantidad de unidades, horas estimadas de uso diario, y ubicacion fisica. El sistema valida cada entrada en tiempo real, detectando valores anomalos (por ejemplo, un aire acondicionado con potencia de 50W seria senalado como posible error).
+
+13.4 Etapa 4: Calculo y Resultados
+
+Al completar el ingreso de cargas, el usuario inicia el calculo. El sistema procesa todos los datos en el motor de calculos y presenta los resultados en un dashboard interactivo organizado en secciones: Resumen Ejecutivo (demanda total, corriente principal, numero de circuitos), Distribucion por Circuitos (tabla detallada con cada circuito, sus cargas, corriente, conductor seleccionado, breaker y caida de tension), Balance de Fases (grafico de barras mostrando la distribucion de cargas entre fases), y Validacion Normativa (indicadores de cumpliento con detalle de cada verificacion).
+
+13.5 Etapa 5: Revision y Ajustes
+
+El usuario revisa los resultados y puede realizar ajustes. Si cambia una carga, agrega un circuito o modifica una distancia, el sistema recalcula automaticamente todo lo afectado. El modulo de recomendaciones inteligentes sugiere optimizaciones (por ejemplo: Consolidar los circuitos 3 y 4 para reducir un breaker o Aumentar el calibre del conductor del circuito 7 para reducir la caida de tension al 1.5%).
+
+13.6 Etapa 6: Diagramas y Visualizacion
+
+El usuario accede a los diagramas generados automaticamente: diagrama unifilar del sistema completo, esquema de conexion de cada tablero, plano de distribucion de cargas, y guia visual de ejecucion. Los diagramas son interactivos: hacer clic en un componente muestra sus especificaciones tecnicas, alternativas disponibles y justificacion de la seleccion.
+
+13.7 Etapa 7: Presupuesto y Materiales
+
+El sistema genera la lista completa de materiales con cantidades, referencias tecnicas y costos unitarios y totales. El usuario puede ajustar precios, cambiar marcas, marcar items como suministrados por el cliente, y agregar items adicionales. El presupuesto final se desglosa por categorias y se puede exportar.
+
+13.8 Etapa 8: Documentacion y Exportacion
+
+En la etapa final, el usuario selecciona los documentos a generar: memoria de calculo completa, lista de materiales, presupuesto, diagramas unifilares, especificaciones tecnicas y reporte de cumplimiento normativo. Todos los documentos se generan con formato profesional, incluyen el logo del usuario (si esta configurado) y se exportan en los formatos seleccionados (PDF, Excel, Word).
+
+13.9 Tiempo Estimado por Etapa
+
+Etapa
+
+Tiempo Estimado
+
+Complejidad
+
+1. Configuracion del Proyecto
+
+3-5 minutos
+
+Baja
+
+2. Definicion de Espacios
+
+5-10 minutos
+
+Baja
+
+3. Ingreso de Cargas
+
+15-30 minutos
+
+Media
+
+4. Calculo y Resultados
+
+Automatico (segundos)
+
+N/A
+
+5. Revision y Ajustes
+
+10-20 minutos
+
+Media
+
+6. Diagramas
+
+Automatico (segundos)
+
+N/A
+
+7. Presupuesto
+
+5-10 minutos
+
+Baja
+
+8. Documentacion
+
+Automatico (minutos)
+
+N/A
+
+TOTAL
+
+45-90 minutos
+
+Variable
+
+14. Experiencia de Usuario (UX/UI)
+
+La experiencia de usuario es un diferenciador critico de la plataforma. El objetivo de diseno es que el usuario nunca sienta que esta utilizando un software complejo de ingenieria, sino una herramienta intuitiva, atractiva y natural de usar. Cada decision de diseno se fundamenta en la reduccion de la carga cognitiva y la maximizacion de la claridad visual.
+
+14.1 Principios de Diseno
+
+Los principios rectores del diseno de experiencia de usuario son: Claridad sobre todo — la informacion tecnica compleja debe presentarse de manera que sea comprendida sin esfuerzo; Progresion natural — el usuario debe sentir que esta avanzando fluidamente hacia su objetivo; Retroalimentacion inmediata — cada accion del usuario produce una respuesta visible del sistema; Prevencion de errores — el sistema anticipa y previene errores antes de que ocurran, en lugar de solo reportarlos; Minimalismo funcional — cada elemento en pantalla debe tener un proposito claro.
+
+14.2 Mockup Conceptual de la Interfaz
+
+La siguiente imagen muestra un mockup conceptual del dashboard principal de la plataforma, con el editor de diagramas electricos, panel de propiedades y visualizacion de calculos:
+
+
+
+Figura 2: Mockup Conceptual del Dashboard Principal
+
+14.3 Estrategia de Onboarding
+
+La primera experiencia del usuario es determinante. El sistema implementa un onboarding progresivo: tutorial interactivo de 3 minutos en la primera visita, tooltips contextuales que aparecen al pasar el cursor sobre elementos, ejemplos pre-cargados que el usuario puede explorar para entender el flujo, y un modo demo que permite experimentar sin crear una cuenta.
+
+14.4 Sistema de Navegacion
+
+La navegacion sigue un modelo de sidebar colapsable con las secciones principales del proyecto, un breadcrumb que indica la ubicacion actual dentro del flujo, y un indicador de progreso visual que muestra el avance del proyecto. El usuario siempre sabe donde esta, que sigue y como volver atras.
+
+14.5 Visualizacion de Datos Tecnicos
+
+Los datos tecnicos se presentan mediante una combinacion de: tarjetas resumen con iconos y colores semaforos (verde/amarillo/rojo para indicar estado), tablas interactivas con ordenamiento y filtrado, graficos de barras y torta para distribuciones, medidores analogicos virtuales para valores criticos, y diagramas interactivos donde los componentes son clickeables para ver detalles.
+
+14.6 Sistema de Explicaciones
+
+Cada resultado tecnico incluye un icono de informacion que, al hacer clic, despliega una explicacion en lenguaje natural. Por ejemplo, junto al resultado Conductor seleccionado: AWG #12, un icono despliega: Se selecciono AWG #12 porque la corriente del circuito es de 18A, el conductor #12 soporta hasta 25A en las condiciones de su instalacion (conduit PVC, 3 conductores, 30C ambiente), y la caida de tension con este calibre es de 2.1%, dentro del limite permitido de 3%. Si desea reducir la caida de tension al 1.5%, puede cambiar a AWG #10.
+
+14.7 Responsividad y Accesibilidad
+
+La interfaz es completamente responsive, adaptandose a pantallas de escritorio (uso principal), tablet (para uso en obra) y movil (para consultas rapidas). Cumple con los estandares WCAG 2.1 AA de accesibilidad: contraste adecuado, navegacion por teclado, compatibilidad con lectores de pantalla, y textos escalables.
+
+14.8 Retos de Diseno UX
+
+El principal reto de diseno es presentar informacion tecnica compleja de manera simple sin perder precision ni profundidad. La solucion adoptada es un sistema de capas de informacion: la capa superficial muestra resultados clave en lenguaje natural, la capa intermedia muestra detalles tecnicos en tablas y graficos, y la capa profunda muestra formulas, normativas aplicadas y calculos completos para usuarios avanzados. El usuario elige que tan profundo quiere ir.
+
+15. Arquitectura Tecnica
+
+La arquitectura tecnica de la Electrical Design Platform esta disenada para soportar alta carga de calculo, escalabilidad elastica y disponibilidad continua. Se basa en patrones arquitectonicos probados y tecnologias de clase empresarial.
+
+15.1 Patron Arquitectonico
+
+El sistema implementa una variante del patron Clean Architecture (Arquitectura Limpia) con separacion en capas: Capa de Dominio (entidades de negocio, reglas de calculo, validaciones normativas), Capa de Aplicacion (casos de uso, servicios de aplicacion, DTOs), Capa de Infraestructura (acceso a datos, APIs externas, servicios de correo, almacenamiento de archivos), y Capa de Presentacion (controllers REST, serializadores, middleware).
+
+Esta separacion garantiza que la logica de negocio (los calculos electricos y las reglas normativas) sea independiente de los frameworks y las tecnologias de infraestructura, facilitando las pruebas unitarias, la evolucion tecnologica y la comprension del codigo.
+
+15.2 Stack Tecnologico
+
+El stack tecnologico seleccionado equilibra madurez, productividad del desarrollo, rendimiento y disponibilidad de talento. A continuacion se detalla cada componente y su justificacion tecnica:
+
+Frontend
+
+Next.js 14 (App Router) como framework principal, proporcionando Server Side Rendering para mejor SEO y tiempo de carga inicial, React Server Components para reducir el tamano del bundle JavaScript, y API Routes para funcionalidades serverless. TypeScript para tipado estatico que previene errores en tiempo de desarrollo. TailwindCSS para estilizacion utilitaria que acelera el desarrollo de interfaces responsivas. React Query para gestion de estado del servidor con caching inteligente y sincronizacion de datos. Zustand para estado global ligero. Recharts para graficos y visualizaciones. React-Flow para diagramas interactivos (diagramas unifilares).
+
+Backend
+
+Django 5.x como framework web principal, seleccionado por su madurez, seguridad incorporada, ORM potente y ecosistema extenso. Django REST Framework para la API REST con serializacion, autenticacion, permisos y documentacion automatica. Celery con Redis como broker para tareas asincronas (calculos pesados, generacion de reportes, envio de correos). PostgreSQL 16 como base de datos principal por su robustez, soporte de tipos complejos y capacidades de JSON. Redis para cache de sesiones, resultados de calculos frecuentes y rate limiting. MinIO (S3-compatible) para almacenamiento de objetos (diagramas exportados, reportes PDF, avatares de usuario).
+
+Motor de Calculos
+
+Python 3.11+ como lenguaje del motor de calculos, seleccionado por su dominio en computacion cientifica. NumPy y SciPy para operaciones matematicas y optimizaciones numericas. Pandas para manipulacion de datos tabulares (tablas AWG, factores de correccion). SymPy para calculo simbolico (manipulacion de formulas, derivacion de expresiones). FastAPI para exponer el motor como microservicio API con documentacion automatica y validacion de datos.
+
+Inteligencia Artificial
+
+scikit-learn para modelos de aprendizaje automatico tradicional (regresion para prediccion de costos, clustering para segmentacion de proyectos). TensorFlow/PyTorch para modelos mas complejos si se requiere en fases avanzadas. OpenAI API o modelos locales (LLaMA) para asistente conversacional y generacion de explicaciones naturales.
+
+Infraestructura
+
+Docker y Docker Compose para contenedorizacion en desarrollo. Kubernetes (EKS/GKE) para orquestacion en produccion. GitHub Actions para CI/CD con pipelines de build, test y deploy. Prometheus y Grafana para monitoreo y alertas. ELK Stack (Elasticsearch, Logstash, Kibana) para logging centralizado. Cloudflare como CDN y proteccion DDoS. AWS/GCP como cloud provider con servicios gestionados (RDS para PostgreSQL, ElastiCache para Redis, S3 para almacenamiento).
+
+15.3 Diagrama de Despliegue
+
+El sistema se despliega como un conjunto de contenedores Docker orquestados por Kubernetes. El trafico entra a traves de un Ingress Controller (NGINX) que distribuye las peticiones entre: pods del frontend (Next.js) para SSR y assets estaticos, pods del backend (Django) para la API REST, pods del motor de calculos (Python/FastAPI) escalables independientemente, y pods de Celery workers para tareas en background. PostgreSQL y Redis operan como servicios gestionados (RDS/Cloud SQL y ElastiCache). El almacenamiento de objetos utiliza S3 o equivalente.
+
+15.4 Estrategia de Escalamiento
+
+El frontend escala horizontalmente segun la carga de usuarios concurrentes. El backend escala segun la cantidad de peticiones API. El motor de calculos escala independientemente segun la demanda de calculos (HPA basado en cola de Celery). La base de datos escala verticalmente (instancia mas grande) y con read replicas para consultas. Redis escala con cluster mode. El almacenamiento S3 es virtualmente ilimitado.
+
+16. Diseno Frontend y Backend
+
+16.1 Diseno del Frontend
+
+El frontend sigue una arquitectura de componentes modulares organizados por dominio funcional. La estructura de directorios refleja los modulos del sistema: cada modulo tiene sus propios componentes, hooks, servicios API y tipos TypeScript.
+
+Estructura de Componentes
+
+Los componentes se organizan en tres niveles: Layout Components (Navbar, Sidebar, Footer, PageShell) que definen la estructura visual de la pagina; Domain Components (LoadEditor, CircuitTable, VoltageDropChart, UnifilarDiagram) que implementan funcionalidad especifica del dominio electrico; y Shared Components (Button, Card, Modal, Tooltip, DataTable) que son reutilizables across la aplicacion.
+
+Gestion de Estado
+
+El estado se gestiona en dos capas. React Query maneja el estado del servidor: cache de proyectos, resultados de calculos, listas de materiales. Invalidacion inteligente del cache cuando los datos cambian. Background refetching para mantener datos frescos. Zustand maneja el estado global del cliente: estado de la UI (sidebars abiertos/cerrados), preferencias de usuario, y proyecto activo actual.
+
+Comunicacion con Backend
+
+La comunicacion se realiza a traves de funciones typed que envuelven fetch/axios, con interceptores para: inyeccion automatica del token JWT en headers, manejo centralizado de errores (401 -> logout, 500 -> toast de error), reintentos automaticos con backoff exponencial para errores de red, y transformacion de snake_case (backend) a camelCase (frontend).
+
+Rendimiento
+
+Estrategias de optimizacion: Server Components para contenido estatico, reduciendo JavaScript enviado al cliente. Code splitting por ruta y por modulo pesado (editor de diagramas, generador de PDFs). Virtualizacion de listas largas (tablas de materiales con cientos de items). Memoizacion de componentes costosos (graficos, diagramas). Prefetching de datos criticos en el servidor.
+
+16.2 Diseno del Backend
+
+El backend sigue la estructura de Django con aplicaciones separadas por dominio: accounts (usuarios, autenticacion, perfiles), projects (proyectos, configuraciones, permisos), loads (catalogo de cargas, ingreso de datos), calculations (resultados de calculos, memorias), materials (base de datos de materiales, listas BOM), diagrams (generacion y almacenamiento de diagramas), reports (generacion de reportes y documentacion), recommendations (motor de recomendaciones), y billing (suscripciones, pagos, facturacion).
+
+API REST
+
+Los endpoints siguen convenciones REST: GET /api/v1/projects/ (listar proyectos), POST /api/v1/projects/ (crear proyecto), GET /api/v1/projects/{id}/ (detalle de proyecto), POST /api/v1/projects/{id}/calculate/ (ejecutar calculos), GET /api/v1/projects/{id}/results/ (obtener resultados), POST /api/v1/projects/{id}/export/ (generar exportacion). Todos los endpoints devuelven JSON con snake_case y soportan paginacion, filtrado y ordenamiento.
+
+Autenticacion y Autorizacion
+
+Autenticacion mediante JWT (JSON Web Tokens) con refresh tokens. Autorizacion basada en roles: free_user (limitado a 3 proyectos, calculos basicos), premium_user (proyectos ilimitados, todas las funcionalidades), team_admin (gestion de equipo, facturacion), y superuser (acceso administrativo completo). Permisos a nivel de objeto: un usuario solo puede acceder a sus proyectos (o proyectos compartidos con su equipo).
+
+Procesamiento Asincrono
+
+Las operaciones pesadas se delegan a Celery workers: calculos complejos de proyectos industriales, generacion de reportes PDF con diagramas, exportacion de grandes listas de materiales a Excel, y analisis de IA sobre proyectos. El frontend recibe un task_id y consulta el estado periodicamente (o via WebSockets en fase avanzada).
+
+Validaciones y Seguridad
+
+Validacion de entrada en multiples capas: serializadores DRF (tipo y rango), validadores de modelo (reglas de negocio), y validaciones del motor de calculos (consistencia tecnica). Proteccion contra SQL injection via ORM. Proteccion contra XSS via escape de salida. Rate limiting por endpoint (100 req/min para API general, 10 req/min para calculos). Sanitizacion de archivos subidos.
+
+17. Base de Datos Propuesta
+
+La base de datos PostgreSQL almacena toda la informacion persistente del sistema. El esquema esta disenado para soportar la complejidad de los datos tecnicos electricos manteniendo la integridad referencial y el rendimiento de consultas.
+
+17.1 Esquema Principal
+
+El esquema se organiza en los siguientes grupos de tablas:
+
+Usuarios y Autenticacion
+
+Tablas: users (id, email, password_hash, first_name, last_name, role, is_active, created_at), user_profiles (user_id, company, phone, avatar_url, preferences, subscription_tier), teams (id, name, owner_id), y team_members (team_id, user_id, role, joined_at).
+
+Proyectos
+
+Tablas: projects (id, name, description, project_type, user_id, team_id, normativa, voltage_type, ambient_temp, altitude, status, created_at, updated_at) y project_settings (project_id, default_pf, safety_factor, max_voltage_drop, currency, labor_cost_factor).
+
+Espacios y Cargas
+
+Tablas: spaces (id, project_id, name, floor, area, height, ambient_conditions) y loads (id, space_id, name, load_type, power, voltage, pf, efficiency, quantity, usage_hours, connection_type, distance_from_panel, simultaneity_factor). Los tipos de carga incluyen: lighting_general, lighting_emergency, receptacle_general, receptacle_kitchen, receptacle_special, ac_unit, water_heater, motor_general, elevator, fire_alarm, data_equipment, special_equipment.
+
+Resultados de Calculos
+
+Tablas: calculation_results (id, project_id, total_demand, total_current, main_breaker_size, panel_capacity, voltage_drop_max, compliance_status, calculated_at), circuits (id, result_id, circuit_number, description, total_power, current, conductor_size, conductor_type, breaker_size, breaker_type, conduit_size, conduit_type, voltage_drop, phase_assignment), y load_assignments (circuit_id, load_id, allocated_power).
+
+Materiales y Costos
+
+Tablas: materials_catalog (id, sku, name, category, brand, description, unit_price, currency, specs, norm_compliance), bom_items (id, project_id, material_id, quantity, unit_price, total_price, is_substitutable), y cost_estimates (id, project_id, materials_total, labor_total, equipment_total, subtotal, tax, grand_total, estimated_days).
+
+Diagramas y Documentos
+
+Tablas: diagrams (id, project_id, diagram_type, svg_content, png_url, created_at) y documents (id, project_id, document_type, file_url, file_size, pages, generated_at).
+
+Normativas y Factores
+
+Tablas: normatives (id, code, name, country, version, effective_date), awg_table (gauge, mm2, ampacity_60c, ampacity_75c, ampacity_90c, resistance, diameter), correction_factors (id, factor_type, condition, condition_value, correction_value, normative_id), y ampacity_adjustments (id, num_current_carrying_conductors, adjustment_factor).
+
+17.2 Consideraciones de Rendimiento
+
+Indices estrategicos: projects.user_id, loads.space_id, circuits.result_id, materials_catalog.category, y bom_items.project_id. Para proyectos con cientos de cargas, se utilizan consultas optimizadas con select_related y prefetch_related. Los resultados de calculos se cachean en Redis con TTL de 24 horas. Los catalogos de materiales (miles de items) se sirven con paginacion y busqueda indexada.
+
+17.3 Estrategia de Backup
+
+Backups automaticos diarios con retencion de 30 dias. Backups semanales con retencion de 12 semanas. Backups mensuales con retencion de 12 meses. Los backups se almacenan en una region diferente de la base de datos principal. Se realizan pruebas de restauracion mensuales. Los datos criticos de usuario se encriptan en reposo con AES-256.
+
+18. Motor de Calculos Electricos
+
+El motor de calculos es el nucleo tecnico de la plataforma. Implementa los algoritmos de ingenieria electrica que transforman los datos de entrada del usuario en resultados precisos, selecciones optimas y validaciones normativas. Desarrollado en Python, opera como un microservicio independiente que expone una API REST.
+
+18.1 Arquitectura del Motor
+
+El motor sigue un pipeline de procesamiento secuencial: Validacion de Entrada -> Calculo de Demanda -> Asignacion de Circuitos -> Calculo de Corrientes -> Seleccion de Conductores -> Verificacion de Caida de Tension -> Seleccion de Protecciones -> Balance de Fases -> Verificacion Normativa -> Generacion de Resultados. Cada etapa produce datos que alimentan la siguiente, y cada etapa puede producir advertencias o errores que se acumulan en un log de validacion.
+
+18.2 Calculo de Demanda Electrica
+
+El calculo de demanda utiliza el metodo de los factores de demanda segun RETIE y NEC. Para cargas de iluminacion y tomacorrientes generales, se aplica el factor de demanda segun el area del proyecto. Para cargas especiales (cocina, lavanderia), se aplican factores de demanda especificos por tipo. Para motores, se consideran los requisitos de arranque. Para aires acondicionados, se aplica el factor de demanda segun la cantidad de unidades. La demanda total se calcula como la suma ponderada de todas las cargas con sus factores de demanda y simultaneidad aplicados.
+
+La formula general es: D = suma(Ci * FD_i * FS_i), donde D es la demanda total, Ci es la potencia conectada de la carga i, FD_i es el factor de demanda aplicable, y FS_i es el factor de simultaneidad. Los valores de FD y FS provienen de tablas normativas y son configurables segun la normativa seleccionada.
+
+18.3 Calculo de Corrientes
+
+La corriente nominal se calcula segun el tipo de conexion. Monofasico: I = P / (V * PF). Trifasico (equilibrado): I = P / (sqrt(3) * V * PF). Trifasico (desequilibrado): se calcula por fase individual. Para motores, se incluye el factor de eficiencia: I = P / (sqrt(3) * V * PF * eff). La corriente de diseno se obtiene aplicando un factor de seguridad (tipicamente 1.25) a la corriente nominal.
+
+18.4 Seleccion de Conductores
+
+La seleccion de conductores sigue un proceso de tres pasos. Paso 1: Calcular la corriente de diseno del circuito. Paso 2: Seleccionar un conductor de la tabla AWG cuya capacidad de conduccion (ajustada por temperatura) sea mayor o igual a la corriente de diseno. Paso 3: Verificar que la caida de tension con el conductor seleccionado este dentro del limite permitido (tipicamente 3% para circuitos de alumbrado y tomacorrientes, 5% para circuitos de motores). Si no cumple, se incrementa el calibre y se verifica nuevamente.
+
+La capacidad de conduccion se ajusta por: temperatura ambiente (factor de correccion por encima de 30C), numero de conductores en la misma canalizacion (factor de agrupamiento), y tipo de canalizacion (conduit, bandeja, directo enterrado). El motor consulta las tablas de ampacidad de la normativa seleccionada y aplica todos los factores de correccion pertinentes.
+
+18.5 Calculo de Caida de Tension
+
+La caida de tension se calcula con la formula: dV = (2 * I * L * R * cos(phi)) / 1000 para monofasico, donde I es la corriente, L es la longitud del circuito en metros, R es la resistencia del conductor en ohm/km, y cos(phi) es el factor de potencia. Para trifasico, se utiliza sqrt(3) en lugar de 2. El resultado se expresa como porcentaje del voltaje nominal.
+
+18.6 Seleccion de Protecciones
+
+La seleccion de breakers sigue criterios de coordinacion: el breaker del circuito ramal debe ser menor o igual al breaker del tablero, con una relacion tipica de 1.6:1 para coordinacion magnetica. El tamano del breaker se selecciona como el siguiente valor estandar mayor o igual a la corriente de diseno del circuito. Se verifica que el breaker proteja el conductor (I_breaker <= I_conductor). Para motores, se permite un breaker mayor considerando el arranque.
+
+18.7 Balance de Fases
+
+Para sistemas trifasicos, el motor distribuye las cargas monofasicas entre las tres fases buscando minimizar el desequilibrio. El algoritmo utiliza un enfoque greedy: ordena las cargas de mayor a menor potencia y las asigna a la fase con la menor carga acumulada actual. El resultado se evalua con el indice de desequilibrio: max(|Pa - Pprom|, |Pb - Pprom|, |Pc - Pprom|) / Pprom * 100%. Si el desequilibrio excede el 20%, se genera una advertencia.
+
+18.8 Validacion Normativa
+
+El motor ejecuta una bateria de verificaciones normativas: separacion de circuitos (iluminacion separada de tomacorrientes), capacidad minima de conductor (#14 AWG minimo para circuitos de 15A, #12 para 20A), proteccion del conductor (breaker <= ampacidad del conductor), caida de tension maxima (3% para alumbrado/tomacorrientes, 5% para motores), sensibilidad de protecciones diferenciales (30mA para humedos, 300mA para secos), y coordinacion de protecciones (breaker aguas abajo <= breaker aguas arriba / 1.6). Cada verificacion produce un resultado: PASS, WARNING o FAIL.
+
+18.9 Precision y Validacion
+
+El motor se valida comparando sus resultados contra calculos manuales realizados por ingenieros electricos para un conjunto de 50 proyectos de referencia que cubren todos los tipos de instalacion y rangos de complejidad. La tolerancia aceptable es del 1% para calculos numericos y del 2% para selecciones de tabla (debido a redondeo en valores estandar). Los tests se ejecutan automaticamente en cada cambio del motor.
+
+19. Sistema Inteligente de Recomendaciones
+
+El sistema de recomendaciones complementa los calculos tecnicos con sugerencias inteligentes basadas en conocimiento experto, mejores practicas de la industria y aprendizaje de patrones de proyectos previos. Funciona como un asistente experto que analiza la configuracion del proyecto y ofrece recomendaciones contextuales.
+
+19.1 Arquitectura del Sistema
+
+El sistema de recomendaciones opera en dos niveles. Nivel 1: Reglas Expertas Codificadas — un motor de reglas que evalua la configuracion del proyecto contra un conjunto de reglas tecnicas predefinidas. Estas reglas se derivan de normativas, manuales de fabricantes y mejores practicas de la industria. Ejemplos: Si la distancia del circuito excede 30 metros, recomendar verificar caida de tension con especial atencion. Si hay mas de 10 cargas en un circuito, sugerir dividirlo. Si la temperatura ambiente excede 40C, recomendar conductores con aislamiento de 90C.
+
+Nivel 2: Aprendizaje Automatico — modelos entrenados con datos de proyectos historicos que identifican patrones optimos y predicen resultados. Este nivel se activa gradualmente a medida que se acumulan datos de proyectos en la plataforma.
+
+19.2 Tipos de Recomendaciones
+
+El sistema genera recomendaciones de cinco tipos: Optimizacion Tecnica (sugerencias para mejorar el diseno tecnico: cambiar conductor, redistribuir cargas, agregar proteccion), Prevencion de Riesgos (alertas de condiciones potencialmente problematicas: sobrecarga, desequilibrio excesivo, proteccion insuficiente), Eficiencia de Costos (sugerencias para reducir costos sin comprometer seguridad: cambiar marca, consolidar circuitos, ajustar simultaneidad), Cumplimiento Normativo (advertencias de posibles incumplimientos normativos y sugerencias de correccion), y Mejores Practicas (recomendaciones basadas en experiencia de la industria: separar circuitos criticos, prever expansion, usar canalizacion adecuada).
+
+19.3 Motor de Reglas
+
+El motor de reglas implementa un sistema de forward chaining: evalua todas las reglas aplicables contra el estado actual del proyecto y genera las recomendaciones correspondientes. Las reglas se expresan como condiciones logicas sobre los datos del proyecto. El motor es extensible: nuevas reglas pueden agregarse sin modificar el codigo existente, permitiendo que el sistema mejore continuamente.
+
+19.4 Modelado Predictivo
+
+A medida que se acumulan proyectos en la plataforma, se entrenan modelos de ML para: Prediccion de Costos — regresion que estima el costo total basado en caracteristicas del proyecto (tipo, tamano, complejidad), con precision que mejora con mas datos; Clustering de Proyectos — agrupacion automatica de proyectos similares para recomendar configuraciones probadas; y Deteccion de Anomalias — identificacion de valores inusuales que pueden indicar errores de entrada (por ejemplo, un circuito con 50 tomacorrientes es anomalo y se senala para verificacion).
+
+19.5 Presentacion al Usuario
+
+Las recomendaciones se presentan de manera no intrusiva pero visible: un panel lateral con contador de recomendaciones pendientes, cada recomendacion con icono de tipo (bombilla para optimizacion, triangulo para riesgo, moneda para costo, escudo para normativa, estrella para mejores practicas), descripcion clara de la recomendacion, justificacion tecnica breve, y botones de accion (Aplicar, Ignorar, Ver mas). El usuario mantiene el control total: puede aplicar, ignorar o posponer cada recomendacion.
+
+20. Generacion de Diagramas y Planos
+
+La generacion automatica de diagramas es una de las capacidades diferenciadoras de la plataforma. Transforma los datos estructurados del proyecto en representaciones visuales profesionales que comunican el diseno electrico de manera clara e inmediata.
+
+20.1 Diagramas Unifilares
+
+El diagrama unifilar es la representacion esquematica del sistema electrico completo. Se genera automaticamente a partir de los resultados del calculo, mostrando: la acometida y el medidor, el interruptor principal, el tablero de distribucion con sus breakers, cada circuito ramal con su identificacion, carga y proteccion, y las cargas terminales. El diagrama utiliza simbolos estandarizados IEEE/ANSI, es vectorial (SVG) para escalado sin perdida, y es interactivo: clic en un componente muestra sus especificaciones.
+
+20.2 Esquemas de Conexion
+
+Los esquemas de conexion muestran el cableado punto a punto para circuitos especificos. Para un circuito de iluminacion, muestra: breaker en el tablero, conductor que sale, cajas de conexion, interruptores, lamparas y conexiones neutro/tierra. Estos esquemas son especialmente utiles para el electricista instalador, que puede seguirlos paso a paso.
+
+20.3 Diagrama Unifilar de Ejemplo
+
+La siguiente imagen muestra un ejemplo de diagrama unifilar generado por el sistema, representando una instalacion residencial tipica con tablero principal, breaker principal, y distribucion a circuitos de iluminacion, tomacorrientes y cargas especiales:
+
+
+
+Figura 3: Ejemplo de Diagrama Unifilar Generado Automaticamente
+
+20.4 Planos de Distribucion
+
+Los planos de distribucion muestran la ubicacion fisica de los componentes electricos en el espacio del proyecto. Aunque no reemplazan los planos arquitectonicos detallados, proporcionan una guia visual util para la instalacion. Muestran: ubicacion aproximada de tableros, recorrido de circuitos, ubicacion de puntos de iluminacion y tomacorrientes, y leyenda de simbolos.
+
+20.5 Guia Visual de Ejecucion
+
+La guia visual de ejecucion es una secuencia de pasos ilustrados que muestra como debe realizarse fisicamente la instalacion. Paso 1: Instalar el tablero en la ubicacion indicada. Paso 2: Instalar las canalizaciones siguiendo el recorrido mostrado. Paso 3: Jalar los conductores por las canalizaciones. Paso 4: Conectar cada circuito segun el esquema. Paso 5: Instalar las protecciones en el tablero. Paso 6: Verificar continuidad y resistencia de aislamiento. Esta guia es especialmente valiosa para tecnicos que necesitan instrucciones claras de ejecucion.
+
+20.6 Tecnologia de Generacion
+
+Los diagramas se generan utilizando SVG (Scalable Vector Graphics) construidos programaticamente. La biblioteca principal es D3.js para calculo de layouts y React-Flow para diagramas interactivos. La generacion ocurre en dos fases: Phase de Layout (calcula posiciones optimas de componentes minimizando cruces y longitudes de conexion) y Phase de Render (genera el SVG con los simbolos, etiquetas y estilos). Los diagramas se exportan como SVG editable, PNG de alta resolucion, o PDF.
+
+20.7 Retos Tecnicos
+
+La generacion automatica de diagramas presenta retos significativos: El layout automatico debe producir diagramas legibles sin intervencion humana, lo que requiere algoritmos de posicionamiento inteligente. Los diagramas complejos (proyectos industriales con decenas de circuitos) deben mantenerse claros, posiblemente con sistemas de niveles o zoom. La estetica debe ser profesional, no generica o robotica. La interaccion (hover, clic) debe ser fluida incluso con diagramas grandes. Estos retos se abordan con algoritmos de graph layout (Sugiyama para diagramas jerarquicos), tecnicas de clustering para agrupar circuitos relacionados, y renderizado virtualizado para diagramas grandes.
+
+21. Sistema de Costos y Presupuestos
+
+El sistema de costos y presupuestos transforma las selecciones tecnicas en estimaciones economicas completas, permitiendo al usuario comprender el impacto financiero de cada decision de diseno y generar propuestas profesionales para clientes.
+
+21.1 Estructura del Presupuesto
+
+El presupuesto se organiza en las siguientes partidas: Materiales (conductores, canalizaciones, tableros, breakers, tomacorrientes, interruptores, lamparas, accesorios), Mano de Obra (instalacion de tableros, canalizaciones, conductores, conexiones, pruebas), Equipos Especiales (aires acondicionados, calentadores, motores, sistemas de alarmas, si son suministrados por el contratista), y Gastos Generales (transporte, herramientas, imprevistos, utilidad). Cada partida se desglosa en items individuales con cantidad, unidad, precio unitario y subtotal.
+
+21.2 Base de Datos de Precios
+
+El sistema mantiene una base de datos de precios de referencia que incluye: materiales electricos comunes con precios actualizables por region, factores de mano de obra por tipo de trabajo y region geografica, y factores de gastos generales como porcentaje del subtotal. Los precios se pueden personalizar: el usuario puede ajustar precios individuales, cargar su propia lista de precios desde Excel, o conectar con APIs de proveedores para precios en tiempo real.
+
+21.3 Calculo de Costos
+
+El calculo sigue la secuencia: Materiales = suma(cantidad_i * precio_unitario_i) para todos los items de la BOM. Mano de Obra = suma(metros_conductor * precio_metro + unidades_canalizacion * precio_unidad + puntos_conexion * precio_punto + horas_pruebas * precio_hora). Equipos Especiales = suma de equipos marcados como suministrados por contratista. Subtotal = Materiales + Mano de Obra + Equipos. Gastos Generales = Subtotal * factor_gg (tipicamente 10-15%). Impuestos = (Subtotal + GG) * tasa_impuesto. Total = Subtotal + GG + Impuestos.
+
+21.4 Analisis de Sensibilidad
+
+El sistema permite analizar como cambia el presupuesto ante modificaciones: cambiar todos los conductores a la siguiente marca (impacto en materiales), ajustar el factor de mano de obra (impacto en MO), cambiar tipo de canalizacion de PVC a EMT (impacto en materiales y MO), o ajustar el margen de imprevistos. Cada cambio se refleja inmediatamente en el presupuesto con indicacion del delta.
+
+21.5 Estimacion de Tiempos
+
+El tiempo estimado de ejecucion se calcula basandose en: cantidad de metros de canalizacion (metros / productividad diaria), cantidad de puntos de conexion (puntos / productividad diaria), cantidad de circuitos (circuitos / productividad diaria), pruebas y documentacion (dias fijos), y factor de complejidad (1.0 para simple, 1.3 para media, 1.7 para alta, 2.2 para critica). El resultado se expresa en dias-hombre y en dias calendario (considerando un equipo tipico de 2-3 electricistas).
+
+21.6 Formato de Salida
+
+El presupuesto se genera como documento profesional con: membrete del usuario/empresa (configurable), tabla de contenido del presupuesto, descripcion del proyecto, desglose detallado por partidas, resumen ejecutivo con totales, condiciones comerciales (forma de pago, plazo, garantia), y espacio para firma y aceptacion. Exportable a PDF y Excel.
+
+22. Generacion de Documentacion Tecnica
+
+La generacion de documentacion tecnica consolida toda la informacion del proyecto en documentos profesionales que pueden presentarse a clientes, entidades reguladoras, aseguradoras y equipos de ejecucion. La plataforma automatiza completamente este proceso.
+
+22.1 Tipos de Documentos Generados
+
+La plataforma puede generar los siguientes tipos de documentos: Memoria de Calculo (documento tecnico detallado que incluye formulas aplicadas, valores de entrada, calculos paso a paso, resultados y validaciones normativas), Lista de Materiales con Especificaciones (BOM detallada con cantidades, referencias tecnicas, especificaciones normativas de cada material), Presupuesto Desglosado (documento comercial con costos por partidas, condiciones y totales), Especificaciones Tecnicas de Materiales y Equipos (ficha tecnica de cada componente seleccionado con datos del fabricante), Diagramas Unifilares y Esquemas (planos vectoriales del sistema electrico), Reporte de Cumplimiento Normativo (verificacion punto por punto de cumplimiento de normativa aplicable), Recomendaciones de Ejecucion (guia practica de instalacion con consideraciones especiales), y Analisis de Riesgos (identificacion de riesgos tecnicos con probabilidad, impacto y mitigacion).
+
+22.2 Estructura de la Memoria de Calculo
+
+La memoria de calculo es el documento tecnico mas detallado. Su estructura incluye: 1. Portada con datos del proyecto y responsable. 2. Indice de contenidos. 3. Resumen ejecutivo con resultados principales. 4. Datos del proyecto (tipo, normativa, parametros generales). 5. Descripcion de cargas (tabla detallada de todas las cargas con especificaciones). 6. Calculo de demanda (formula, sustitucion de valores, resultado). 7. Calculo de corrientes (por cada circuito: formula, valores, resultado). 8. Seleccion de conductores (por cada circuito: corriente de diseno, conductor seleccionado, factores de correccion aplicados). 9. Verificacion de caida de tension (por cada circuito: formula, longitud, resistencia, caida calculada, verificacion contra limite). 10. Seleccion de protecciones (por cada circuito: breaker seleccionado, coordinacion verificada). 11. Balance de fases (tabla de distribucion, indice de desequilibrio). 12. Validacion normativa (tabla de verificaciones con resultado PASS/FAIL). 13. Conclusiones tecnicas.
+
+22.3 Formato y Exportacion
+
+Todos los documentos se generan con formato profesional utilizando plantillas personalizables. El sistema soporta exportacion a tres formatos: PDF (para presentacion y archivo), Excel (para manipulacion de datos y costos), y Word (para edicion y personalizacion adicional). Las plantillas incluyen el logo del usuario, colores corporativos y campos personalizados.
+
+22.4 Personalizacion de Documentos
+
+El usuario puede personalizar: seleccionar que secciones incluir (por ejemplo, excluir la memoria detallada para un cliente que solo necesita el presupuesto), ajustar el nivel de detalle (resumen ejecutivo vs tecnico completo), agregar notas y comentarios personalizados, incluir anexos (planos arquitectonicos, fotos del sitio), y configurar el idioma del documento (inicialmente espanol, extensible a otros idiomas).
+
+22.5 Firma Digital y Control de Versiones
+
+Los documentos incluyen metadatos de control: version del documento (v1.0, v1.1, etc.), fecha de generacion, responsable tecnico, estado (borrador, revisado, aprobado), y hash de integridad. En fases avanzadas, se integra firma digital para documentos con validez legal.
+
+23. Inteligencia Artificial Aplicada
+
+La inteligencia artificial se integra en la plataforma para potenciar las capacidades tecnicas con asistencia inteligente, prediccion y optimizacion. No se trata de reemplazar el juicio del ingeniero, sino de amplificarlo con insights basados en datos.
+
+23.1 Asistente Conversacional
+
+El asistente conversacional responde preguntas del usuario en lenguaje natural sobre su proyecto. Ejemplos de interacciones: Por que se selecciono este breaker? -> El breaker de 20A se selecciono porque la corriente de diseno del circuito es 16A, y segun la norma el breaker debe ser el siguiente valor estandar mayor o igual a la corriente de diseno. El valor estandar siguiente es 20A. Que pasa si cambio este conductor a uno mas delgado? -> Si cambia de AWG #10 a AWG #12, la caida de tension aumentara de 1.8% a 2.9%, aunque aun dentro del limite permitido de 3%. El ahorro seria de $45 en materiales. El conductor #12 soporta hasta 25A, suficiente para la corriente de diseno de 16A. Este asistente utiliza modelos de lenguaje (LLMs) afinados con conocimiento electrico y contexto del proyecto actual.
+
+23.2 Prediccion de Costos
+
+Un modelo de regresion entrenado con proyectos historicos predice el costo total de un nuevo proyecto basandose en sus caracteristicas (tipo, tamano, numero de cargas, complejidad). A medida que se acumulan mas proyectos, la precision mejora. El modelo identifica tambien las partidas que mas contribuyen al costo y sugiere alternativas.
+
+23.3 Deteccion de Anomalias
+
+Un modelo de deteccion de anomalias identifica valores inusuales en los datos de entrada que pueden indicar errores: una carga con potencia excesivamente alta para su tipo, un circuito con demasiadas cargas conectadas, una caida de tension cercana al limite que requiere atencion, o una relacion breaker/conductor inconsistente. Estas anomalias se presentan como alertas para verificacion del usuario.
+
+23.4 Recomendaciones por Similaridad
+
+Utilizando clustering, el sistema agrupa proyectos similares y recomienda configuraciones que han funcionado bien en casos analogos. Si el usuario esta disenando una casa de 120m2 con 3 habitaciones, el sistema puede sugerir: Proyectos similares han utilizado tipicamente un tablero de 24 espacios con breaker principal de 60A. La configuracion de circuitos mas comun para este perfil es: 3 circuitos de iluminacion, 4 circuitos de tomacorrientes, 1 circuito de cocina, 2 circuitos de AC.
+
+23.5 Vision por Computadora (Futuro)
+
+En fases avanzadas, se integraran capacidades de vision: reconocimiento de componentes electricos en fotos del sitio, extraccion automatica de informacion de planos escaneados, y comparacion visual entre el diseno y la instalacion real para verificacion de ejecucion.
+
+23.6 Consideraciones Eticas y de Transparencia
+
+El uso de IA en ingenieria electrica requiere precaucion. El sistema implementa: Transparencia — cada recomendacion de IA incluye la explicacion del razonamiento. Control humano — el usuario siempre tiene la decision final y puede ignorar recomendaciones. Limites claros — el sistema no realiza calculos sin validacion normativa; la IA complementa pero no reemplaza los algoritmos tecnicos. Auditabilidad — todas las recomendaciones de IA se registran para revision.
+
+24. Escalabilidad
+
+La arquitectura de la plataforma esta disenada para escalar desde cientos de usuarios iniciales hasta cientos de miles en crecimiento organico, manteniendo el rendimiento y la calidad del servicio en todos los niveles.
+
+24.1 Escalabilidad de Usuarios
+
+La capa de aplicacion (Django) escala horizontalmente agregando mas instancias detras del balanceador de carga. El uso de JWT para autenticacion stateless permite que cualquier instancia atienda cualquier peticion sin dependencia de sesiones en memoria. PostgreSQL escala con read replicas para distribuir la carga de consultas. Redis Cluster maneja la sesion y cache distribuida.
+
+24.2 Escalabilidad de Calculos
+
+El motor de calculos es el cuello de botella potencial. Se aborda con: cola de tareas Celery que distribuye calculos entre multiples workers, autoescalado del pool de workers segun la longitud de la cola (HPA en Kubernetes), cache agresiva de resultados para calculos con los mismos parametros, y optimizacion de algoritmos (calculos complejos de proyectos industriales se descomponen en sub-calculos paralelizables).
+
+24.3 Escalabilidad de Datos
+
+La base de datos PostgreSQL se particiona por tenant (equipo/organizacion) para distribuir la carga. Los proyectos archivados se migran a almacenamiento frio (S3 Glacier) reduciendo la carga en la base activa. El catalogo de materiales (miles de items) se cachea en Redis con invalidacion por evento. Los diagramas y documentos generados se almacenan en S3, no en la base de datos.
+
+24.4 Escalabilidad Geografica
+
+Para expansion internacional, la arquitectura soporta multi-region: despliegue en multiples regiones cloud con datos replicados, routing de usuarios a la region mas cercana, CDN global para assets estaticos, y sincronizacion de catalogos de materiales y normativas por region.
+
+24.5 Metricas de Escalabilidad
+
+Objetivos de rendimiento: 1000 usuarios concurrentes con latencia API < 200ms (P95). Calculo de proyecto residencial en < 3 segundos. Calculo de proyecto industrial en < 15 segundos. Generacion de diagramas en < 10 segundos. Generacion de reporte PDF en < 30 segundos. Disponibilidad del 99.9%.
+
+25. Seguridad
+
+La seguridad es critica en una plataforma que maneja datos tecnicos de proyectos, informacion de clientes y transacciones de pago. El enfoque de seguridad es de multiples capas, cubriendo desde la infraestructura hasta la aplicacion.
+
+25.1 Seguridad de la Infraestructura
+
+WAF (Web Application Firewall) para proteccion contra ataques comunes. SSL/TLS en todas las comunicaciones (HTTPS). Redes privadas para comunicacion entre servicios (VPC). Monitoreo de seguridad 24/7 con alertas automaticas. Parches de seguridad aplicados automaticamente. Backups encriptados en reposo y en transito.
+
+25.2 Seguridad de la Aplicacion
+
+Autenticacion mediante JWT con refresh tokens y expiracion corta (15 minutos para access tokens). Hash de contrasenas con bcrypt. Autorizacion basada en roles con verificacion en cada endpoint. Rate limiting por IP y por usuario para prevenir abuso. Validacion exhaustiva de entrada en todos los endpoints. Proteccion CSRF en endpoints que modifican estado. Sanitizacion de archivos subidos (verificacion de tipo y tamano).
+
+25.3 Seguridad de Datos
+
+Encriptacion de datos sensibles en reposo (AES-256). Encriptacion de datos en transito (TLS 1.3). Acceso a base de datos solo desde la red privada de la aplicacion. Politicas de retencion de datos configurables. Capacidad de exportacion y eliminacion de datos personales (cumplimiento GDPR). Logs de auditoria de acceso a datos.
+
+25.4 Seguridad del Motor de Calculos
+
+El motor de calculos opera en un entorno aislado (sandbox) con recursos limitados. Timeout de ejecucion para prevenir calculos infinitos. Validacion de rangos de entrada para prevenir desbordamiento numerico. Sin acceso a red ni sistema de archivos desde el motor.
+
+25.5 Cumplimiento Normativo de Seguridad
+
+La plataforma se disena para cumplir con: ISO 27001 (gestion de seguridad de la informacion), SOC 2 Type II (controles de seguridad, disponibilidad y confidencialidad), GDPR (proteccion de datos personales de residentes de la UE), y leyes de proteccion de datos locales aplicables.
+
+25.6 Plan de Respuesta a Incidentes
+
+Se define un plan de respuesta a incidentes que incluye: deteccion y clasificacion, contencion, erradicacion, recuperacion, comunicacion a usuarios afectados, y lecciones aprendidas. Simulacros de incidentes trimestrales.
+
+26. Riesgos Tecnicos
+
+Todo proyecto de software tiene riesgos tecnicos que deben identificarse, evaluarse y mitigarse. A continuacion se presenta el registro de riesgos principales de la Electrical Design Platform.
+
+26.1 Registro de Riesgos
+
+ID
+
+Riesgo
+
+Probabilidad
+
+Impacto
+
+Mitigacion
+
+R1
+
+Precision incorrecta en calculos electricos
+
+Baja
+
+Critico
+
+Validacion contra 50+ proyectos de referencia; revision por ingenieros; tests automatizados
+
+R2
+
+Rendimiento deficiente con proyectos grandes
+
+Media
+
+Alto
+
+Optimizacion de algoritmos; procesamiento asincrono; cache; paralelizacion
+
+R3
+
+Complejidad excesiva de la interfaz
+
+Media
+
+Alto
+
+Testing de usabilidad; iteracion con usuarios; diseno progresivo
+
+R4
+
+Escalabilidad limitada del motor de calculos
+
+Media
+
+Alto
+
+Arquitectura de microservicios; colas de tareas; autoescalado
+
+R5
+
+Dependencia de normativas que cambian
+
+Alta
+
+Medio
+
+Arquitectura extensible; actualizaciones regulares; versionado de normativas
+
+R6
+
+Integracion compleja con proveedores de pago
+
+Baja
+
+Medio
+
+Uso de Stripe/PayPal; sandbox testing; manejo de errores robusto
+
+R7
+
+Seguridad de datos de proyectos
+
+Baja
+
+Critico
+
+Encriptacion; auditoria; pentesting; cumplimiento normativo
+
+R8
+
+Retraso en desarrollo por complejidad tecnica
+
+Media
+
+Alto
+
+Desarrollo incremental (MVP); priorizacion de funcionalidades; equipo calificado
+
+R9
+
+Adopcion limitada por usuarios
+
+Media
+
+Alto
+
+Freemium atractivo; onboarding optimizado; feedback temprano; marketing
+
+R10
+
+Competencia con soluciones establecidas
+
+Alta
+
+Medio
+
+Diferenciacion clara; precio competitivo; foco en UX; mercado objetivo definido
+
+26.2 Estrategia de Gestion de Riesgos
+
+La estrategia de gestion de riesgos incluye: Identificacion continua en cada fase del proyecto. Evaluacion mensual de probabilidad e impacto. Mitigacion proactiva (actuar antes de que el riesgo se materialice). Monitoreo de indicadores de riesgo. Contingencias documentadas para riesgos criticos. Revision trimestral del registro de riesgos con el equipo completo.
+
+27. Complejidad del Proyecto
+
+La Electrical Design Platform es un proyecto de alta complejidad que integra multiples dominios de conocimiento y tecnologias. Comprender esta complejidad es esencial para la planificacion realista, la asignacion de recursos y la gestion de expectativas.
+
+27.1 Complejidad Matematica
+
+El motor de calculos implementa algoritmos de ingenieria electrica que van desde operaciones aritmeticas simples hasta optimizaciones combinatorias. Los calculos de demanda y corriente son relativamente directos, pero la seleccion optima de conductores con multiples factores de correccion interdependientes introduce complejidad combinatoria. El balance de fases es un problema de optimizacion NP-hard en su forma general (asignacion de cargas a fases minimizando desequilibrio). Los algoritmos utilizan heuristicas eficientes que producen resultados cercanos al optimo en tiempo polinomial.
+
+La caida de tension en sistemas con multiples puntos de derivacion requiere resolucion de sistemas de ecuaciones lineales. La coordinacion de protecciones involucra verificacion de multiples criterios simultaneos. La validacion normativa debe considerar cientos de reglas interdependientes que varian segun la normativa y el tipo de instalacion.
+
+27.2 Complejidad de Software
+
+El sistema integra multiples tecnologias que deben operar en armonia: frontend SPA con logica de estado compleja, backend API REST con logica de negocio extensa, motor de calculos matematico, base de datos relacional con decenas de tablas, cache distribuido, cola de tareas, almacenamiento de objetos, y servicios de IA. La coordinacion entre estos componentes, el manejo de errores distribuidos, y la consistencia de datos son desafios significativos.
+
+La logica de negocio es intrinsecamente compleja: cientos de reglas normativas, miles de combinaciones de materiales, multiples tipos de instalacion, y la necesidad de mantener trazabilidad completa de cada decision tecnica. El codigo debe ser correcto, mantenible y extensible.
+
+27.3 Complejidad de UX
+
+El mayor reto de diseno es presentar informacion tecnica compleja de manera simple. Cada pantalla debe balancear la profundidad tecnica requerida por ingenieros con la simplicidad necesaria para usuarios no tecnicos. Los diagramas electricos deben ser precisos pero comprensibles. Las explicaciones deben ser tecnicamente correctas pero accessibles. La navegacion debe guiar a usuarios novatos sin obstaculizar a expertos.
+
+La generacion automatica de diagramas presenta desafios de layout, estetica e interactividad. Los diagramas deben ser generados automaticamente pero parecer diseñados manualmente. Deben ser legibles para proyectos pequenos y manejables para proyectos grandes.
+
+27.4 Complejidad de Normativas
+
+Las normativas electricas son documentos extensos (el RETIE tiene cientos de articulos) que se actualizan periodicamente. El sistema debe codificar estas reglas de manera ejecutable, mantenerse actualizado ante cambios normativos, y soportar multiples normativas simultaneas con estructuras diferentes. Cada normativa tiene sus propias tablas, factores y excepciones.
+
+27.5 Complejidad de Datos
+
+La base de datos debe almacenar: usuarios y perfiles, proyectos con configuraciones, espacios y cargas (potencialmente miles por proyecto), resultados de calculos con trazabilidad completa, catalogos de materiales (miles de items), normativas y factores de correccion, diagramas y documentos generados, historial de recomendaciones, y datos de suscripcion y facturacion. La relacion entre estos datos es compleja y requiere diseno cuidadoso.
+
+27.6 Evaluacion Global de Complejidad
+
+Considerando todas las dimensiones, el proyecto se clasifica como de ALTA COMPLEJIDAD. Requiere un equipo multidisciplinario con experiencia en ingenieria electrica, desarrollo de software, diseno de UX, ciencia de datos y operaciones de infraestructura. El desarrollo completo estimado abarca 12-18 meses con un equipo de 6-8 personas.
+
+28. Roadmap por Fases
+
+El desarrollo se organiza en cinco fases secuenciales con entregables claros y criterios de exito definidos para cada una. Este enfoque incremental permite validar el producto con usuarios reales antes de invertir en funcionalidades avanzadas.
+
+28.1 Fase 1: Fundacion (Meses 1-3)
+
+Objetivo: Establecer la base tecnica del producto. Entregables: Arquitectura de infraestructura desplegada (dev/staging/prod). Autenticacion y autorizacion completas. CRUD de proyectos basico. Ingreso de cargas simple. Calculo de demanda y corrientes. Seleccion basica de conductores. Validacion contra normativa RETIE (capitulos basicos). Interfaz de usuario funcional pero sin pulido final. Criterios de exito: Pipeline CI/CD operativo. Calculos validados contra 10 proyectos de referencia. Usuarios internos pueden crear proyectos y obtener resultados basicos.
+
+28.2 Fase 2: MVP (Meses 4-6)
+
+Objetivo: Lanzar el Producto Minimo Viable al mercado. Entregables: Calculo completo de proyectos residenciales. Seleccion de protecciones. Verificacion de caida de tension. Lista de materiales basica. Presupuesto simple. Diagrama unifilar basico (SVG estatico). Exportacion a PDF. Modelo freemium implementado. Onboarding de usuarios. Panel de administracion. Criterios de exito: 100 usuarios registrados en el primer mes post-lanzamiento. Capacidad de procesar proyectos residenciales completos. NPS > 30.
+
+28.3 Fase 3: Profesional (Meses 7-10)
+
+Objetivo: Convertir el MVP en una herramienta profesional completa. Entregables: Soporte para proyectos comerciales e industriales. Diagramas interactivos (SVG clickeable). Esquemas de conexion. Memoria de calculo completa. Sistema de recomendaciones basado en reglas. Balance de fases. Colaboracion en equipo (compartir proyectos). Personalizacion de reportes. App web responsive optimizada. Criterios de exito: 1000 usuarios activos mensuales. Tasa de conversion free->premium > 3%. Proyectos comerciales procesados correctamente.
+
+28.4 Fase 4: Inteligencia (Meses 11-14)
+
+Objetivo: Integrar capacidades de IA y escalar funcionalidades. Entregables: Asistente conversacional con LLM. Prediccion de costos basada en ML. Deteccion de anomalias. Recomendaciones por similaridad. API publica documentada. Integraciones con ERP/CRM. Multi-normativa (NEC, IEC). Soporte multi-idioma (espanol, ingles, portugues). Criterios de exito: 5000 usuarios activos mensuales. Uso activo del asistente IA. Integraciones con 3+ plataformas externas.
+
+28.5 Fase 5: Ecosistema (Meses 15-18)
+
+Objetivo: Evolucionar de herramienta a ecosistema. Entregables: Marketplace de materiales (conexion con proveedores). API para fabricantes. Modo inspeccion y mantenimiento. Vision por computadora (reconocimiento de componentes). Gemelos digitales de instalaciones. App movil nativa. Presencia internacional. Criterios de exito: 20000+ usuarios activos mensuales. Ingresos recurrentes sostenibles. Posicionamiento como lider en el segmento.
+
+29. MVP Inicial
+
+El Producto Minimo Viable (MVP) es la primera version publica de la plataforma, diseñada para validar la propuesta de valor con usuarios reales con el minimo esfuerzo de desarrollo necesario. El MVP se enfoca exclusivamente en proyectos residenciales con funcionalidades esenciales.
+
+29.1 Funcionalidades del MVP
+
+El MVP incluye: Registro e inicio de sesion de usuarios. Creacion de proyectos residenciales. Ingreso de cargas (catalogo basico: iluminacion, tomacorrientes, AC, calentador). Calculo automatico de demanda, corrientes, conductores y breakers. Verificacion de caida de tension. Validacion contra RETIE (requisitos basicos). Lista de materiales con cantidades. Presupuesto estimado basico. Diagrama unifilar SVG estatico. Exportacion de reporte basico en PDF. Modelo freemium (3 proyectos gratis, premium ilimitado).
+
+29.2 Exclusiones del MVP
+
+Intencionalmente NO incluye: Proyectos comerciales/industriales, diagramas interactivos, memoria de calculo detallada, colaboracion en equipo, asistente IA, API publica, multi-normativa, multi-idioma, app movil, ni integraciones externas.
+
+29.3 Metricas de Exito del MVP
+
+Las metricas que determinan el exito del MVP son: 500+ usuarios registrados en los primeros 2 meses. 100+ proyectos creados. Tasa de retencion semanal > 30%. NPS (Net Promoter Score) > 25. Tasa de conversion a premium > 2%. Feedback cualitativo positivo de al menos 20 usuarios activos.
+
+30. Futuras Funcionalidades
+
+Tras el MVP y las fases iniciales, la plataforma puede evolucionar hacia capacidades avanzadas que transformen la herramienta en un ecosistema completo para el sector electrico.
+
+30.1 Vision a Largo Plazo
+
+La vision a largo plazo incluye: Gemelos Digitales — modelos 3D virtuales de las instalaciones electricas que se sincronizan con sensores IoT para monitoreo en tiempo real, prediccion de fallas y optimizacion energetica. Realidad Aumentada — superposicion de diagramas electricos sobre la vista real del sitio mediante tablets o gafas AR, facilitando la instalacion y el mantenimiento. Automatizacion Completa — integracion con sistemas de gestion de obra para flujo de trabajo automatico desde el diseno hasta la ejecucion, incluyendo generacion automatica de ordenes de compra y programacion de instaladores.
+
+30.2 Funcionalidades Priorizadas
+
+Funcionalidades planificadas para fases posteriores, ordenadas por prioridad: Calculo de puesta a tierra y sistemas de proteccion contra rayos. Analisis de calidad de potencia (armonicos, flicker, factor de potencia). Diseno de sistemas fotovoltaicos residenciales integrados. Calculo de iluminacion (niveles de iluminancia, distribucion luminica). Integracion BIM (Building Information Modeling) para coordinacion con arquitectura y estructura. Modulo de inspeccion con checklists digitales y generacion de actas. Calculo de sistemas contra incendio (alarmas, detection, extincion). Modulo de mantenimiento predictivo basado en datos historicos.
+
+30.3 Expansion de Mercado
+
+La expansion geografica contempla: Adaptacion a normativas de cada pais (NCh 4/2003 de Chile, IRAM 2184 de Argentina, NOM-001-SEDE de Mexico). Soporte de idiomas adicionales (ingles, portugues, frances). Precios locales en moneda local. Catalogos de materiales de proveedores locales. Alianzas con colegios de ingenieros y asociaciones del sector.
+
+31. Modelo SaaS
+
+La Electrical Design Platform opera bajo un modelo Software como Servicio (SaaS), donde los usuarios acceden a la aplicacion via navegador web mediante suscripcion, sin necesidad de instalacion ni mantenimiento local.
+
+31.1 Arquitectura SaaS
+
+La arquitectura es multi-tenant: una unica instancia de la aplicacion sirve a multiples usuarios y equipos, con aislamiento de datos a nivel de base de datos (row-level security). Esto minimiza los costos de infraestructura por usuario y simplifica el despliegue y mantenimiento. Los usuarios acceden via HTTPS desde cualquier dispositivo con navegador moderno. No requiere instalacion, actualizaciones manuales ni compatibilidad con sistemas operativos especificos.
+
+31.2 Infraestructura Cloud
+
+Desplegada en AWS o GCP con: region principal en America Latina (baja latencia para usuarios principales), CDN global para assets estaticos, autoescalado segun demanda, monitoreo 24/7, y backups automaticos. El modelo pay-as-you-go del cloud se alinea con el crecimiento del negocio: los costos de infraestructura crecen proporcionalmente con el numero de usuarios activos.
+
+31.3 Ventajas del Modelo SaaS
+
+Para el usuario: Acceso desde cualquier dispositivo y lugar. Sin instalacion ni mantenimiento. Actualizaciones automaticas y continuas. Colaboracion en tiempo real. Almacenamiento en la nube con respaldo. Soporte integrado. Para el negocio: Ingresos recurrentes predecibles (MRR). Capacidad de iterar rapido basado en feedback. Analisis de uso para priorizar funcionalidades. Distribucion global sin infraestructura local. Control de version unificado.
+
+31.4 Modelo de Datos Multi-Tenant
+
+Cada registro en la base de datos incluye un tenant_id que identifica al usuario o equipo propietario. Todas las consultas filtran por tenant_id automaticamente. Los usuarios de un mismo equipo comparten el mismo tenant_id. Los usuarios gratuitos tienen limites impuestos a nivel de aplicacion (numero de proyectos, funcionalidades disponibles).
+
+31.5 Actualizaciones y Mantenimiento
+
+El despliegue continuo (CI/CD) permite actualizar la plataforma multiples veces al dia sin downtime perceptible. Las actualizaciones se realizan mediante despliegue blue-green: la nueva version se despliega en paralelo, se verifica, y luego se cambia el trafico. Si hay problemas, el rollback es inmediato. Los usuarios siempre acceden a la version mas reciente.
+
+32. Monetizacion
+
+El modelo de monetizacion se basa en el enfoque freemium, donde una version gratuita atractiva sirve como embudo de adquisicion y la version premium genera los ingresos mediante suscripcion.
+
+32.1 Niveles de Suscripcion
+
+Gratuito (Free)
+
+Proposito: Adquisicion de usuarios y validacion del producto. Limites: Hasta 3 proyectos activos. Solo proyectos residenciales. Maximo 20 cargas por proyecto. Calculos basicos (demanda, corriente, conductor, breaker). Sin diagramas interactivos. Sin exportacion PDF. Sin colaboracion. Sin IA. Soporte via comunidad.
+
+Profesional (Premium)
+
+Proposito: Usuarios individuales que requieren funcionalidad completa. Precio: $19-29 USD/mes. Incluye: Proyectos ilimitados. Proyectos residenciales, comerciales e industriales. Cargas ilimitadas. Calculos completos con memoria tecnica. Diagramas interactivos y esquemas. Exportacion PDF y Excel. Personalizacion de reportes. Recomendaciones inteligentes (reglas). Historial de versiones. Soporte por email (24h).
+
+Equipo (Team)
+
+Proposito: Equipos de trabajo que colaboran en proyectos. Precio: $49-79 USD/mes (hasta 5 usuarios). Incluye todo lo de Profesional, mas: Colaboracion en tiempo real. Compartir proyectos entre miembros. Roles y permisos. Workspace compartido. Biblioteca de proyectos del equipo. Administracion centralizada. Soporte prioritario.
+
+Empresarial (Enterprise)
+
+Proposito: Grandes organizaciones con requisitos especiales. Precio: Custom. Incluye todo lo de Equipo, mas: Usuarios ilimitados. API completa. Integraciones personalizadas. SSO (Single Sign-On). Auditoria completa. Cumplimiento avanzado. Gerente de cuenta dedicado. SLA garantizado. Onboarding personalizado.
+
+32.2 Estrategia de Precios
+
+Precios basados en valor: el usuario premium ahorra horas de trabajo en cada proyecto, justificando facilmente el costo de suscripcion. Periodos: mensual (flexibilidad) y anual (descuento 20%). Precios adaptados por region (PPP) para mercados latinoamericanos. Descuentos para estudiantes y educadores (50%). Programa de referidos (un mes gratis por cada usuario referido que se suscriba).
+
+32.3 Metricas Clave (KPIs)
+
+MRR (Monthly Recurring Revenue). ARPU (Average Revenue Per User). LTV (Lifetime Value) objetivo > $200. CAC (Customer Acquisition Cost) objetivo < $50. Churn mensual objetivo < 5%. Tasa de conversion free->premium objetivo > 3%. NPS objetivo > 40.
+
+32.4 Fuentes Adicionales de Ingreso
+
+Ademas de suscripciones, se exploran: Comisiones por referencia a proveedores de materiales (marketplace). Cursos online de diseno electrico. Certificaciones profesionales. Publicidad dirigida a fabricantes de materiales electricos (sin afectar la experiencia del usuario). Datos anonimizados de tendencias del sector (reportes de mercado).
+
+33. Diferencial Frente a Otros Softwares
+
+El mercado de software para diseno electrico incluye desde calculadoras simples hasta suites profesionales complejas. La Electrical Design Platform se diferencia de cada categoria de competidor en aspectos clave.
+
+33.1 vs Calculadoras Online y Apps Moviles
+
+Las calculadoras online y apps moviles basicas ofrecen un unico calculo aislado (por ejemplo, caida de tension o seleccion de breaker). La EDP ofrece: Calculo integrado completo (no calculos aislados). Generacion automatica de diagramas (no solo numeros). Listas de materiales y presupuestos. Documentacion tecnica profesional. Asistencia inteligente. Flujo de trabajo guiado paso a paso.
+
+33.2 vs Software CAD Electrico (AutoCAD Electrical)
+
+Los software CAD electrico son herramientas de dibujo tecnico con bibliotecas de simbolos. Requieren que el usuario sepa que dibujar. La EDP ofrece: Generacion automatica de diagramas (no dibujo manual). Calculos integrados (no solo dibujo). No requiere conocimiento de CAD. Precio accesible (no licencias de $1000+/ano). Interfaz moderna y web (no instalacion). Asistencia inteligente.
+
+33.3 vs Software de Analisis de Potencia (ETAP, SKM)
+
+Los software de analisis de potencia son herramientas especializadas para ingenieros electricos avanzados, orientados a sistemas de alta tension y complejidad. La EDP ofrece: Accesibilidad para no expertos. Interfaz intuitiva (no requiere formacion especializada). Precio accesible (no licencias de $5000+/ano). Enfoque en instalaciones de baja tension (el 80% del mercado). Experiencia de usuario moderna.
+
+33.4 vs Hojas de Calculo Excel
+
+Muchos profesionales aun usan Excel para calculos electricos. La EDP ofrece: Validacion automatica de datos (no errores de formula). Actualizacion automatica de tablas normativas. Diagramas automaticos (imposibles en Excel). Documentacion integrada. Colaboracion en tiempo real. Trazabilidad de cambios. No requiere conocimiento de formulas.
+
+33.5 Tabla Comparativa
+
+Caracteristica
+
+EDP
+
+Calculadoras
+
+CAD Electrico
+
+Analisis Potencia
+
+Excel
+
+Calculo automatico
+
+Completo
+
+Aislado
+
+No
+
+Avanzado
+
+Manual
+
+Diagramas
+
+Auto
+
+No
+
+Manual
+
+Limitado
+
+No
+
+Presupuesto
+
+Integrado
+
+No
+
+No
+
+No
+
+Manual
+
+Facilidad de uso
+
+Alta
+
+Alta
+
+Baja
+
+Baja
+
+Media
+
+Precio
+
+$$
+
+Gratis-$
+
+$$$$
+
+$$$$$
+
+$
+
+Normativa
+
+Integrada
+
+No
+
+Parcial
+
+Integrada
+
+Manual
+
+Asistencia IA
+
+Si
+
+No
+
+No
+
+No
+
+No
+
+Colaboracion
+
+Si
+
+No
+
+Parcial
+
+No
+
+Parcial
+
+34. Requerimientos Funcionales
+
+Los requerimientos funcionales definen las capacidades que el sistema debe ofrecer a sus usuarios. Se organizan por modulo funcional y se clasifican por prioridad.
+
+34.1 Modulo de Autenticacion y Usuarios
+
+RF-AU-01: El sistema debe permitir registro de usuarios con email y contrasena. [Alta]
+
+RF-AU-02: El sistema debe permitir inicio de sesion con email y contrasena. [Alta]
+
+RF-AU-03: El sistema debe permitir recuperacion de contrasena via email. [Alta]
+
+RF-AU-04: El sistema debe soportar autenticacion con Google OAuth. [Media]
+
+RF-AU-05: El sistema debe permitir gestion de perfil de usuario (nombre, empresa, telefono, avatar). [Media]
+
+RF-AU-06: El sistema debe implementar roles de usuario: free, premium, team_admin, superuser. [Alta]
+
+34.2 Modulo de Proyectos
+
+RF-PR-01: El usuario debe poder crear un nuevo proyecto especificando nombre, tipo, normativa y alimentacion. [Alta]
+
+RF-PR-02: El usuario debe poder duplicar un proyecto existente. [Media]
+
+RF-PR-03: El usuario debe poder archivar y eliminar proyectos. [Media]
+
+RF-PR-04: El sistema debe permitir configurar parametros del proyecto (temperatura, altitud, factor de seguridad). [Alta]
+
+RF-PR-05: El usuario debe poder definir espacios/areas dentro del proyecto. [Media]
+
+RF-PR-06: El sistema debe limitar a 3 proyectos activos para usuarios gratuitos. [Alta]
+
+34.3 Modulo de Cargas
+
+RF-LO-01: El usuario debe poder agregar cargas desde un catalogo predefinido. [Alta]
+
+RF-LO-02: El usuario debe poder crear cargas personalizadas con potencia, voltaje, factor de potencia, eficiencia y tiempo de uso. [Alta]
+
+RF-LO-03: El sistema debe validar rangos de entrada (ej: potencia entre 1W y 500kW). [Alta]
+
+RF-LO-04: El usuario debe poder especificar cantidad y ubicacion de cada carga. [Alta]
+
+RF-LO-05: El sistema debe detectar valores anomalos y alertar al usuario. [Media]
+
+RF-LO-06: El usuario debe poder organizar cargas por espacios. [Media]
+
+34.4 Modulo de Calculos
+
+RF-CA-01: El sistema debe calcular la demanda electrica total aplicando factores de demanda y simultaneidad. [Alta]
+
+RF-CA-02: El sistema debe calcular la corriente nominal y de diseno para cada circuito. [Alta]
+
+RF-CA-03: El sistema debe seleccionar el calibre de conductor segun tablas AWG con factores de correccion. [Alta]
+
+RF-CA-04: El sistema debe verificar la caida de tension para cada circuito. [Alta]
+
+RF-CA-05: El sistema debe seleccionar breakers y protecciones apropiadas. [Alta]
+
+RF-CA-06: El sistema debe balancear cargas entre fases para sistemas trifasicos. [Media]
+
+RF-CA-07: El sistema debe verificar el cumplimiento normativo (RETIE/NEC). [Alta]
+
+RF-CA-08: El sistema debe permitir recalculo automatico ante cambios. [Alta]
+
+RF-CA-09: El sistema debe generar memoria de calculo con formulas aplicadas. [Media]
+
+34.5 Modulo de Materiales
+
+RF-MA-01: El sistema debe generar lista automatica de materiales (BOM) basada en calculos. [Alta]
+
+RF-MA-02: El usuario debe poder ajustar cantidades y seleccionar marcas alternativas. [Media]
+
+RF-MA-03: El sistema debe calcular costos unitarios y totales. [Alta]
+
+RF-MA-04: El sistema debe permitir agregar items adicionales a la BOM. [Media]
+
+RF-MA-05: El usuario debe poder marcar items como suministrados por cliente. [Baja]
+
+34.6 Modulo de Costos
+
+RF-CO-01: El sistema debe calcular costo de materiales, mano de obra y equipos. [Alta]
+
+RF-CO-02: El sistema debe aplicar factores de mano de obra segun region. [Media]
+
+RF-CO-03: El sistema debe calcular gastos generales e impuestos. [Media]
+
+RF-CO-04: El sistema debe estimar tiempo de ejecucion en dias. [Media]
+
+RF-CO-05: El usuario debe poder ajustar precios y factores manualmente. [Media]
+
+34.7 Modulo de Diagramas
+
+RF-DI-01: El sistema debe generar diagrama unifilar automaticamente. [Alta]
+
+RF-DI-02: Los diagramas deben ser exportables como PNG y SVG. [Alta]
+
+RF-DI-03: Los diagramas deben mostrar simbolos estandarizados. [Alta]
+
+RF-DI-04: Diagramas interactivos disponibles solo para premium. [Media]
+
+34.8 Modulo de Reportes
+
+RF-RE-01: El sistema debe exportar reporte en PDF. [Alta]
+
+RF-RE-02: El sistema debe exportar lista de materiales a Excel. [Alta]
+
+RF-RE-03: El reporte debe incluir membrete del usuario/empresa. [Media]
+
+RF-RE-04: El usuario debe poder seleccionar que secciones incluir. [Media]
+
+34.9 Modulo de Suscripcion
+
+RF-SU-01: El sistema debe implementar modelo freemium con limites claros. [Alta]
+
+RF-SU-02: El sistema debe integrar pasarela de pagos (Stripe). [Alta]
+
+RF-SU-03: El usuario debe poder cambiar entre planes. [Media]
+
+RF-SU-04: El sistema debe generar facturas automaticas. [Media]
+
+35. Requerimientos No Funcionales
+
+Los requerimientos no funcionales definen las cualidades del sistema: rendimiento, seguridad, usabilidad, escalabilidad y mantenibilidad.
+
+35.1 Rendimiento
+
+RNF-PE-01: Tiempo de respuesta de API < 200ms (P95) para operaciones CRUD. [Alta]
+
+RNF-PE-02: Calculo de proyecto residencial < 3 segundos. [Alta]
+
+RNF-PE-03: Calculo de proyecto industrial < 15 segundos. [Alta]
+
+RNF-PE-04: Generacion de diagrama < 10 segundos. [Media]
+
+RNF-PE-05: Generacion de reporte PDF < 30 segundos. [Media]
+
+RNF-PE-06: Soporte para 1000 usuarios concurrentes. [Alta]
+
+RNF-PE-07: Disponibilidad del 99.9%. [Alta]
+
+35.2 Seguridad
+
+RNF-SE-01: Autenticacion mediante JWT con expiracion. [Alta]
+
+RNF-SE-02: Contrasenas hasheadas con bcrypt. [Alta]
+
+RNF-SE-03: Comunicacion encriptada TLS 1.3. [Alta]
+
+RNF-SE-04: Datos sensibles encriptados en reposo (AES-256). [Alta]
+
+RNF-SE-05: Rate limiting por IP y usuario. [Alta]
+
+RNF-SE-06: Proteccion contra SQL injection, XSS y CSRF. [Alta]
+
+RNF-SE-07: Logs de auditoria de acceso. [Media]
+
+35.3 Usabilidad
+
+RNF-US-01: Interfaz intuitiva que no requiera manual de uso. [Alta]
+
+RNF-US-02: Tutorial interactivo de onboarding. [Media]
+
+RNF-US-03: Tooltips explicativos en todos los campos tecnicos. [Alta]
+
+RNF-US-04: Diseno responsive (escritorio, tablet, movil). [Alta]
+
+RNF-US-05: Compatible con Chrome, Firefox, Safari y Edge. [Alta]
+
+RNF-US-06: Cumplimiento WCAG 2.1 AA. [Media]
+
+35.4 Escalabilidad
+
+RNF-ES-01: Arquitectura que soporte 100,000+ usuarios registrados. [Media]
+
+RNF-ES-02: Escalamiento horizontal de servicios de calculo. [Alta]
+
+RNF-ES-03: Base de datos con read replicas. [Media]
+
+RNF-ES-04: Cache distribuido para resultados frecuentes. [Media]
+
+35.5 Mantenibilidad
+
+RNF-MN-01: Cobertura de tests unitarios > 80%. [Alta]
+
+RNF-MN-02: Documentacion de API con OpenAPI/Swagger. [Alta]
+
+RNF-MN-03: Pipeline CI/CD automatizado. [Alta]
+
+RNF-MN-04: Despliegue sin downtime. [Media]
+
+RNF-MN-05: Codigo siguiendo estandares de estilo (PEP8, ESLint). [Alta]
+
+35.6 Disponibilidad y Recuperacion
+
+RNF-DR-01: Backups automaticos diarios con 30 dias de retencion. [Alta]
+
+RNF-DR-02: RTO (Recovery Time Objective) < 4 horas. [Alta]
+
+RNF-DR-03: RPO (Recovery Point Objective) < 1 hora. [Alta]
+
+36. Tecnologias Recomendadas
+
+La seleccion de tecnologias se basa en criterios de madurez, productividad, rendimiento, comunidad y disponibilidad de talento en la region.
+
+Capa
+
+Tecnologia
+
+Version
+
+Justificacion
+
+Frontend Framework
+
+Next.js
+
+14+
+
+SSR, React Server Components, App Router
+
+UI Library
+
+React
+
+18+
+
+Ecosistema maduro, componentes reutilizables
+
+Lenguaje Frontend
+
+TypeScript
+
+5.3+
+
+Tipado estatico, prevencion de errores
+
+Estilos
+
+TailwindCSS
+
+3.4+
+
+Productividad, utilidades, responsive
+
+Graficos
+
+Recharts + D3.js
+
+Latest
+
+Graficos interactivos y diagramas SVG
+
+Diagramas
+
+React-Flow
+
+Latest
+
+Diagramas unifilares interactivos
+
+Backend Framework
+
+Django
+
+5.x
+
+Maduro, seguro, ORM potente, admin
+
+API
+
+Django REST Framework
+
+3.14+
+
+REST API con serializacion y permisos
+
+Lenguaje Backend
+
+Python
+
+3.11+
+
+Motor de calculos, ML, scripting
+
+Motor Calculos API
+
+FastAPI
+
+Latest
+
+Alto rendimiento, documentacion auto
+
+Base de Datos
+
+PostgreSQL
+
+16
+
+Robusta, JSON, extensiones
+
+Cache
+
+Redis
+
+7+
+
+Sesiones, cache, rate limiting
+
+Cola Tareas
+
+Celery + Redis
+
+Latest
+
+Procesamiento asincrono
+
+Almacenamiento
+
+MinIO/S3
+
+Latest
+
+Objetos: diagramas, reportes
+
+ML/IA
+
+scikit-learn + OpenAI API
+
+Latest
+
+Modelos y LLM
+
+Container
+
+Docker
+
+Latest
+
+Desarrollo y despliegue consistente
+
+Orquestacion
+
+Kubernetes
+
+Latest
+
+Autoescalado, alta disponibilidad
+
+CI/CD
+
+GitHub Actions
+
+Latest
+
+Automatizacion de build/test/deploy
+
+Monitoreo
+
+Prometheus + Grafana
+
+Latest
+
+Metricas y alertas
+
+Logging
+
+ELK Stack
+
+Latest
+
+Logs centralizados
+
+CDN
+
+Cloudflare
+
+Latest
+
+Assets estaticos globales
+
+Cloud
+
+AWS o GCP
+
+Latest
+
+Infraestructura cloud
+
+Pagos
+
+Stripe
+
+Latest
+
+Pasarela de pagos
+
+Email
+
+SendGrid/Resend
+
+Latest
+
+Emails transaccionales
+
+37. APIs y Librerias Sugeridas
+
+37.1 Librerias Python (Motor de Calculos)
+
+NumPy: Operaciones matematicas vectorizadas y algebra lineal. SciPy: Optimizacion numerica y resolucion de sistemas de ecuaciones. Pandas: Manipulacion de datos tabulares (tablas AWG, factores de correccion). SymPy: Calculo simbolico para manipulacion de formulas. Pydantic: Validacion de datos de entrada al motor. FastAPI: Exposicion del motor como API REST. Uvicorn: Servidor ASGI de alto rendimiento.
+
+37.2 Librerias JavaScript/TypeScript (Frontend)
+
+next: Framework React con SSR. react y react-dom: Libreria UI. tailwindcss: Framework CSS utilitario. @tanstack/react-query: Gestion de estado del servidor. zustand: Estado global ligero. recharts: Graficos de React. @xyflow/react (React-Flow): Diagramas de flujo interactivos. react-hook-form: Formularios con validacion. zod: Validacion de esquemas TypeScript. axios: Cliente HTTP. date-fns: Manipulacion de fechas. html2canvas + jspdf: Generacion de PDF en cliente.
+
+37.3 Librerias Python (Backend Django)
+
+Django: Framework web. djangorestframework: API REST. djangorestframework-simplejwt: Autenticacion JWT. celery: Tareas asincronas. redis: Cliente Redis. django-cors-headers: CORS para frontend. django-filter: Filtrado de API. django-storages: Almacenamiento S3. whitenoise: Servicio de archivos estaticos. gunicorn: Servidor WSGI.
+
+37.4 APIs Externas
+
+Stripe API: Procesamiento de pagos y suscripciones. SendGrid/Resend API: Envio de emails transaccionales. OpenAI API: Asistente conversacional (GPT-4). Google OAuth API: Autenticacion social. Cloudflare API: Gestion de CDN y DNS. AWS S3 API: Almacenamiento de objetos.
+
+37.5 Herramientas de Desarrollo
+
+pytest: Framework de testing Python. jest + React Testing Library: Testing frontend. cypress: Testing end-to-end. black + ruff: Formateo y linting Python. prettier + eslint: Formateo y linting TypeScript. playwright: Testing de navegadores y generacion de screenshots.
+
+38. Diseno Conceptual de Interfaces
+
+El diseno conceptual de interfaces describe las pantallas principales de la aplicacion, su estructura y el flujo de navegacion entre ellas.
+
+38.1 Estructura de Layout
+
+El layout base de la aplicacion consiste en: Topbar (fija) con logo, nombre del proyecto activo, indicador de guardado, notificaciones, y menu de usuario. Sidebar (colapsable) con navegacion por modulos: Proyecto, Cargas, Calculos, Diagramas, Materiales, Presupuesto, Documentos. Area principal (scrollable) con el contenido del modulo activo. Panel contextual (derecha, colapsable) con recomendaciones, explicaciones y propiedades del elemento seleccionado.
+
+38.2 Pantallas Principales
+
+Dashboard / Lista de Proyectos
+
+Muestra tarjetas de proyectos recientes con miniatura, nombre, fecha, estado y acciones rapidas (abrir, duplicar, eliminar). Incluye boton de nuevo proyecto y filtros por tipo y estado.
+
+Wizard de Nuevo Proyecto
+
+Formulario paso a paso en 3 etapas: informacion basica, tipo de instalacion y normativa, parametros electricos. Cada paso tiene validacion y barra de progreso.
+
+Editor de Cargas
+
+Interfaz de dos paneles: izquierda muestra lista de cargas agrupadas por espacio (drag & drop para reordenar), derecha muestra formulario de edicion de la carga seleccionada con todos los campos. Incluye busqueda de catalogo, filtros por tipo, y resumen de totales.
+
+Resultados de Calculo
+
+Dashboard de resultados con: tarjetas resumen en la parte superior (demanda, corriente, cumplimiento), tabla detallada de circuitos con columnas sorteables, grafico de torta de distribucion de cargas, grafico de barras de caida de tension por circuito, e indicadores semaforo de estado normativo.
+
+Editor de Diagramas
+
+Visualizacion del diagrama unifilar con zoom, pan y seleccion de componentes. Al seleccionar un componente, el panel lateral muestra sus especificaciones y permite editar.
+
+Presupuesto
+
+Tabla editable de partidas con cantidades, precios y totales. Panel superior con totales acumulados. Boton de exportar a PDF/Excel.
+
+38.3 Mockup del Dashboard Principal
+
+La siguiente imagen muestra el diseno conceptual del dashboard principal con el editor de diagramas electricos y panel de calculos:
+
+
+
+Figura 4: Diseno Conceptual del Dashboard Principal
+
+39. Diagramas Conceptuales
+
+Los diagramas conceptuales ilustran la estructura y el funcionamiento del sistema de manera visual. A continuacion se presentan los diagramas principales.
+
+39.1 Diagrama de Arquitectura del Sistema
+
+El diagrama de arquitectura muestra la organizacion de capas del sistema y las relaciones entre sus componentes principales:
+
+
+
+Figura 5: Diagrama de Arquitectura de Capas
+
+39.2 Diagrama de Flujo de Datos
+
+El diagrama de flujo de datos muestra como la informacion fluye a traves del sistema, desde la entrada del usuario hasta la generacion de documentos:
+
+
+
+Figura 6: Flujo de Datos del Sistema
+
+39.3 Diagrama de Modulos
+
+El sistema se compone de 12 modulos funcionales interconectados. Cada modulo expone una API interna y se comunica con otros modulos a traves del backend central. La modularizacion permite desarrollo paralelo, despliegue independiente y mantenimiento aislado.
+
+39.4 Diagrama de Estados del Proyecto
+
+Un proyecto atraviesa los siguientes estados: Borrador -> En Calculo -> Calculado -> En Revision -> Revisado -> Documentado -> Archivado. Cada transicion de estado es registrada y puede revertirse. Los estados Calculado, Revisado y Documentado generan versiones snapshot del proyecto.
+
+40. Flujo de Datos
+
+El flujo de datos describe como la informacion se transforma a medida que atraviesa el sistema, desde la entrada del usuario hasta los documentos finales.
+
+40.1 Flujo Principal
+
+El flujo de datos principal sigue estas etapas: 1. Entrada de Datos: El usuario ingresa datos del proyecto y cargas a traves del frontend. Los datos se validan en el cliente (TypeScript/Zod) y en el servidor (Django serializers). Los datos validados se almacenan en PostgreSQL. 2. Disparo de Calculo: El usuario solicita el calculo. El backend Django recibe la peticion, carga los datos del proyecto, y envia una tarea a la cola Celery. 3. Procesamiento: El worker Celery invoca el motor de calculos Python via HTTP. El motor lee los datos del proyecto, ejecuta los algoritmos de ingenieria, y devuelve los resultados. 4. Almacenamiento de Resultados: Los resultados se almacenan en PostgreSQL y se cachean en Redis. 5. Presentacion: El frontend consulta los resultados via API y los presenta en dashboards, tablas y graficos. 6. Generacion de Documentos: Cuando el usuario solicita un reporte, el backend genera el documento (PDF/Excel) y lo almacena en S3. Se notifica al usuario cuando el documento esta listo.
+
+40.2 Flujo de Recomendaciones
+
+El flujo de recomendaciones opera en paralelo: Los resultados del calculo se evaluan contra el motor de reglas expertas. Las reglas que se activan generan recomendaciones que se almacenan en la base de datos. El frontend consulta las recomendaciones activas y las presenta en el panel lateral. Cuando el usuario aplica una recomendacion, se modifica el proyecto y se recalcula.
+
+40.3 Flujo de Diagramas
+
+El flujo de diagramas: El frontend solicita la generacion de un diagrama. El backend calcula el layout (posiciones de componentes) usando algoritmos de graph layout. Se genera el SVG con los simbolos y conexiones. El SVG se almacena en S3 y se devuelve al frontend para visualizacion. Para diagramas interactivos, el SVG incluye metadatos de cada componente.
+
+40.4 Flujo de Autenticacion
+
+El flujo de autenticacion: El usuario ingresa credenciales o usa OAuth. El backend valida y genera access token (JWT, 15 min) y refresh token (7 dias). El frontend almacena tokens y los envia en cada peticion. El backend verifica el token en cada endpoint protegido. Cuando el access token expira, el frontend usa el refresh token para obtener uno nuevo.
+
+40.5 Flujo de Pagos
+
+El flujo de suscripcion: El usuario selecciona un plan. El frontend redirige a Stripe Checkout. El usuario completa el pago en Stripe. Stripe envia webhook al backend con el resultado. El backend actualiza la suscripcion del usuario. El usuario recibe confirmacion por email.
+
+41. Conclusiones
+
+La Electrical Design Platform representa una propuesta tecnologica de alto impacto para el sector de la ingenieria electrica. A lo largo de este documento se ha presentado un analisis comprehensivo que justifica la necesidad, define la solucion, detalla la arquitectura y establece el roadmap para su desarrollo y comercializacion.
+
+41.1 Sintesis del Proyecto
+
+El proyecto aborda una necesidad real y significativa: la fragmentacion de herramientas, la dependencia de experticia individual y la inaccesibilidad del conocimiento tecnico en el diseno de instalaciones electricas. La solucion propuesta integra en una sola plataforma cohesiva los calculos de ingenieria, la seleccion de materiales, la generacion de diagramas, la estimacion de costos y la documentacion tecnica, todo ello presentado a traves de una interfaz intuitiva y visualmente atractiva.
+
+La arquitectura tecnica, basada en tecnologias modernas y probadas (Next.js, Django, PostgreSQL, Python), proporciona una base solida para el desarrollo escalable y mantenible. El modelo SaaS freemium ofrece una via viable para la monetizacion y el crecimiento organico.
+
+41.2 Fortalezas del Proyecto
+
+Las principales fortalezas son: Integracion completa del flujo de trabajo (calculos, diagramas, materiales, presupuesto en una sola herramienta). Experiencia de usuario superior (interfaz intuitiva, explicaciones claras, visualizaciones atractivas). Precision tecnica validada (calculos basados en normativas, validacion contra proyectos de referencia). Escalabilidad del modelo de negocio (freemium con conversion a premium). Diferenciacion competitiva clara (no existe una solucion comparable en el segmento medio). Equipo multidisciplinario (requiere conocimientos de ingenieria electrica, software y UX).
+
+41.3 Desafios y Mitigaciones
+
+Los principales desafios identificados son: Complejidad del motor de calculos (mitigado con validacion exhaustiva y revision por expertos). Curva de aprendizaje del equipo (mitigada con desarrollo incremental y capacitacion). Adopcion de usuarios (mitigada con freemium atractivo y onboarding optimizado). Competencia futura (mitigada con diferenciacion en UX y velocidad de iteracion). Cambios normativos (mitigada con arquitectura extensible).
+
+41.4 Impacto Esperado
+
+Se espera que la plataforma: Reduzca el tiempo de diseno electrico en un 50-70%. Disminuya los errores de calculo y seleccion en un 90%. Genere ahorros de materiales del 15-25% por optimizacion. Democratice el acceso al diseno electrico profesional. Mejore la seguridad de las instalaciones electricas por mayor precision. Potencie la productividad de ingenieros electricos y tecnicos.
+
+41.5 Viabilidad
+
+El proyecto es viable tecnicamente (tecnologias maduras disponibles), economicamente (modelo SaaS con MRR escalable) y de mercado (necesidad validada, competencia fragmentada, oportunidad identificada). El desarrollo incremental a traves del MVP permite validar la propuesta de valor antes de la inversion completa, reduciendo el riesgo del proyecto.
+
+42. Recomendaciones Tecnicas
+
+Basado en el analisis presentado en este documento, se formulan las siguientes recomendaciones tecnicas para la implementacion exitosa del proyecto.
+
+42.1 Recomendaciones de Desarrollo
+
+1. Priorizar el motor de calculos: es el nucleo del producto y su precision es no negociable. Invertir en validacion exhaustiva contra proyectos de referencia desde el inicio. 2. Adoptar desarrollo orientado a tests (TDD) para el motor de calculos: cada algoritmo debe tener tests unitarios que cubran casos normales, de borde y de error. 3. Implementar CI/CD desde el dia 1: pipeline de build, test y deploy automatizado. 4. Usar feature flags para desplegar funcionalidades incompletas sin afectar a usuarios. 5. Mantener la deuda tecnica baja: refactorizacion continua, code reviews obligatorios, y estandares de codigo.
+
+42.2 Recomendaciones de Arquitectura
+
+1. Aislar el motor de calculos como microservicio independiente desde el inicio para facilitar el escalado y las pruebas. 2. Disenar la base de datos con la multi-normativa en mente: usar estructuras que permitan agregar nuevas normativas sin migraciones complejas. 3. Implementar cache agresiva para catalogos de materiales y factores de correccion. 4. Usar colas de tareas para todo procesamiento pesado (calculos, generacion de reportes, envio de emails). 5. Disenar la API pensando en futura API publica: versionado, documentacion, rate limiting.
+
+42.3 Recomendaciones de Producto
+
+1. Lanzar el MVP lo antes posible (6 meses) para obtener feedback real. 2. Medir todo: funnel de conversion, retencion, NPS, tiempo en app, funcionalidades mas usadas. 3. Iterar rapidamente basado en datos, no en suposiciones. 4. Establecer un programa de beta testers electricistas reales desde la fase 2. 5. No sobrecargar el MVP: residencial simple, calculos basicos, PDF simple. 6. Priorizar la experiencia de onboarding: si el usuario no entiende como empezar, no volvera.
+
+42.4 Recomendaciones de Negocio
+
+1. Definir metricas claras desde el inicio (MRR, CAC, LTV, churn, NPS). 2. Invertir en contenido educativo (blog, tutoriales, videos) para atraer trafico organico. 3. Establecer alianzas con distribuidores de materiales electricos para marketplace futuro. 4. Participar en foros y comunidades de electricistas para construir reputacion. 5. Considerar programa de embajadores entre usuarios early adopters. 6. Monitorear la competencia continuamente y diferenciarse en UX.
+
+42.5 Recomendaciones de Equipo
+
+1. Formar un equipo multidisciplinario: desarrolladores frontend y backend, ingeniero electrico consultor, disenador UX/UI, y product manager. 2. El ingeniero electrico consultor es critico: debe validar todos los calculos y participar en el diseno de las reglas normativas. 3. Contratar un electricista como advisor de producto para feedback de usuario real. 4. Fomentar la comunicacion continua entre el equipo tecnico y el dominio electrico. 5. Invertir en capacitacion del equipo en ambos dominios (tecnicos aprenden electricidad, electricistas aprenden software).
+
+42.6 Recomendaciones de Escalabilidad Futura
+
+1. Disenar la arquitectura para soportar multi-tenant desde el inicio. 2. Planificar la internacionalizacion (i18n) desde el desarrollo del frontend. 3. Considerar la futura API publica en el diseno de la API interna. 4. Mantener la opcion de extraer el motor de calculos como producto standalone (API B2B). 5. Evaluar la adopcion de GraphQL si la API REST se vuelve compleja. 6. Planificar la migracion a arquitectura event-driven si el volumen de operaciones lo justifica.
+
+42.7 Recomendacion Final
+
+Este proyecto tiene el potencial de transformar la forma en que se disenan las instalaciones electricas. La combinacion de precision tecnica, experiencia de usuario excepcional y modelo de negocio escalable crea una oportunidad unica en el mercado. El enfoque debe ser: lanzar rapido, medir todo, iterar basado en datos, y nunca comprometer la precision de los calculos. La calidad tecnica es la base de la confianza, y la confianza es la base del exito en el mercado de la ingenieria.
+
+
+
+
+
+Electrical Design Platform
+
+Sistema Inteligente de Diseno Electrico
+
+Documentacion Tecnica Completa | Version 1.0
+
+© 2025 | Todos los derechos reservados
+
+electricaldesignplatform.com
+
+1 / 1

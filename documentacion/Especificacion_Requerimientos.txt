@@ -1,0 +1,114 @@
+================================================================================
+ESPECIFICACIÓN DE REQUERIMIENTOS Y PLANTEAMIENTO DEL PROYECTO: ELECTROSMART
+================================================================================
+
+Este documento consolida y simplifica de forma profesional la visión, el problema
+y los requerimientos fundamentales de ElectroSmart Platform (EDP), antes de 
+entrar en detalles de diseño de base de datos o arquitectura de código. Su objetivo 
+es servir como guía clara y comprensible para el equipo de desarrollo.
+
+--------------------------------------------------------------------------------
+1. RESUMEN EJECUTIVO (¿Qué es ElectroSmart?)
+--------------------------------------------------------------------------------
+ElectroSmart es una plataforma web inteligente tipo SaaS (Software como Servicio) 
+diseñada para asistir de principio a fin en la planificación, cálculo matemático, 
+presupuestación y documentación de instalaciones eléctricas.
+
+A diferencia del software tradicional que es costoso y requiere conocimientos de 
+ingeniería avanzada, ElectroSmart está pensado para ser intuitivo y accesible tanto 
+para ingenieros eléctricos experimentados como para técnicos, electricistas 
+independientes y constructores.
+
+--------------------------------------------------------------------------------
+2. PLANTEAMIENTO DEL PROBLEMA (¿Qué dolor soluciona en el mercado?)
+--------------------------------------------------------------------------------
+El sector de las instalaciones eléctricas en Latinoamérica y el mundo hispanohablante
+sufre de ineficiencias estructurales críticas:
+
+  * Cálculos Manuales Imprecisos: Los instaladores suelen usar métodos empíricos o 
+    "reglas del dedo". Esto genera conductores sobredimensionados (gastos innecesarios) 
+    o subdimensionados (alto riesgo de incendios y daños de equipos).
+  * Incumplimiento Normativo: Cumplir con las normas técnicas locales (RETIE en 
+    Colombia, NEC en EE.UU., IEC a nivel internacional) es sumamente complejo y requiere 
+    verificación constante de tablas de calibre (AWG), factores de temperatura y 
+    agrupamiento.
+  * Falta de Documentación Formal: La gran mayoría de proyectos pequeños y medianos 
+    no generan diagramas unifilares ni memorias de cálculo formales, lo que dificulta 
+    inspecciones de seguridad y mantenimientos futuros.
+  * Presupuestos Deficientes: Los electricistas estiman costos basándose únicamente 
+    en su intuición, lo que produce pérdidas económicas o cotizaciones poco profesionales.
+  * Costo y Complejidad del Software Actual: Los programas profesionales (como ETAP 
+    o SKM) tienen licencias de miles de dólares anuales y curvas de aprendizaje muy 
+    pronunciadas, lo que los hace inaccesibles para el 70% de los técnicos del sector.
+
+--------------------------------------------------------------------------------
+3. EL OBJETIVO DEL SISTEMA (¿Qué queremos lograr?)
+--------------------------------------------------------------------------------
+Queremos construir una aplicación web fácil de usar que automatice y simplifique 
+el proceso de diseño de una instalación eléctrica segura y normativamente correcta:
+
+  1. Entrada del usuario: Ingresar de forma sencilla las cargas eléctricas 
+     (bombillos, tomas, motores) organizadas por zonas (ej. cocina, sala, taller).
+  2. Motor de cálculo inteligente: Calcular automáticamente los conductores 
+     apropiados, la capacidad de los interruptores automáticos (breakers), el balance 
+     de fases en instalaciones trifásicas y la caída de tensión en tramos largos.
+  3. Visualización automática: Generar de manera dinámica el diagrama unifilar 
+     (layout eléctrico) del proyecto.
+  4. Presupuesto y materiales: Generar una lista cuantificada de materiales con 
+     precios de referencia de la región.
+  5. Documentación oficial: Descargar en un solo clic la memoria de cálculo oficial, 
+     el presupuesto y las advertencias normativas en formato PDF/XLSX.
+
+--------------------------------------------------------------------------------
+4. REQUERIMIENTOS FUNCIONALES (¿Cómo queremos que funcione?)
+--------------------------------------------------------------------------------
+
+Fase 1: Configuración de Entorno e Instalación
+  * El usuario define los parámetros básicos de la instalación:
+    - Nivel de tensión (110V, 220V, etc.).
+    - Tipo de acometida (Monofásica, Bifásica o Trifásica).
+    - Temperatura ambiente promedio y altitud (factores críticos para corregir calibres).
+    - Normativa que desea cumplir (RETIE / NEC / IEC).
+
+Fase 2: Ingreso de Cargas y Estructuración
+  * Biblioteca de Cargas: El sistema debe contar con un catálogo preestablecido de 
+    electrodomésticos y equipos comunes (neveras, aires acondicionados, duchas 
+    eléctricas, motores, iluminación general) para facilitar el ingreso.
+  * Estructuración por Tableros y Circuitos: El usuario puede crear ambientes y 
+    agrupar las cargas en circuitos específicos para estructurar la instalación 
+    lógicamente.
+
+Fase 3: Motor de Cálculos y Alertas de Cumplimiento
+  * Cálculo de Corriente de Diseño e Incremento de Seguridad.
+  * Selección de Conductores: Determinación del calibre de cable apropiado en AWG 
+    o mm2, aplicando factores de corrección por temperatura y agrupamiento.
+  * Selección de Protecciones: Recomendación del amperaje correcto para el breaker 
+    de cada circuito.
+  * Cálculo de Caída de Tensión: Verificación de que la tensión no disminuya más 
+    allá del límite permitido (usualmente 3% en circuitos derivados).
+  * Alertas Visuales (Semáforo): Si el usuario modifica manualmente un calibre de cable 
+    o breaker a un nivel inseguro, el sistema debe alertarlo visualmente (Rojo/Amarillo) 
+    explicando en lenguaje sencillo la norma que está infringiendo.
+
+Fase 4: Generación de Entregables
+  * Diagrama Unifilar Interactivo: Representación gráfica de la acometida, tableros 
+    y circuitos en formato vectorial (SVG), que el usuario pueda ver en pantalla.
+  * Lista de Materiales y Costos: Generación de cantidades aproximadas de cable (m), 
+    canalizaciones, cajas de breaker y breakers requeridos, multiplicados por un 
+    precio base editable.
+  * Reporte de Ingeniería: Exportación de una memoria de cálculo formal lista para 
+    presentar a curadurías urbanas, inspectores o clientes.
+
+--------------------------------------------------------------------------------
+5. ALCANCE DEL PRODUCTO MÍNIMO VIABLE (MVP)
+--------------------------------------------------------------------------------
+Para la primera versión del sistema, nos enfocaremos en:
+  * Instalaciones residenciales y comerciales de baja complejidad (hasta 200 Amperios).
+  * Soporte de normas NEC y RETIE.
+  * Interfaz web responsiva (optimizada para computadores y tablets).
+  * Generación de diagrama unifilar en formato SVG interactivo.
+  * Exportación de la memoria de cálculo a PDF y presupuesto a Excel.
+
+================================================================================
+FIN DEL DOCUMENTO - LISTO PARA VALIDACIÓN Y POSTERIOR ETAPA DE DISEÑO
+================================================================================

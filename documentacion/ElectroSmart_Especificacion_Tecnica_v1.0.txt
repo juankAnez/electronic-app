@@ -1,0 +1,2094 @@
+ElectroSmart Platform  —  Especificación Técnica v1.0  —  Confidencial
+
+
+
+⚡
+
+
+
+ELECTROSMART PLATFORM
+
+Plataforma Inteligente de Diseño y Cálculo de Instalaciones Eléctricas
+
+
+
+Versión del documento
+
+v1.0.0 — Diseño Inicial
+
+
+
+Clasificación
+
+Confidencial — Uso Interno
+
+
+
+Fecha
+
+Mayo 2026
+
+Tipo de documento
+
+Diseño de Software / Propuesta Técnica
+
+
+
+Estado
+
+Borrador Oficial para Desarrollo
+
+
+
+Normas de referencia
+
+RETIE · NEC · IEC 60364 · AWG
+
+
+
+Documento de Arquitectura, Diseño y Especificación Técnica
+
+
+
+
+1. INTRODUCCIÓN
+
+
+
+ElectroSmart Platform es una plataforma SaaS de ingeniería inteligente diseñada para transformar radicalmente la manera en que se planifican, calculan, documentan y ejecutan las instalaciones eléctricas en proyectos residenciales, comerciales, industriales y de infraestructura a cualquier escala. La plataforma integra un motor matemático de cálculo eléctrico de precisión de ingeniería con una capa de inteligencia artificial generativa y un sistema de visualización interactiva, todo empaquetado en una interfaz web moderna y accesible.
+
+
+
+El sector eléctrico enfrenta un problema estructural persistente: la brecha entre el conocimiento técnico especializado requerido para diseñar instalaciones correctas y la realidad operativa de miles de instaladores, técnicos y pequeños contratistas que deben tomar decisiones críticas de ingeniería sin las herramientas adecuadas. Esta brecha provoca sobrecostos, errores técnicos, incumplimientos normativos, riesgos de seguridad y pérdidas de tiempo que impactan directamente la rentabilidad de los proyectos.
+
+
+
+ElectroSmart no es una calculadora eléctrica avanzada ni un simple generador de listas de materiales. Es un sistema experto integral que actúa como un ingeniero eléctrico virtual: analiza cada proyecto desde sus parámetros iniciales, ejecuta cálculos multi-variable en tiempo real, genera recomendaciones normativas, produce documentación técnica completa y presenta visualmente cómo debe ejecutarse la instalación, todo en una experiencia de usuario intuitiva que no requiere formación avanzada en ingeniería.
+
+
+
+Propósito del documento
+
+Este documento constituye la especificación técnica inicial completa de ElectroSmart Platform.
+
+Define la arquitectura del sistema, los módulos funcionales, el motor de cálculos eléctricos,
+
+los requerimientos funcionales y no funcionales, el modelo de datos, la estrategia de escalabilidad,
+
+el roadmap de desarrollo y el modelo de negocio SaaS. Sirve como base oficial para:
+
+  • Inicio formal del desarrollo del software
+
+  • Presentación ante inversores o aceleradoras
+
+  • Evaluación como proyecto de grado o trabajo de investigación
+
+  • Propuesta técnica para equipos de desarrollo
+
+
+
+
+2. DESCRIPCIÓN GENERAL DEL PROYECTO
+
+
+
+2.1 Concepto del sistema
+
+ElectroSmart Platform es una aplicación web SaaS multi-tenant que centraliza todo el ciclo de vida del diseño de instalaciones eléctricas. El sistema recibe como entrada los parámetros técnicos de un proyecto eléctrico (cargas, tensiones, distancias, entorno, normativa aplicable) y genera como salida un conjunto completo de soluciones: cálculos validados, selección de materiales, presupuestos estimados, diagramas técnicos, esquemas de conexión y documentación exportable en formatos profesionales.
+
+
+
+A diferencia de las herramientas existentes (AutoCAD Electrical, ETAP, DIALux, calculadoras online aisladas), ElectroSmart está diseñado desde su concepción para ser accesible a usuarios sin formación avanzada en ingeniería, mientras mantiene la rigurosidad técnica que exigen los proyectos reales. Este equilibrio entre precisión y usabilidad constituye su diferencial fundamental.
+
+
+
+2.2 Componentes principales
+
+Componente
+
+Descripción técnica
+
+Motor de Cálculo Eléctrico
+
+Núcleo matemático en Python que ejecuta todos los cálculos normativos: caída de tensión, corriente de diseño, selección de conductores y protecciones, balanceo de fases, demanda máxima, factor de demanda, simultaneidad y validaciones de cumplimiento.
+
+Sistema Experto de Recomendaciones
+
+Motor de reglas e IA que interpreta los resultados de cálculo y genera recomendaciones técnicas contextualizadas, alertas de riesgo, sugerencias de optimización y explicaciones en lenguaje natural.
+
+Generador de Diagramas y Planos
+
+Módulo que produce automáticamente diagramas unifilares, esquemas de distribución de tableros, planos de planta simplificados y layouts de circuitos, usando librerías SVG/Canvas con renderizado en el cliente.
+
+Sistema de Materiales y Costos
+
+Base de datos normalizada de componentes eléctricos con precios de referencia, reglas de selección automática y motor de presupuestación que considera materiales, mano de obra y contingencias.
+
+Generador de Documentación
+
+Módulo que produce memorias de cálculo, informes técnicos, listas de materiales cuantificadas y reportes de cumplimiento normativo en formatos PDF, DOCX y XLSX.
+
+Módulo de Gestión de Proyectos
+
+Interfaz de organización de múltiples proyectos, control de versiones de diseño, colaboración en equipo y gestión de clientes para profesionales y empresas.
+
+
+
+
+3. VISIÓN DEL PROYECTO
+
+
+
+Declaración de Visión
+
+Ser la plataforma de referencia en Latinoamérica y el mundo hispanohablante para el diseño
+
+asistido por inteligencia artificial de instalaciones eléctricas, democratizando el acceso a
+
+herramientas de ingeniería profesional para técnicos, electricistas, ingenieros independientes
+
+y empresas del sector, reduciendo en un 70% el tiempo de diseño y en un 90% los errores
+
+técnicos en proyectos de instalación eléctrica.
+
+
+
+3.1 Pilares estratégicos
+
+Democratización técnica: Hacer que cálculos de ingeniería complejos sean accesibles y comprensibles para técnicos sin formación universitaria avanzada.
+
+Precisión normativa: Garantizar que todos los resultados cumplan con RETIE, NEC, IEC 60364 y demás normativas aplicables según la región del usuario.
+
+Eficiencia operativa: Reducir de días a minutos el tiempo necesario para generar la documentación técnica completa de un proyecto eléctrico.
+
+Escalabilidad inteligente: Crecer desde proyectos residenciales simples hasta instalaciones industriales complejas con el mismo motor de cálculo, ajustando la complejidad al perfil del usuario.
+
+Ecosistema colaborativo: Crear una comunidad de profesionales que comparten plantillas, componentes y proyectos, enriqueciendo la base de conocimiento de la plataforma.
+
+
+
+3.2 Visión a 5 años
+
+En un horizonte de cinco años, ElectroSmart Platform aspira a tener presencia en más de 15 países de Latinoamérica y España, con una base de más de 50,000 usuarios activos entre técnicos, ingenieros y empresas contratistas. La plataforma evolucionará hacia la integración con sistemas BIM (Building Information Modeling), la generación automática de planos en formatos DXF/DWG compatibles con AutoCAD, la integración con proveedores de materiales para cotización en tiempo real y la predicción de consumo energético con machine learning. A largo plazo, se contempla la expansión hacia el diseño asistido de instalaciones fotovoltaicas, sistemas de tierra, instalaciones de baja tensión especiales y redes de media tensión.
+
+
+
+
+4. PROBLEMA QUE RESUELVE
+
+
+
+4.1 Diagnóstico del sector
+
+El diseño de instalaciones eléctricas es un proceso técnico que combina conocimiento normativo profundo, cálculo matemático multi-variable y experiencia práctica. Sin embargo, la mayoría de los proyectos eléctricos en Latinoamérica son ejecutados por técnicos y maestros electricistas que no tienen acceso a herramientas profesionales de cálculo, obligándolos a depender de métodos empíricos, tablas impresas, reglas del pulgar y experiencia personal acumulada.
+
+
+
+4.2 Problemas identificados
+
+Problema
+
+Descripción e impacto
+
+Cálculos manuales imprecisos
+
+Los técnicos realizan cálculos a mano o con calculadoras básicas, sin considerar factores de corrección por temperatura, agrupamiento de conductores, caída de tensión acumulada en circuitos largos ni simultaneidad de cargas. Esto resulta en dimensionamientos incorrectos: conductores sobredimensionados (costos excesivos) o subdimensionados (riesgos de incendio y falla).
+
+Selección empírica de materiales
+
+La selección de calibres de conductor, capacidad de breakers, tipo de canalización y capacidad de tableros se hace frecuentemente por costumbre o por disponibilidad en el mercado local, no por cálculo técnico verificado. Esto genera instalaciones que no cumplen normativas y representan riesgos para usuarios.
+
+Ausencia de documentación técnica
+
+La mayoría de proyectos eléctricos residenciales y medianos no generan ninguna documentación técnica: no hay memoria de cálculo, no hay diagrama unifilar, no hay lista de materiales verificada. Esto dificulta el mantenimiento futuro, las ampliaciones y el cumplimiento regulatorio.
+
+Estimación de costos deficiente
+
+Los presupuestos se elaboran manualmente con base en experiencia, sin considerar cantidades exactas de materiales, desperdicios, herramientas especiales ni tiempos reales de ejecución. Esto genera sub-presupuestación frecuente y pérdidas económicas para contratistas.
+
+Tiempo de diseño excesivo
+
+Un ingeniero experimentado puede tardar entre 4 y 16 horas en completar el diseño, cálculo y documentación de un proyecto eléctrico mediano. Este tiempo representa un costo significativo que muchos proyectos pequeños no pueden justificar.
+
+Errores en proyectos industriales
+
+En instalaciones industriales con motores de alta potencia, sistemas de compensación de potencia reactiva y cargas no lineales, los errores de cálculo pueden generar daños a equipos de alto valor, paros de producción y riesgos graves para el personal.
+
+
+
+4.3 Impacto económico del problema
+
+Según estimaciones del sector eléctrico en Colombia y Latinoamérica, aproximadamente el 35% de los incidentes eléctricos domiciliarios tienen origen en instalaciones mal dimensionadas o ejecutadas sin diseño técnico. El costo promedio de un incidente por sobrecarga en una instalación residencial (incluyendo daños a electrodomésticos, reparación de instalación y pérdida de contenidos) supera los USD 2,000. En instalaciones industriales, este costo puede escalar a decenas de miles de dólares por paros de producción.
+
+
+
+
+5. JUSTIFICACIÓN
+
+
+
+5.1 Justificación técnica
+
+La complejidad del cálculo eléctrico normativo hace que las herramientas actuales sean inaccesibles para la mayoría de los actores del sector. Los softwares profesionales existentes (ETAP, SKM PowerTools, EasyPower) están diseñados para ingenieros con formación avanzada, tienen curvas de aprendizaje de semanas o meses, y sus licencias cuestan entre USD 2,000 y USD 15,000 anuales. AutoCAD Electrical, aunque más extendido, requiere conocimiento profundo de CAD y no incluye motores de cálculo integrados. Ninguna herramienta actual combina cálculo de precisión, generación de documentación y usabilidad para usuarios no especializados.
+
+
+
+5.2 Justificación de mercado
+
+El mercado objetivo en Latinoamérica incluye aproximadamente 800,000 electricistas certificados, 120,000 ingenieros eléctricos activos, 45,000 empresas contratistas eléctricas y decenas de miles de estudiantes de ingeniería eléctrica. A nivel global, el mercado de software de diseño eléctrico se valoró en USD 2.8 mil millones en 2023 y se proyecta alcanzar USD 5.1 mil millones en 2028, con una tasa de crecimiento anual del 12.7%. El segmento de herramientas SaaS para PYMES del sector construcción y eléctrico es el de mayor crecimiento dentro de este mercado.
+
+
+
+5.3 Justificación tecnológica
+
+La madurez actual de tecnologías como Python para cálculo matemático, React para interfaces reactivas complejas, librerías de generación de SVG y PDF en navegador, y modelos de lenguaje grande (LLMs) para asistencia técnica contextualizada, hace que sea técnicamente viable desarrollar una plataforma que hace cinco años habría requerido una infraestructura mucho más compleja y costosa. El modelo SaaS permite distribuir el costo de desarrollo entre miles de usuarios, haciendo viable económicamente la plataforma para el segmento de pequeños proyectos.
+
+
+
+
+6. OBJETIVO GENERAL
+
+
+
+Diseñar y desarrollar una plataforma SaaS web que integre un motor de cálculo eléctrico de precisión normativa con un sistema inteligente de recomendaciones, generación automática de diagramas técnicos y documentación profesional, accesible para técnicos, ingenieros y empresas del sector eléctrico, que reduzca significativamente el tiempo de diseño, los errores técnicos y los costos de documentación en proyectos de instalaciones eléctricas residenciales, comerciales e industriales.
+
+
+
+
+7. OBJETIVOS ESPECÍFICOS
+
+
+
+Desarrollar un motor de cálculo eléctrico en Python que implemente con precisión los algoritmos normativos definidos en RETIE, NEC y tablas AWG/IEC, incluyendo cálculo de demanda, corriente de diseño, caída de tensión, selección de conductores, protecciones y verificaciones de cumplimiento.
+
+Implementar un sistema experto basado en reglas y modelos de lenguaje que genere recomendaciones técnicas contextualizadas, alertas de riesgo, explicaciones en lenguaje natural y sugerencias de optimización para cada proyecto.
+
+Crear un módulo de generación automática de diagramas unifilares y esquemas de conexión interactivos, basado en la topología de cargas definida por el usuario, con capacidad de edición manual y exportación en formatos estándar.
+
+Diseñar una base de datos normalizada de componentes eléctricos (conductores, breakers, tableros, canalizaciones, accesorios) con precios de referencia actualizables y reglas de selección automática según los resultados de cálculo.
+
+Construir un sistema de generación de documentación técnica que produzca memorias de cálculo, listas de materiales cuantificadas, presupuestos detallados e informes de cumplimiento normativo en formatos PDF, DOCX y XLSX.
+
+Diseñar una interfaz de usuario web moderna e intuitiva que guíe al usuario paso a paso en la definición del proyecto, presentando los resultados de manera visual y comprensible independientemente del nivel técnico del usuario.
+
+Implementar una arquitectura SaaS multi-tenant escalable con modelo freemium que permita acceso gratuito para proyectos básicos y planes premium para funcionalidades avanzadas, industriales y de colaboración en equipo.
+
+Establecer un sistema de validación técnica continua que verifique la consistencia de los datos de entrada, detecte conflictos normativos, identifique condiciones de riesgo y genere alertas antes de finalizar cualquier diseño.
+
+Integrar un módulo de gestión de proyectos que permita a usuarios profesionales manejar múltiples proyectos simultáneos, con historial de versiones, control de cambios y exportación de reportes consolidados para clientes.
+
+Desarrollar un sistema de estimación de tiempo de ejecución y complejidad del proyecto basado en análisis histórico y parámetros técnicos, que apoye la planificación y cotización de trabajos eléctricos.
+
+
+
+
+8. ALCANCE DEL PROYECTO
+
+
+
+8.1 Alcance funcional — Incluido en MVP
+
+Diseño y cálculo de instalaciones eléctricas residenciales hasta 200 A de acometida
+
+Diseño y cálculo de instalaciones comerciales de baja complejidad (hasta 400 A)
+
+Ingreso de cargas eléctricas con sus parámetros técnicos completos
+
+Cálculo automático de demanda máxima con factor de demanda y simultaneidad
+
+Selección automática de conductores por tablas AWG con factores de corrección básicos
+
+Selección de breakers y protecciones por corriente de diseño
+
+Cálculo de caída de tensión por circuito y acumulada
+
+Balance de fases en sistemas trifásicos
+
+Generación de lista de materiales cuantificada con costos de referencia
+
+Generación de diagrama unifilar básico en SVG
+
+Exportación de reporte técnico en PDF
+
+Gestión de hasta 5 proyectos simultáneos en plan gratuito
+
+
+
+8.2 Alcance funcional — Versiones posteriores
+
+Instalaciones industriales con motores de alta potencia y corrección de factor de potencia
+
+Cálculo de sistemas de puesta a tierra según normas
+
+Integración con catálogos de proveedores para cotización en tiempo real
+
+Generación de planos en formato DXF/DWG compatible con AutoCAD
+
+Módulo de instalaciones fotovoltaicas y sistemas de respaldo
+
+Análisis de cortocircuito y coordinación de protecciones
+
+Módulo de cálculo de iluminación según normas
+
+Colaboración en tiempo real (múltiples usuarios en un proyecto)
+
+API pública para integración con sistemas externos
+
+
+
+8.3 Fuera del alcance
+
+Diseño de redes de media y alta tensión (> 1 kV)
+
+Cálculo de instalaciones de telecomunicaciones (aunque pueden registrarse como cargas)
+
+Diseño estructural o civil de edificaciones
+
+Gestión contable o facturación de proyectos
+
+Aplicación móvil nativa en la versión inicial (responsive web como alternativa)
+
+
+
+
+9. PÚBLICO OBJETIVO
+
+
+
+9.1 Segmentos de usuario primarios
+
+Segmento
+
+Descripción y necesidades
+
+Electricistas técnicos independientes
+
+Profesionales con formación técnica que ejecutan proyectos residenciales y comerciales. Principal segmento del plan gratuito. Necesitan herramientas de cálculo rápidas y presentación de resultados comprensibles sin terminología excesivamente académica.
+
+Ingenieros eléctricos independientes
+
+Profesionales con titulación universitaria que desarrollan proyectos de mayor complejidad. Principal segmento del plan premium. Necesitan precisión normativa, memoria de cálculo completa y documentación exportable para entrega oficial.
+
+Pequeñas y medianas empresas contratistas
+
+Empresas con 2 a 20 empleados técnicos que ejecutan proyectos residenciales, comerciales e industriales de mediana escala. Necesitan gestión de múltiples proyectos, plantillas reutilizables y generación de presupuestos profesionales.
+
+Estudiantes de ingeniería eléctrica
+
+Estudiantes de pregrado y técnico que necesitan verificar sus cálculos manuales, aprender metodología de diseño y generar documentación para proyectos académicos. Segmento clave para adopción temprana.
+
+Departamentos de mantenimiento industrial
+
+Áreas de mantenimiento en industrias que necesitan documentar instalaciones existentes, planificar ampliaciones y calcular impactos de nuevas cargas en instalaciones en operación.
+
+Inspectores y certificadores eléctricos
+
+Profesionales que realizan revisiones y certificaciones de instalaciones. Pueden usar la plataforma para generar reportes de cumplimiento normativo y validar diseños presentados por contratistas.
+
+
+
+
+10. CASOS DE USO
+
+
+
+10.1 CU-001: Diseño de instalación residencial completa
+
+Campo
+
+Detalle
+
+Actor
+
+Técnico electricista o ingeniero independiente
+
+Precondición
+
+Usuario autenticado con al menos un proyecto creado
+
+Descripción
+
+El usuario ingresa un proyecto residencial de vivienda de 3 habitaciones con sus cargas completas (iluminación, tomacorrientes, electrodomésticos) y el sistema calcula el diseño completo de la instalación.
+
+Flujo principal
+
+1. Usuario crea nuevo proyecto tipo 'Residencial' · 2. Ingresa datos generales (área, pisos, alimentación) · 3. Registra cargas por ambiente · 4. Sistema calcula demanda, corrientes y conductores · 5. Sistema genera diagrama unifilar · 6. Usuario revisa y ajusta · 7. Sistema genera documentación completa
+
+Resultado esperado
+
+Diagrama unifilar, memoria de cálculo, lista de materiales y presupuesto estimado listos para entrega
+
+Postcondición
+
+Proyecto guardado con todos los cálculos y documentos generados
+
+
+
+10.2 CU-002: Cálculo de tablero de distribución industrial
+
+Campo
+
+Detalle
+
+Actor
+
+Ingeniero eléctrico con plan premium
+
+Descripción
+
+Cálculo completo de tablero de distribución para nave industrial con motores de diferentes potencias, iluminación industrial y sistema de aire comprimido.
+
+Flujo principal
+
+1. Selección de proyecto tipo 'Industrial' · 2. Ingreso de motores con datos de placa (kW, V, FP, arranque) · 3. Sistema aplica factores de demanda industrial · 4. Cálculo de barras, conductores de acometida y protecciones del tablero principal · 5. Distribución de circuitos derivados · 6. Verificación de balance de fases · 7. Generación de diagrama y memoria
+
+Resultado esperado
+
+Diseño completo del tablero con especificaciones técnicas y diagrama unifilar trifásico
+
+
+
+10.3 CU-003: Estimación rápida de presupuesto
+
+Campo
+
+Detalle
+
+Actor
+
+Contratista eléctrico
+
+Descripción
+
+El usuario necesita generar una estimación de presupuesto rápida para presentar a un cliente potencial antes de confirmar el trabajo.
+
+Flujo principal
+
+1. Ingreso de parámetros básicos del proyecto · 2. Selección de nivel de detalle 'Estimación rápida' · 3. Sistema calcula materiales y mano de obra estimada · 4. Ajuste de márgenes y contingencias · 5. Exportación de presupuesto en PDF con logo del contratista
+
+Resultado esperado
+
+Documento de presupuesto profesional listo para presentar al cliente en menos de 15 minutos
+
+
+
+
+11. ARQUITECTURA DEL SISTEMA
+
+
+
+11.1 Visión general de la arquitectura
+
+ElectroSmart Platform sigue una arquitectura de tres capas desacopladas: (1) una capa de presentación implementada como Single Page Application (SPA) en React/Next.js, (2) una capa de lógica de negocio y cálculo implementada como API REST en Django, y (3) una capa de persistencia en PostgreSQL. El desacoplamiento entre capas permite escalar independientemente cada componente según la demanda y facilita el mantenimiento evolutivo del sistema.
+
+
+
+Diagrama conceptual de arquitectura
+
+
+
+  [Navegador Web / PWA]
+
+       |  HTTPS / REST API / WebSocket
+
+  [Load Balancer - Nginx]
+
+       |
+
+  [Frontend Server - Next.js / Vercel]
+
+       |  API calls
+
+  [API Server - Django REST Framework]
+
+       |          |
+
+  [Motor Cálculo  [Módulo IA / LLM]
+
+   Python Engine]      |
+
+       |          [OpenAI API / Local LLM]
+
+  [PostgreSQL]  [Redis Cache]  [Celery Workers]
+
+       |
+
+  [Object Storage - S3/R2 para documentos]
+
+
+
+
+
+11.2 Patrones arquitectónicos aplicados
+
+REST API con versionamiento semántico (/api/v1/, /api/v2/) para compatibilidad hacia atrás
+
+Multi-tenancy a nivel de base de datos mediante campo tenant_id en todas las entidades principales, con Row-Level Security en PostgreSQL
+
+Procesamiento asíncrono de tareas pesadas (generación de PDF, diagramas complejos, cálculos industriales extensos) mediante Celery + Redis
+
+Caché en Redis para resultados de cálculo que no cambian con frecuencia (tablas normativas, precios de materiales, configuraciones de tenant)
+
+Event-driven updates mediante WebSocket para actualización en tiempo real de la UI cuando los cálculos asincrónicos completan
+
+Repository Pattern en Django para abstraer el acceso a datos y facilitar testing
+
+Command Pattern para encapsular las operaciones del motor de cálculo como unidades testables e independientes
+
+
+
+
+12. MÓDULOS DEL SISTEMA
+
+
+
+12.1 Módulo de Gestión de Proyectos
+
+Creación y configuración de proyectos con metadatos completos (nombre, cliente, ubicación, tipo, normativa aplicable)
+
+Sistema de versiones: cada modificación significativa genera una snapshot que puede ser recuperada
+
+Exportación e importación de proyectos en formato JSON propio para backup y transferencia
+
+Gestión de colaboradores con roles (propietario, editor, visualizador)
+
+Dashboard de resumen con estado de cálculo, alertas activas y progreso de completitud del proyecto
+
+
+
+12.2 Módulo de Ingreso de Cargas
+
+Biblioteca de cargas precargada con más de 500 equipos estándar con parámetros técnicos de fábrica
+
+Formulario avanzado para ingreso manual de cargas con validación en tiempo real de coherencia de parámetros
+
+Agrupación de cargas por circuito, tablero y subfase para organización jerárquica del proyecto
+
+Importación masiva de cargas desde Excel/CSV con mapeo de columnas configurable
+
+Soporte para cargas con perfil de consumo variable (tiempo de uso, factor de utilización individual)
+
+
+
+12.3 Motor de Cálculo Eléctrico
+
+Cálculo de demanda máxima con métodos: factor de demanda NEC, método de demanda diversificada, suma aritmética con reserva
+
+Corriente de diseño considerando factor de potencia, eficiencia del equipo y corriente de arranque para motores
+
+Selección de conductores por tablas AWG/MCM con factores de corrección por temperatura ambiente, agrupamiento y tipo de aislamiento
+
+Cálculo de caída de tensión por tramo usando método exacto (incluye reactancia inductiva para conductores > 2 AWG)
+
+Selección de breakers con verificación de curvas de disparo, coordinación de protecciones y corriente de cortocircuito mínima
+
+Cálculo de capacidad de tableros y barras de distribución
+
+Análisis de balance de fases con recomendaciones de redistribución
+
+
+
+12.4 Módulo de Visualización y Diagramas
+
+Generación automática de diagrama unifilar con topología derivada del ingreso de cargas
+
+Editor visual interactivo: arrastrar, reorganizar, anotar componentes del diagrama
+
+Vista de layout de tablero con visualización de posición de breakers
+
+Esquema de conexión básico con representación gráfica de conductores y canalizaciones
+
+Mapa de calor de carga por circuito para identificar circuitos críticos
+
+
+
+12.5 Módulo de Materiales y Presupuesto
+
+Generación automática de lista de materiales con cantidades calculadas incluyendo desperdicios estándar
+
+Base de precios de referencia actualizable por región con soporte para múltiples monedas
+
+Estructuración del presupuesto por categorías: materiales, mano de obra, herramientas, transporte, contingencias
+
+Comparativo de alternativas de materiales (conductor aluminio vs. cobre, por ejemplo)
+
+Estimación de tiempo de ejecución por tipo de trabajo basado en rendimientos unitarios
+
+
+
+12.6 Módulo de Documentación Técnica
+
+Memoria de cálculo con todas las fórmulas aplicadas, valores intermedios y justificación de selecciones
+
+Diagrama unifilar en PDF vectorial de alta resolución listo para entrega oficial
+
+Lista de materiales en formato Excel con fórmulas de cálculo de cantidades
+
+Reporte de cumplimiento normativo con referencia específica a los artículos aplicables
+
+Portada y secciones del informe con logo y datos del usuario/empresa
+
+
+
+
+13. FLUJO COMPLETO DEL USUARIO
+
+
+
+13.1 Etapa 1 — Configuración del proyecto
+
+Usuario crea cuenta o inicia sesión
+
+Selecciona 'Nuevo Proyecto' desde el dashboard
+
+Elige tipo de proyecto: Residencial / Comercial / Industrial / Infraestructura
+
+Ingresa datos generales: nombre, cliente, dirección, normativa aplicable (RETIE / NEC / IEC)
+
+Configura parámetros del sistema: voltaje de alimentación, número de fases, frecuencia, nivel de tensión
+
+Define condiciones de entorno: temperatura ambiente, tipo de instalación (interior/exterior), altitud
+
+
+
+13.2 Etapa 2 — Ingreso de cargas y topología
+
+Usuario agrega ambientes o zonas (habitaciones, pisos, áreas)
+
+Para cada zona, agrega cargas desde la biblioteca o manualmente
+
+Configura parámetros individuales de cada carga (potencia, FP, tiempo de uso, factor de utilización)
+
+Agrupa cargas en circuitos derivados lógicos
+
+Define la jerarquía de tableros (tablero principal → subtableros → circuitos)
+
+Sistema valida coherencia de datos en tiempo real y señala inconsistencias
+
+
+
+13.3 Etapa 3 — Cálculo y verificación
+
+Usuario lanza cálculo completo con botón 'Calcular Proyecto'
+
+Motor de cálculo ejecuta todos los algoritmos y retorna resultados en < 3 segundos (proyectos estándar)
+
+Sistema presenta resultados en panel organizado: demanda, conductores, protecciones, tableros
+
+Sistema genera alertas de riesgo o incumplimiento normativo si existen
+
+Usuario puede ajustar parámetros y recalcular iterativamente
+
+Sistema de recomendaciones IA presenta sugerencias de optimización
+
+
+
+13.4 Etapa 4 — Generación de salidas
+
+Usuario accede a módulo de Diagramas y revisa el unifilar generado automáticamente
+
+Realiza ajustes visuales si es necesario (posición de elementos, anotaciones)
+
+Genera lista de materiales y revisa precios de referencia
+
+Exporta documentación técnica completa en PDF y/o DOCX
+
+Comparte el proyecto o descarga los archivos para entrega al cliente
+
+
+
+
+14. EXPERIENCIA DE USUARIO (UX/UI)
+
+
+
+14.1 Principios de diseño UX
+
+Principio
+
+Implementación
+
+Progressive Disclosure
+
+La interfaz muestra primero los parámetros esenciales y desplega progresivamente los técnicos avanzados. Un técnico básico puede completar un proyecto sin ver nunca los factores de corrección avanzados; un ingeniero puede acceder a todos los parámetros que necesita.
+
+Immediate Feedback
+
+Cada dato ingresado actualiza en tiempo real los indicadores de carga, alertas y estado del proyecto. No hay que esperar un botón 'Calcular' para saber si algo está mal (aunque el cálculo completo sí requiere acción explícita).
+
+Guided Workflows
+
+El sistema guía al usuario con un wizard paso a paso para proyectos nuevos, pero permite acceso directo a cualquier módulo para usuarios experimentados que prefieren navegación libre.
+
+Contextual Help
+
+Cada campo técnico tiene un ícono de información que despliega una explicación en lenguaje simple, el valor típico para ese tipo de proyecto y la referencia normativa aplicable.
+
+Error Prevention
+
+Las validaciones ocurren antes de permitir avanzar al siguiente paso, con mensajes descriptivos que explican qué está mal y cómo corregirlo, nunca solo un mensaje de error genérico.
+
+Responsive Design
+
+La interfaz se adapta a tablets y smartphones para permitir uso en campo, aunque la experiencia completa está optimizada para pantallas de escritorio de 1280px o más.
+
+
+
+14.2 Componentes de interfaz clave
+
+Dashboard de proyecto con indicador visual de completitud y lista de tareas pendientes
+
+Panel de cargas con arrastrar y soltar para reorganizar circuitos
+
+Panel de resultados con semáforo visual (verde/amarillo/rojo) para cada sección del cálculo
+
+Visor de diagrama unifilar interactivo con zoom y navegación
+
+Asistente IA flotante que puede responder preguntas sobre el proyecto actual
+
+Sistema de notificaciones en tiempo real para alertas críticas de seguridad
+
+
+
+
+15. ARQUITECTURA TÉCNICA
+
+
+
+15.1 Stack tecnológico completo
+
+Capa
+
+Tecnología
+
+Justificación
+
+Capa
+
+Tecnología
+
+Justificación
+
+Frontend SPA
+
+React 18 + Next.js 14
+
+SSR/SSG para SEO, App Router para rutas complejas, soporte a RSC
+
+Estilos
+
+TailwindCSS + shadcn/ui
+
+Sistema de diseño coherente, componentes accesibles, build optimizado
+
+Estado global
+
+Zustand + React Query
+
+Estado liviano del cliente + caché y sincronización de datos del servidor
+
+Diagramas
+
+React Flow + D3.js
+
+Diagramas interactivos con nodos personalizados para unifilar
+
+PDF cliente
+
+jsPDF + html2canvas
+
+Exportación de reportes sin necesidad de servidor para tier gratuito
+
+Backend API
+
+Django 4.2 + DRF
+
+Ecosistema Python maduro, ORM potente, excelente para APIs REST
+
+Autenticación
+
+django-allauth + JWT
+
+SSO, OAuth social, tokens JWT para API stateless
+
+Cálculo
+
+NumPy + Pandas + SciPy
+
+Cálculo matricial vectorizado, manejo de tablas normativas, solvers
+
+Base de datos
+
+PostgreSQL 16
+
+JSONB para datos flexibles, Row-Level Security, extensiones matemáticas
+
+Caché
+
+Redis 7
+
+Sesiones, caché de cálculos, cola de tareas Celery
+
+Tareas async
+
+Celery + Redis
+
+Procesamiento en background de generación de documentos pesados
+
+Object Storage
+
+Cloudflare R2 / AWS S3
+
+Almacenamiento de documentos generados y proyectos exportados
+
+CI/CD
+
+GitHub Actions
+
+Pipeline automático de tests, linting y despliegue
+
+Infraestructura
+
+Railway / Render / AWS
+
+Opciones de despliegue según escala: Railway para MVP, AWS para escala
+
+
+
+
+16-17. DISEÑO FRONTEND, BACKEND Y BASE DE DATOS
+
+
+
+16.1 Estructura del backend Django
+
+electrosmart/: Proyecto Django principal con settings modulares (base, development, production, testing)
+
+apps/projects/: Gestión de proyectos, versiones, configuraciones de entorno
+
+apps/loads/: Modelo de cargas eléctricas, biblioteca de equipos, importación masiva
+
+apps/calculations/: Motor de cálculo, algoritmos normativos, validaciones técnicas
+
+apps/materials/: Catálogo de materiales, precios de referencia, reglas de selección
+
+apps/diagrams/: Generación de topología de diagramas, serialización de grafos
+
+apps/documents/: Generación de PDF/DOCX/XLSX, plantillas de reportes
+
+apps/ai_assistant/: Integración con LLM, sistema de prompts contextuales, caché de respuestas
+
+apps/accounts/: Gestión de usuarios, tenants, suscripciones, permisos
+
+
+
+17.1 Modelo de base de datos — Entidades principales
+
+Entidad
+
+Campos principales
+
+Tenant
+
+tenant_id, name, plan_type, settings_json, created_at, billing_info
+
+User
+
+user_id, tenant_id, email, role, profile_json, last_login, is_active
+
+Project
+
+project_id, tenant_id, owner_id, name, project_type, config_json, status, created_at, updated_at
+
+ProjectVersion
+
+version_id, project_id, version_number, snapshot_json, changelog, created_by, created_at
+
+LoadGroup
+
+group_id, project_id, parent_group_id, name, group_type, phase_assignment, order_index
+
+ElectricalLoad
+
+load_id, group_id, name, power_w, voltage_v, power_factor, efficiency, quantity, use_hours, load_type, custom_params_json
+
+CalculationResult
+
+result_id, project_id, version_id, demand_kw, demand_kva, main_current_a, conductor_spec_json, breaker_spec_json, voltage_drop_json, alerts_json, calculated_at
+
+MaterialItem
+
+item_id, project_id, component_ref_id, quantity, unit, unit_price, total_price, category
+
+ComponentCatalog
+
+comp_id, category, name, specs_json, unit, reference_price, currency, price_region, last_updated
+
+DiagramData
+
+diagram_id, project_id, nodes_json, edges_json, layout_json, svg_cache, updated_at
+
+
+
+18. MOTOR DE CÁLCULOS ELÉCTRICOS
+
+El motor de cálculos es el componente técnico más crítico de la plataforma. Implementado íntegramente en Python, el motor encapsula los algoritmos eléctricos en clases especializadas que reciben parámetros de entrada normalizados y retornan objetos de resultado estructurados. El diseño modular permite testear cada algoritmo de forma independiente y garantizar precisión matemática comparable a herramientas profesionales.
+
+
+
+18.1 Algoritmos implementados
+
+Demanda máxima: Método del factor de demanda (NEC Art. 220), método de demanda diversificada para residencias > 3 unidades, factor de reserva configurable (mínimo 25% NEC), cálculo de demanda pico vs. demanda promedio
+
+Corriente de diseño: Id = P / (V × FP × η) para monofásico; Id = P / (√3 × V × FP × η) para trifásico; corriente de arranque para motores (típicamente 6-8 × In); corriente de cortocircuito de aportación
+
+Selección de conductores: Tabla 310.15(B)(16) NEC, factores de corrección por temperatura (tabla 310.15(B)(2)(a)), factor de agrupamiento (tabla 310.15(C)(1)), verificación de ampacidad mínima, selección del calibre inmediatamente superior a la corriente corregida
+
+Caída de tensión: ΔV = (2 × L × Id × (R×cos(φ) + X×sin(φ))) / 1000 para monofásico; ΔV = (√3 × L × Id × (R×cos(φ) + X×sin(φ))) / 1000 para trifásico; resistencia y reactancia por tablas de conductores AWG
+
+Selección de breakers: Capacidad de interrupción ≥ Icc calculada, corriente nominal ≥ Id, verificación de coordinación con protección aguas arriba (relación mínima 1:2.5 para selectividad básica)
+
+Balance de fases: Distribución óptima de cargas entre fases para minimizar corriente de neutro y desbalance (objetivo: desbalance < 5% entre fases)
+
+
+
+Ejemplo de implementación — Cálculo de conductores
+
+class ConductorSelector:
+
+    def select(self, design_current_a, distance_m, temperature_c, grouped_conductors):
+
+        base_ampacity = self._lookup_nec_table(design_current_a)
+
+        temp_factor = self._temperature_correction(temperature_c)
+
+        group_factor = self._grouping_correction(grouped_conductors)
+
+        corrected_ampacity = base_ampacity * temp_factor * group_factor
+
+        selected_awg = self._find_min_gauge(design_current_a / (temp_factor * group_factor))
+
+        voltage_drop = self._calculate_vd(selected_awg, distance_m, design_current_a)
+
+        if voltage_drop > 0.03:  # NEC recomienda max 3% en circuito derivado
+
+            selected_awg = self._upsize_for_vd(selected_awg, distance_m, design_current_a)
+
+        return ConductorResult(awg=selected_awg, ampacity=corrected_ampacity, vd=voltage_drop)
+
+
+
+
+19. SISTEMA INTELIGENTE DE RECOMENDACIONES E IA
+
+
+
+19.1 Arquitectura del sistema de IA
+
+El sistema inteligente de recomendaciones opera en dos capas complementarias. La primera capa es un motor de reglas determinístico que ejecuta validaciones normativas y genera alertas basadas en condiciones bien definidas (por ejemplo: 'conductor subdimensionado', 'caída de tensión supera límite normativo', 'tablero sin espacio de reserva'). La segunda capa es un modelo de lenguaje grande (LLM) que interpreta el contexto del proyecto completo y genera recomendaciones en lenguaje natural, responde preguntas técnicas del usuario y explica los resultados de cálculo de forma comprensible.
+
+
+
+19.2 Motor de reglas — Alertas y validaciones
+
+Tipo de alerta
+
+Condiciones que la generan
+
+CRITICAL — Seguridad eléctrica
+
+Conductor cuya ampacidad corregida es inferior a la corriente de diseño; breaker con capacidad de interrupción insuficiente para la corriente de cortocircuito del punto de instalación; caída de tensión acumulada superior al 5% (límite NEC para circuito derivado + alimentador)
+
+WARNING — Cumplimiento normativo
+
+Ausencia de protección GFCI en circuitos de baños, cocinas y exteriores (NEC 210.8); tablero sin el 20% de espacio de reserva para expansión futura (buena práctica); desbalance de fases superior al 10%
+
+INFO — Recomendaciones de optimización
+
+Posibilidad de reducir calibre de conductor por recálculo con factor de demanda más preciso; sugerencia de agrupar circuitos para optimizar número de breakers; recomendación de relocar tablero para reducir longitudes de conductores
+
+
+
+19.3 Integración con LLM
+
+La integración con el modelo de lenguaje se realiza mediante la API de OpenAI (GPT-4o) o un modelo local (Llama 3.1 en configuraciones enterprise) con un sistema de prompts contextuales que incluyen: los parámetros calculados del proyecto, la normativa aplicable, el perfil del usuario y el historial de la conversación. El contexto es comprimido y resumido para optimizar el uso de tokens. Las respuestas se cachean en Redis para preguntas frecuentes en proyectos similares.
+
+Respuestas a preguntas técnicas sobre el proyecto: '¿Por qué se seleccionó este calibre de conductor?'
+
+Generación de justificaciones normativas: 'Este breaker de 20A cumple el artículo 210.20 del NEC porque...'
+
+Sugerencias proactivas de optimización basadas en el análisis del proyecto completo
+
+Generación de la narrativa técnica para la memoria de cálculo del reporte
+
+Asistente conversacional para guiar al usuario en proyectos complejos paso a paso
+
+
+
+
+20. GENERACIÓN DE DIAGRAMAS Y PLANOS
+
+
+
+20.1 Retos técnicos de la generación automática
+
+La generación automática de diagramas unifilares es uno de los retos técnicos más complejos del proyecto. Un diagrama unifilar no es simplemente un gráfico de la topología eléctrica; es un documento técnico normalizado con simbología estandarizada (IEEE/IEC), reglas de distribución espacial, convenciones de etiquetado y relaciones de jerarquía visual que deben ser legibles y no ambiguas. El principal desafío es el layout automático: dado un grafo arbitrario de nodos (equipos) y aristas (conductores), determinar una distribución espacial que sea visualmente clara, que respete las convenciones del diagrama unifilar y que se adapte a cualquier tamaño de proyecto.
+
+
+
+20.2 Algoritmo de layout del diagrama
+
+El grafo eléctrico se representa como un DAG (Directed Acyclic Graph) con nodos tipados (acometida, medidor, tablero principal, subtablero, breaker, carga)
+
+Se aplica un algoritmo de layout jerárquico (Sugiyama framework) que distribuye los nodos en niveles verticales correspondiendo a niveles de la instalación eléctrica
+
+Dentro de cada nivel, los nodos se ordenan para minimizar cruces de aristas mediante heurísticas de barycenter crossing minimization
+
+El layout final se optimiza con un paso de ajuste de posiciones para respetar márgenes mínimos entre elementos y maximizar la legibilidad
+
+Los símbolos eléctricos se renderizan como componentes SVG parametrizables: cada símbolo (breaker, transformador, motor, etc.) tiene una definición SVG vectorial que se escala sin pérdida de calidad
+
+
+
+20.3 Tecnologías de diagramación
+
+Tecnología
+
+Rol en la generación de diagramas
+
+React Flow
+
+Framework de diagramas interactivos para React. Proporciona el motor de renderizado, manejo de eventos de drag-and-drop, zoom y pan. Los nodos son componentes React personalizados con símbolos SVG eléctricos.
+
+D3.js
+
+Cálculo de layouts, algoritmos de distribución jerárquica, manipulación matemática de coordenadas. No se usa para renderizado directo (delegado a React Flow).
+
+Biblioteca SVG personalizada
+
+Conjunto de 80+ símbolos eléctricos normalizados en SVG: breakers termomagnéticos, diferenciales, contactores, motores, transformadores, medidores, tableros, acometidas.
+
+jsPDF + SVG2PDF
+
+Exportación del diagrama a PDF vectorial de alta resolución para impresión en tamaños A3/A1.
+
+
+
+
+21. SISTEMA DE COSTOS Y PRESUPUESTOS
+
+
+
+El módulo de costos y presupuestos genera estimaciones económicas estructuradas a partir de los resultados del motor de cálculo. El proceso parte de la lista de materiales calculada (conductores con metrajes exactos, breakers con especificaciones, tubería conduit con rutas, accesorios de tablero) y aplica precios de referencia de una base de datos actualizable por región.
+
+
+
+21.1 Estructura del presupuesto
+
+Categoría
+
+Descripción
+
+Materiales eléctricos principales
+
+Conductores (por tipo, calibre y metraje), breakers (por amperaje y curva), tableros (por capacidad y tipo), canalizaciones (conduit, bandejas), accesorios de conexión
+
+Materiales menores y consumibles
+
+Cintillos, cintas, conectores, tornillería, etiquetas, silicona, fijaciones. Estimado como % del material principal (típicamente 8-12%)
+
+Mano de obra
+
+Horas estimadas por tipo de trabajo (tendido de conductor, instalación de tablero, conexiones) multiplicadas por tarifa horaria configurable por el usuario
+
+Herramientas y equipos
+
+Alquiler o amortización de herramientas especiales para el proyecto (grúas, escaleras, equipos de medición)
+
+Transporte y logística
+
+Estimado por distancia al sitio y volumen de materiales
+
+Imprevistos y contingencias
+
+Porcentaje configurable (estándar 10-15% del subtotal) para variaciones de precios y trabajos adicionales
+
+Honorarios profesionales
+
+Para usuarios que facturan honorarios de diseño e ingeniería sobre el presupuesto de obra
+
+Impuestos y cargos
+
+IVA, retenciones u otros impuestos configurables por país/región
+
+
+
+
+22. GENERACIÓN DE DOCUMENTACIÓN TÉCNICA
+
+
+
+El sistema genera automáticamente un conjunto completo de documentos técnicos exportables que cubren todas las necesidades de un proyecto eléctrico profesional. Cada documento se genera a partir de las plantillas base del sistema, personalizadas con los datos del usuario/empresa y los resultados específicos del proyecto.
+
+
+
+22.1 Documentos generados
+
+Documento
+
+Descripción y contenido
+
+Memoria de Cálculo (PDF/DOCX)
+
+Documento técnico completo con: datos generales del proyecto, normas de referencia, descripción del sistema eléctrico, tabla de cargas detallada, metodología de cálculo, resultados por circuito (corriente, conductor, breaker, caída de tensión), verificaciones normativas y conclusiones. Formato: 15-40 páginas según complejidad.
+
+Diagrama Unifilar (PDF vectorial)
+
+Diagrama unifilar en escala normalizada, con simbología IEEE/IEC, leyenda de símbolos, cuadro de información del proyecto, norte eléctrico y especificaciones de conductores sobre cada tramo. Exportado como PDF vectorial de alta resolución.
+
+Lista de Materiales (XLSX)
+
+Hoja de cálculo con columnas: código de referencia, descripción técnica completa, unidad, cantidad bruta, desperdicio %, cantidad neta, precio unitario, precio total. Con subtotales por categoría y totales generales.
+
+Presupuesto de Obra (PDF/XLSX)
+
+Documento de presupuesto con membrete del profesional/empresa, desglose por partidas, análisis de precios unitarios opcionales, resumen ejecutivo de costos y condiciones generales del presupuesto.
+
+Reporte de Cumplimiento (PDF)
+
+Checklist normativo con referencia a cada artículo aplicable del RETIE/NEC, estado de cumplimiento (Cumple / No Cumple / No Aplica) con justificación técnica para cada punto.
+
+
+
+
+23. INTELIGENCIA ARTIFICIAL APLICADA
+
+
+
+23.1 Aplicaciones de IA en el sistema
+
+Aplicación
+
+Descripción
+
+Asistente técnico conversacional
+
+Chat integrado que entiende el contexto del proyecto activo y puede responder preguntas técnicas específicas: '¿Cuál es la corriente de diseño del circuito de aire acondicionado?' o '¿Qué norma justifica el uso de este calibre de conductor?'
+
+Generación de narrativa técnica
+
+El LLM genera automáticamente los párrafos descriptivos de la memoria de cálculo, la justificación de selección de materiales y las conclusiones del proyecto, basándose en los datos calculados.
+
+Reconocimiento de imágenes (fase 2)
+
+El usuario podrá fotografiar la placa de datos de un equipo y el sistema extraerá automáticamente los parámetros técnicos (potencia, voltaje, FP, corriente nominal) usando visión artificial.
+
+Predicción de costos
+
+Modelo de regresión entrenado con histórico de proyectos que predice el costo total de instalación a partir de los parámetros del proyecto, antes de completar el diseño detallado.
+
+Detección de anomalías
+
+Modelo que identifica combinaciones inusuales de parámetros que podrían indicar errores de ingreso: una carga de 50 kW a 120V en una residencia, por ejemplo, es estadísticamente anómala.
+
+Optimización automática
+
+Algoritmo que explora el espacio de configuraciones alternativas del proyecto y sugiere redistribuciones de cargas que mejoran el balance de fases, reducen la caída de tensión o disminuyen el costo de materiales.
+
+
+
+
+24. ESCALABILIDAD
+
+
+
+24.1 Estrategia de escalabilidad horizontal
+
+La arquitectura de ElectroSmart está diseñada para escalar horizontalmente desde el primer día. Cada capa de la arquitectura puede replicarse independientemente según la demanda. El backend Django es stateless (el estado de sesión está en Redis, no en el proceso), lo que permite ejecutar múltiples instancias detrás de un load balancer sin sincronización entre ellas. El motor de cálculo Python, siendo la parte computacionalmente más intensiva, puede escalarse como servicio independiente con Celery workers replicables.
+
+
+
+24.2 Estrategia de base de datos
+
+PostgreSQL con read replicas para consultas de solo lectura (dashboards, reportes, catálogo de materiales)
+
+Connection pooling con PgBouncer para manejar picos de conexiones sin saturar el servidor
+
+Particionamiento de tablas de cálculo por fecha y tenant_id para mantener performance con millones de registros
+
+Índices compuestos estratégicos en columnas de búsqueda frecuente (project_id, tenant_id, status)
+
+JSONB con índices GIN para campos de configuración y resultados de cálculo que se consultan frecuentemente
+
+
+
+25. SEGURIDAD
+
+
+
+25.1 Modelo de seguridad
+
+Dominio
+
+Implementación
+
+Autenticación
+
+JWT con refresh tokens de corta duración (access: 15 min, refresh: 7 días), rate limiting por IP y por usuario, bloqueo por intentos fallidos, 2FA opcional con TOTP
+
+Autorización
+
+Row-Level Security en PostgreSQL como capa adicional a los permisos de Django, garantizando que los datos de un tenant no puedan ser accedidos por otro incluso si hay un bug en la capa de aplicación
+
+Comunicación
+
+HTTPS obligatorio con TLS 1.3, HSTS, sin soporte para TLS < 1.2, certificados Let's Encrypt con renovación automática
+
+Datos sensibles
+
+Datos de pago procesados exclusivamente por Stripe (no almacenados en la plataforma), contraseñas hasheadas con Argon2, datos PII encriptados a nivel de campo en DB
+
+Protección de API
+
+Rate limiting por endpoint y usuario, validación exhaustiva de inputs con sanitización, protección CSRF, headers de seguridad (CSP, X-Frame-Options, X-Content-Type-Options)
+
+Auditoría
+
+Log inmutable de acciones críticas (creación/eliminación de proyectos, exportaciones, cambios de plan) almacenado en sistema separado de escritura única
+
+
+
+
+26. RIESGOS TÉCNICOS
+
+
+
+Riesgo
+
+Probabilidad/Impacto
+
+Mitigación
+
+Riesgo
+
+Probabilidad/Impacto
+
+Mitigación
+
+Precisión del motor de cálculo
+
+Media / Crítico
+
+Suite de pruebas con >500 casos de prueba verificados contra cálculos manuales de ingenieros, auditoría periódica por ingeniero eléctrico certificado, modo verbose que muestra cada paso del cálculo
+
+Desactualización normativa
+
+Alta / Alto
+
+Sistema de versiones de normativas, alertas automáticas cuando se publican actualizaciones del NEC o RETIE, panel de administración para actualizar tablas normativas sin deploy
+
+Calidad del layout automático de diagramas
+
+Alta / Medio
+
+Invertir en la implementación del algoritmo Sugiyama completo, permitir edición manual post-generación, opción de layout manual para casos complejos
+
+Latencia del motor de cálculo
+
+Media / Medio
+
+Profiling continuo, precálculo en background para proyectos guardados, caché de resultados parciales, feedback visual de progreso para cálculos > 2 segundos
+
+Costos de API de LLM
+
+Alta / Medio
+
+Caché agresivo de respuestas similares, límites por plan, fallback a motor de reglas cuando el LLM no está disponible, evaluación de modelos locales para reducir costos
+
+Adopción de usuarios no técnicos
+
+Media / Alto
+
+Inversión significativa en UX testing, onboarding guiado, videos tutoriales, soporte en línea, comunidad de usuarios, documentación en lenguaje simple
+
+Escalabilidad de base de datos
+
+Baja / Alto
+
+Arquitectura de datos preparada para sharding desde el inicio, índices bien diseñados, monitoreo continuo de queries lentas, plan de migración a distributed DB si crece > 10M proyectos
+
+
+
+27. COMPLEJIDAD DEL PROYECTO
+
+
+
+ElectroSmart Platform es un proyecto de complejidad técnica alta, por encima de la media de los proyectos SaaS convencionales. Esta complejidad no proviene principalmente del volumen de código sino de la precisión técnica requerida en el dominio eléctrico y de los retos de UX para hacer accesible información compleja.
+
+
+
+Dimensión
+
+Nivel y descripción
+
+Complejidad del motor de cálculo
+
+ALTA. Los algoritmos eléctricos requieren implementación exacta de tablas normativas, factores de corrección interdependientes y manejo de condiciones de borde (conductores paralelos, sistemas de emergencia, cargas con arranque especial). Un error sutil puede generar diseños técnicamente incorrectos.
+
+Complejidad del layout de diagramas
+
+MUY ALTA. El layout automático de grafos jerárquicos con mínimo de cruces es un problema NP-hard en el caso general. Las heurísticas disponibles (Sugiyama, ELK) requieren configuración cuidadosa y sus resultados deben ser revisados exhaustivamente.
+
+Complejidad de la UX
+
+ALTA. La traducción de resultados de ingeniería a lenguaje comprensible para técnicos sin formación universitaria requiere un trabajo profundo de diseño de la experiencia y pruebas con usuarios reales. El progressive disclosure debe implementarse cuidadosamente para no ocultar información crítica.
+
+Complejidad del modelo de datos
+
+MEDIA-ALTA. El modelo debe soportar topologías eléctricas arbitrariamente complejas (jerarquías de tableros, circuitos paralelos, cargas distribuidas) en una estructura relacional eficiente.
+
+Complejidad de las normativas
+
+ALTA. La correcta implementación de las normativas eléctricas requiere comprensión profunda de su contenido y de sus interacciones. Diferentes normativas tienen metodologías de cálculo diferentes para el mismo problema.
+
+
+
+
+28. ROADMAP POR FASES
+
+
+
+Fase 1 — MVP (meses 1-4)
+
+FASE 1: Fundamentos y MVP
+
+Mes 1: Setup infraestructura, autenticación, gestión básica de proyectos, modelo de datos core
+
+Mes 2: Motor de cálculo para proyectos residenciales (demanda, conductores, breakers, caída de tensión)
+
+Mes 3: Módulo de cargas con biblioteca básica, interfaz de ingreso, resultados de cálculo
+
+Mes 4: Generador básico de diagrama unifilar SVG, exportación PDF del reporte, lista de materiales
+
+Entregable: Plataforma funcional para proyectos residenciales con registro de usuarios y plan gratuito
+
+
+
+Fase 2 — Crecimiento (meses 5-8)
+
+FASE 2: Comercial y Premium
+
+Mes 5: Extensión del motor de cálculo para proyectos comerciales, mejoras de precisión
+
+Mes 6: Sistema de presupuestos con base de precios, estimación de tiempos, plan premium básico
+
+Mes 7: Asistente IA con LLM integrado, sistema de recomendaciones avanzado
+
+Mes 8: Generación de documentación profesional completa (memoria, diagrama, BOM en XLSX)
+
+Entregable: Producto premium lanzado con funcionalidades completas para ingenieros independientes
+
+
+
+Fase 3 — Industrial (meses 9-12)
+
+FASE 3: Industrial y Escala
+
+Mes 9: Motor de cálculo industrial (motores, corrección FP, arranque de motores, demanda industrial)
+
+Mes 10: Módulo de tableros de distribución complejo, análisis de cortocircuito básico
+
+Mes 11: Colaboración en equipo, gestión de clientes, portal de empresa
+
+Mes 12: API pública, integraciones básicas, programa de partners
+
+Entregable: Plataforma completa para empresas contratistas con funcionalidades industriales
+
+
+
+Fase 4 — Expansión (año 2)
+
+FASE 4: Expansión y Ecosistema
+
+Integración BIM básica (lectura de plantas en DXF para definir topología)
+
+Exportación DXF/DWG compatible con AutoCAD
+
+Módulo de instalaciones fotovoltaicas y sistemas de respaldo (UPS, generadores)
+
+Módulo de cálculo de iluminación (curva de luminancia, nivel de iluminancia por área)
+
+Marketplace de plantillas y proyectos tipo compartidos por la comunidad
+
+App móvil iOS/Android para consulta en campo y registro de cargas con la cámara
+
+
+
+
+29. MVP INICIAL — ESPECIFICACIÓN DETALLADA
+
+
+
+El Producto Mínimo Viable (MVP) de ElectroSmart Platform debe demostrar la propuesta de valor central del sistema: que un técnico sin formación en ingeniería puede ingresar los datos de un proyecto residencial y obtener en menos de 5 minutos un conjunto completo de resultados técnicos confiables. El MVP no busca ser completo, sino ser correcto en lo que hace y demostrar la viabilidad del concepto.
+
+
+
+29.1 Funcionalidades incluidas en el MVP
+
+Funcionalidad
+
+Alcance en MVP
+
+Autenticación básica
+
+Registro con email, inicio de sesión, recuperación de contraseña. Sin OAuth en MVP.
+
+Gestión de proyectos
+
+Crear, listar, abrir, duplicar y eliminar proyectos. Sin versiones en MVP.
+
+Configuración de proyecto
+
+Tipo (Residencial/Comercial), voltaje (120/240/208/480V), fases (1F/3F), norma (RETIE/NEC).
+
+Ingreso de cargas
+
+Formulario individual con: nombre, potencia (W), voltaje, FP, cantidad, horas de uso. Biblioteca básica de 50 equipos comunes.
+
+Cálculo residencial
+
+Demanda máxima, corriente de diseño, selección de conductor AWG básica, caída de tensión, selección de breakers para sistema monofásico y bifásico 120/240V.
+
+Resultados
+
+Panel con resumen de demanda total, tabla de circuitos con conductor y breaker seleccionado, alertas de caída de tensión.
+
+Diagrama unifilar
+
+Generación automática de diagrama SVG simple con tablero principal, breakers y cargas agrupadas. Sin editor interactivo en MVP.
+
+Exportación básica
+
+Descarga de reporte en PDF con: resumen del proyecto, tabla de cargas, resultados de cálculo y diagrama unifilar. Sin personalización de marca.
+
+Plan gratuito
+
+Hasta 3 proyectos, máximo 15 cargas por proyecto, sin exportación de diagrama editable.
+
+
+
+
+30. FUTURAS FUNCIONALIDADES
+
+
+
+Corto plazo (6-12 meses post-MVP)
+
+Análisis de cortocircuito según IEC 60909 para selección correcta de capacidad de interrupción
+
+Coordinación de protecciones con curvas de disparo y selectividad
+
+Reconocimiento óptico de placas de equipos (OCR + CV) para ingreso rápido de cargas
+
+Importación de proyectos desde Excel con mapeo configurable
+
+Versiones de proyecto con comparación de cambios entre versiones
+
+
+
+Mediano plazo (12-24 meses)
+
+Módulo de instalaciones fotovoltaicas: string sizing, inversor, protecciones AC/DC, red de interconexión
+
+Cálculo de sistemas de puesta a tierra: mallas de tierra, resistencia de puesta a tierra, equipotencialización
+
+Módulo de eficiencia energética: análisis de consumo, identificación de oportunidades de ahorro, payback de mejoras
+
+Integración directa con catálogos Schneider Electric, ABB, Eaton para precios y especificaciones en tiempo real
+
+Portal de clientes: los profesionales pueden compartir proyectos con sus clientes en modo lectura
+
+
+
+Largo plazo (> 24 meses)
+
+Integración BIM: lectura de modelos Revit/IFC para extracción automática de topología de instalación
+
+Digital twin eléctrico: simulación de comportamiento de la instalación bajo diferentes escenarios de carga
+
+Módulo de redes de media tensión: subestaciones, transformadores de potencia, protecciones de MT
+
+Inteligencia predictiva: recomendaciones basadas en análisis de millones de proyectos de la plataforma
+
+Marketplace de instaladores: directorio de profesionales certificados con portafolio de proyectos en la plataforma
+
+
+
+
+31-32. MODELO SAAS Y MONETIZACIÓN
+
+
+
+31.1 Estructura de planes
+
+Característica
+
+Plan Gratuito
+
+Plan Pro (USD 29/mes)
+
+Característica
+
+Plan Gratuito
+
+Plan Pro (USD 29/mes)
+
+Proyectos activos
+
+3 proyectos
+
+Ilimitados
+
+Cargas por proyecto
+
+Máximo 15
+
+Ilimitadas
+
+Tipos de proyecto
+
+Residencial básico
+
+Residencial, Comercial, Industrial
+
+Exportación PDF
+
+Reporte básico sin marca
+
+Reporte completo con logo y datos
+
+Diagrama unifilar
+
+Vista en pantalla
+
+Descarga PDF/SVG vectorial
+
+Lista de materiales
+
+Vista en pantalla
+
+Export Excel con precios
+
+Presupuesto
+
+No incluido
+
+Completo con precios por región
+
+Asistente IA
+
+No incluido
+
+50 consultas/mes
+
+Historial versiones
+
+No incluido
+
+Últimas 10 versiones
+
+Soporte
+
+Comunidad
+
+Email prioritario
+
+
+
+Plan adicional
+
+Descripción
+
+Plan Team (USD 79/mes)
+
+Todo Plan Pro + hasta 5 usuarios, proyectos compartidos en tiempo real, gestión de clientes, portal de proyectos para clientes, plantillas de empresa, reportes con marca corporativa
+
+Plan Enterprise (USD 199/mes)
+
+Todo Plan Team + usuarios ilimitados, módulo industrial completo, API pública, SLA de disponibilidad, soporte técnico dedicado, custom domain, facturación anual con descuento
+
+Add-on: IA Avanzada (+USD 19/mes)
+
+Consultas IA ilimitadas, generación automática de memorias de cálculo, análisis predictivo de proyectos
+
+Add-on: Diagramas Premium (+USD 15/mes)
+
+Editor de diagramas avanzado, exportación DXF, diagramas multihoja, simbología IEC/ANSI configurable
+
+
+
+32.1 Proyección de ingresos (años 1-3)
+
+Período
+
+Usuarios / Conversión
+
+MRR estimado
+
+Período
+
+Usuarios / Conversión
+
+MRR estimado
+
+Fin Año 1
+
+2,000 registrados / 8% conversión
+
+USD 4,640/mes
+
+Fin Año 2
+
+12,000 registrados / 12% conversión
+
+USD 41,760/mes
+
+Fin Año 3
+
+40,000 registrados / 15% conversión
+
+USD 174,000/mes
+
+
+
+
+33. DIFERENCIAL FRENTE A OTROS SOFTWARES
+
+
+
+Criterio
+
+ElectroSmart
+
+Competencia actual
+
+Criterio
+
+ElectroSmart
+
+Competencia actual
+
+Accesibilidad
+
+Diseñado para técnicos sin formación universitaria, interfaz intuitiva
+
+ETAP, SKM: requieren ingeniería avanzada. AutoCAD: curva de aprendizaje larga
+
+Precio
+
+Desde USD 0 (freemium) hasta USD 199/mes
+
+ETAP: USD 5,000-15,000/año. AutoCAD: USD 2,000+/año
+
+Integración IA
+
+LLM integrado para explicaciones y recomendaciones
+
+Ninguno de los competidores principales tiene IA conversacional
+
+Generación automática
+
+Diagrama + materiales + presupuesto + documentación generados automáticamente
+
+Herramientas especializadas por función, sin integración
+
+Foco regional
+
+Soporte nativo RETIE (Colombia) y expansión latinoamericana
+
+NEC-centric, limitada adaptación a normativas latinoamericanas
+
+Experiencia web
+
+100% web, sin instalación, acceso desde cualquier dispositivo
+
+La mayoría requiere instalación en Windows
+
+Tiempo de aprendizaje
+
+Operativo en menos de 1 hora para proyectos básicos
+
+ETAP: semanas de capacitación; AutoCAD: días-semanas
+
+Modelo de negocio
+
+SaaS mensual sin contratos anuales obligatorios
+
+Licencias perpetuas o anuales de alto costo inicial
+
+
+
+
+34. REQUERIMIENTOS FUNCIONALES
+
+
+
+RF-001 al RF-010: Gestión de usuarios y proyectos
+
+ID
+
+Descripción
+
+RF-001
+
+El sistema debe permitir registro de usuarios con email y contraseña, con verificación de email obligatoria antes de primer acceso.
+
+RF-002
+
+El sistema debe permitir creación de proyectos con nombre, descripción, tipo, normativa aplicable y configuración de sistema eléctrico.
+
+RF-003
+
+El sistema debe guardar automáticamente los cambios cada 30 segundos sin interrumpir el flujo del usuario.
+
+RF-004
+
+El sistema debe permitir duplicar proyectos existentes como punto de partida para nuevos proyectos similares.
+
+RF-005
+
+El sistema debe mantener un historial de versiones con posibilidad de restaurar versiones anteriores.
+
+RF-006
+
+El sistema debe permitir ingreso de cargas eléctricas con: nombre, potencia (W/kW), voltaje, factor de potencia, eficiencia, cantidad, horas de uso diario y tipo de carga.
+
+RF-007
+
+El sistema debe incluir una biblioteca de cargas precargada con al menos 200 equipos estándar con parámetros técnicos de referencia.
+
+RF-008
+
+El sistema debe calcular la demanda máxima del proyecto usando el método definido en la normativa seleccionada.
+
+RF-009
+
+El sistema debe seleccionar automáticamente el calibre de conductor adecuado considerando corriente de diseño, temperatura ambiente, agrupamiento y caída de tensión máxima permitida.
+
+RF-010
+
+El sistema debe verificar que la caída de tensión acumulada no supere el límite establecido por la normativa (3% en derivados, 5% total según NEC 210.19).
+
+
+
+RF-011 al RF-020: Cálculo y resultados
+
+ID
+
+Descripción
+
+RF-011
+
+El sistema debe seleccionar breakers con capacidad nominal mayor o igual a la corriente de diseño del circuito, con verificación de capacidad de interrupción.
+
+RF-012
+
+El sistema debe generar diagrama unifilar automático en SVG dentro de los 5 segundos siguientes al cálculo.
+
+RF-013
+
+El sistema debe generar una lista de materiales cuantificada con unidades, cantidades y precios de referencia.
+
+RF-014
+
+El sistema debe exportar el reporte técnico completo en formato PDF con una resolución mínima de 300 DPI.
+
+RF-015
+
+El sistema debe presentar alertas clasificadas por severidad (Critical/Warning/Info) para cualquier condición de incumplimiento normativo.
+
+RF-016
+
+El sistema debe calcular el balance de fases en sistemas trifásicos y generar recomendación de redistribución si el desbalance supera el 10%.
+
+RF-017
+
+El sistema debe generar estimación de presupuesto con desglose por categorías (materiales, mano de obra, contingencias).
+
+RF-018
+
+El sistema debe permitir ajuste de precios de referencia de materiales por usuario/región.
+
+RF-019
+
+El sistema debe calcular y mostrar el tiempo estimado de ejecución del proyecto por categoría de trabajo.
+
+RF-020
+
+El sistema debe permitir al usuario agregar notas técnicas a cualquier sección del proyecto.
+
+
+
+
+35. REQUERIMIENTOS NO FUNCIONALES
+
+
+
+Requerimiento
+
+Especificación
+
+RNF-001 — Rendimiento
+
+El cálculo completo de un proyecto residencial estándar (hasta 30 cargas) debe completarse en menos de 3 segundos. El tiempo de carga inicial de la aplicación (First Contentful Paint) no debe superar 2.5 segundos en conexión 4G.
+
+RNF-002 — Disponibilidad
+
+El sistema debe garantizar disponibilidad del 99.5% mensual (SLA básico) y 99.9% mensual para planes Enterprise. Los mantenimientos programados deben notificarse con 48 horas de anticipación.
+
+RNF-003 — Precisión
+
+Los resultados del motor de cálculo deben coincidir con cálculos manuales verificados por ingeniero eléctrico certificado con un margen de error máximo del 0.1% para valores continuos y 0% para selecciones discretas (calibres, breakers).
+
+RNF-004 — Escalabilidad
+
+La arquitectura debe soportar hasta 10,000 usuarios concurrentes sin degradación de rendimiento mediante escalamiento horizontal de la capa de aplicación.
+
+RNF-005 — Usabilidad
+
+Un usuario técnico sin formación previa en el sistema debe ser capaz de completar su primer proyecto residencial simple en menos de 20 minutos, medido por pruebas de usabilidad con usuarios reales.
+
+RNF-006 — Seguridad
+
+El sistema debe cumplir con OWASP Top 10, GDPR para usuarios europeos, y Ley 1581 de protección de datos en Colombia. Ningún dato de un tenant debe ser accesible desde otro tenant bajo ninguna circunstancia.
+
+RNF-007 — Compatibilidad
+
+La interfaz debe funcionar correctamente en las últimas dos versiones de Chrome, Firefox, Safari y Edge, con soporte responsivo para pantallas desde 768px de ancho.
+
+RNF-008 — Mantenibilidad
+
+Cobertura de pruebas automatizadas mínima del 80% en el motor de cálculo y del 60% en el resto del backend. Documentación técnica de API actualizada automáticamente desde el código fuente.
+
+
+
+
+36-37. TECNOLOGÍAS Y APIs RECOMENDADAS
+
+
+
+36.1 Stack principal
+
+Tecnología
+
+Justificación y uso
+
+Next.js 14
+
+Framework React con SSR, App Router, optimización de imágenes automática, middleware para autenticación, soporte a React Server Components para reducir JS del cliente.
+
+TailwindCSS 3.4 + shadcn/ui
+
+Sistema de estilos utility-first con componentes accesibles preconfigurados (Dialog, Select, Table, Toast). Permite prototipado rápido y consistencia visual.
+
+React Flow 11
+
+Librería de diagramas interactivos para React con soporte a nodos personalizados SVG, handles de conexión configurables, minimap, viewport controls y exportación a PNG/SVG.
+
+Django 4.2 LTS
+
+Framework web Python con ORM maduro, sistema de migraciones robusto, panel de administración automático para gestión de catálogos, excelente integración con NumPy/Pandas.
+
+Django REST Framework 3.15
+
+Serialización, autenticación JWT, vistas basadas en clases, filtrado, paginación y throttling out-of-the-box. Integración con drf-spectacular para documentación OpenAPI automática.
+
+NumPy + Pandas + SciPy
+
+Núcleo matemático del motor de cálculo. NumPy para operaciones matriciales en cálculo trifásico, Pandas para manejo de tablas normativas, SciPy para solvers en cálculo de cortocircuito.
+
+
+
+37.1 APIs y librerías externas
+
+API / Librería
+
+Uso en la plataforma
+
+OpenAI API (GPT-4o)
+
+Asistente técnico conversacional, generación de narrativa de memorias de cálculo, respuestas contextuales sobre normativas.
+
+ReportLab / WeasyPrint
+
+Generación de PDFs complejos con tablas, imágenes y layouts precisos desde Python en el backend.
+
+python-docx
+
+Generación de memorias de cálculo en formato DOCX con estilos profesionales y tablas dinámicas.
+
+openpyxl
+
+Generación de listas de materiales en Excel con fórmulas, formatos condicionales y gráficos de distribución de costos.
+
+Stripe
+
+Procesamiento de pagos, gestión de suscripciones y trials gratuitos con webhooks para actualización de planes.
+
+Sentry
+
+Monitoreo de errores en producción con alertas y contexto completo de cada excepción en frontend y backend.
+
+Cloudflare R2
+
+Almacenamiento de PDFs generados y proyectos exportados con CDN integrado para distribución rápida.
+
+Resend / SendGrid
+
+Envío transaccional de emails (verificación, recuperación de contraseña, reportes programados, notificaciones).
+
+
+
+
+38-40. DISEÑO CONCEPTUAL, DIAGRAMAS Y FLUJO DE DATOS
+
+
+
+38.1 Pantallas principales de la interfaz
+
+Pantalla
+
+Descripción del diseño
+
+Dashboard principal
+
+Grid de proyectos recientes con tarjetas que muestran: nombre, tipo, fecha de modificación, estado de cálculo (completado/pendiente/error) e indicador de alertas activas. Barra de búsqueda y filtros por tipo. Botón prominente 'Nuevo Proyecto'.
+
+Configuración de proyecto
+
+Wizard de 4 pasos: (1) Información general, (2) Configuración del sistema eléctrico, (3) Condiciones de entorno, (4) Resumen y confirmar. Progress bar en la parte superior. Cada paso valida antes de permitir avanzar.
+
+Editor de cargas
+
+Panel izquierdo: árbol jerárquico del proyecto (tableros → circuitos → cargas). Panel central: formulario de la carga seleccionada con campos técnicos. Panel derecho: resumen de carga total del circuito seleccionado con indicador visual de capacidad.
+
+Panel de resultados
+
+Layout en tabs: Resumen | Circuitos | Tableros | Alertas. El tab de Circuitos muestra tabla con: circuito, cargas, demanda, corriente, conductor, breaker, caída de tensión. Cada fila tiene indicador de color según estado.
+
+Visor de diagrama
+
+Canvas a pantalla completa con toolbar: zoom in/out, fit to screen, toggle de etiquetas, exportar. Minimap en esquina inferior derecha para proyectos grandes. Click en cualquier elemento del diagrama selecciona el componente en el panel de datos.
+
+Generador de documentos
+
+Checklist de documentos a incluir con preview en miniatura. Configuración de portada (logo, datos del profesional). Barra de progreso durante generación. Historial de exportaciones anteriores con opción de re-descargar.
+
+
+
+40.1 Flujo de datos en el sistema
+
+Flujo completo de datos — desde ingreso hasta exportación
+
+
+
+1. INGRESO DE DATOS
+
+   Usuario ingresa cargas → Validación en frontend (React) → Envío a API
+
+   POST /api/v1/projects/{id}/loads/ → Django serializer valida datos
+
+   → Guardado en PostgreSQL (tabla electrical_loads)
+
+
+
+2. CÁLCULO
+
+   Usuario triggerea cálculo → POST /api/v1/projects/{id}/calculate/
+
+   → Django crea tarea Celery → Motor Python carga datos del proyecto
+
+   → Executa algoritmos en secuencia: demanda → conductores → breakers → validaciones
+
+   → Resultado serializado como JSON → Guardado en calculation_results
+
+   → WebSocket notifica al cliente → Frontend actualiza UI con resultados
+
+
+
+3. GENERACIÓN DE DIAGRAMA
+
+   Motor de topología construye grafo DAG desde estructura de tableros/circuitos
+
+   → Algoritmo de layout Sugiyama calcula posiciones X,Y de nodos
+
+   → Serialización como nodes_json + edges_json → Guardado en diagram_data
+
+   → Frontend React Flow hidrata el grafo y renderiza el diagrama interactivo
+
+
+
+4. EXPORTACIÓN
+
+   Usuario solicita PDF → POST /api/v1/projects/{id}/export/pdf/
+
+   → Celery worker ejecuta generación con ReportLab
+
+   → PDF subido a Cloudflare R2 → URL firmada devuelta al cliente
+
+   → Frontend descarga el archivo desde CDN de R2
+
+
+
+
+
+
+41. CONCLUSIONES
+
+
+
+ElectroSmart Platform representa una oportunidad técnica y de negocio concreta y bien fundamentada. El problema que aborda —la brecha entre la complejidad del diseño eléctrico profesional y la realidad operativa de miles de técnicos y pequeños contratistas— es real, costoso y no está adecuadamente resuelto por las herramientas actualmente disponibles en el mercado latinoamericano.
+
+
+
+La viabilidad técnica del proyecto está demostrada por la madurez del ecosistema tecnológico seleccionado (Python para cálculo, React/Next.js para interfaces reactivas complejas, PostgreSQL para persistencia multitenancy) y por la existencia de casos de éxito en plataformas similares de otros dominios de ingeniería. Los principales retos técnicos —el layout automático de diagramas, la precisión normativa del motor de cálculo y la usabilidad para usuarios no especializados— son desafíos abordables con el equipo y metodología correctos, no bloqueadores fundamentales.
+
+
+
+El modelo de negocio SaaS freemium permite una estrategia de go-to-market efectiva: la barrera de entrada cero (plan gratuito funcional) facilita la adopción masiva, mientras que el valor incremental de los planes pagos (precisión industrial, documentación profesional, colaboración en equipo, IA avanzada) justifica la conversión a pago. La proyección conservadora de 12% de conversión para el año dos es consistente con benchmarks de SaaS B2B en verticales técnicas especializadas.
+
+
+
+El mayor factor crítico de éxito no es técnico sino de ejecución: el desarrollo del MVP debe completarse con un equipo pequeño pero altamente competente en las tres áreas de conocimiento que el proyecto demanda simultáneamente —ingeniería eléctrica, ingeniería de software y diseño de experiencia de usuario. La ausencia de experticia profunda en cualquiera de estas tres dimensiones comprometería la calidad del producto final de maneras que serían difíciles de corregir retroactivamente.
+
+
+
+42. RECOMENDACIONES TÉCNICAS
+
+
+
+PRIORITARIO: Contratar o asociar un ingeniero eléctrico matriculado para la validación continua del motor de cálculo. El costo de un error en la precisión técnica supera con creces el costo de la validación experta.
+
+Implementar el motor de cálculo como un paquete Python independiente con su propia suite de pruebas, antes de integrarlo al backend Django. Esto facilita el testing exhaustivo y la sustitución futura si fuera necesario.
+
+Invertir significativamente en pruebas de usabilidad con usuarios reales (técnicos electricistas sin formación universitaria) desde la fase de prototipo. Los supuestos sobre cómo entienden los conceptos técnicos suelen ser incorrectos hasta que se validan con usuarios reales.
+
+Iniciar con soporte exclusivo para RETIE (Colombia) y NEC (Estados Unidos/internacional) en el MVP, y diseñar el sistema de normativas como un módulo configurable que permita agregar nuevas normativas sin modificar el motor de cálculo principal.
+
+Implementar telemetría detallada desde el primer día: qué cálculos se ejecutan con qué parámetros, qué errores ocurren con más frecuencia, dónde abandonan los usuarios el flujo. Este dato es invaluable para priorizar mejoras.
+
+Diseñar el modelo de datos para multi-tenancy desde el inicio, no como una adición posterior. Migrar a multi-tenancy en una base de datos con millones de registros es un proceso costoso y riesgoso.
+
+Evaluar el uso de un LLM local (Llama 3.1 70B en servidor propio o en Groq) para las funcionalidades de IA, especialmente en planes Enterprise donde la privacidad de los datos del proyecto puede ser una exigencia del cliente.
+
+Establecer un consejo técnico asesor con 2-3 ingenieros eléctricos de experiencia en diferentes tipos de proyectos (residencial, industrial, infraestructura) que revisen cada nueva versión del motor de cálculo antes de su lanzamiento.
+
+
+
+ElectroSmart Platform
+
+Documento de Especificación Técnica v1.0.0
+
+Mayo 2026 — Confidencial
+
+	© 2026 ElectroSmart Technologies	Página

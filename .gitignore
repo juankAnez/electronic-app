@@ -1,0 +1,40 @@
+# Python virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Database (local testing)
+*.sqlite3
+
+# IDE / Editor configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Frontend dependencies and builds
+node_modules/
+dist/
+build/
+.next/
+.out/
+
+# OS files
+.DS_Store
+Thumbs.db

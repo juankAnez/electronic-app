@@ -1,0 +1,158 @@
+================================================================================
+DISEÑO TÉCNICO Y ARQUITECTURA DEL SISTEMA: ELECTROSMART
+================================================================================
+
+Este documento detalla el diseño de arquitectura, el modelo de datos para la base 
+de datos PostgreSQL y las herramientas del frontend recomendadas para el desarrollo 
+de ElectroSmart, priorizando la facilidad de uso y la precisión técnica.
+
+--------------------------------------------------------------------------------
+1. VALIDACIÓN DE LA ESTRATEGIA Y TECNOLOGÍAS
+--------------------------------------------------------------------------------
+La combinación tecnológica propuesta es idónea para este tipo de aplicación:
+  * PostgreSQL: Indispensable para manejar las relaciones jerárquicas y estructuradas 
+    de un proyecto eléctrico (Proyecto -> Tableros -> Circuitos -> Cargas).
+  * Django + Django REST Framework (DRF): Permite construir un backend robusto y seguro 
+    rápidamente, con un ORM potente para PostgreSQL y validaciones de API estrictas.
+  * React: Excelente para crear la interfaz interactiva y reactiva necesaria 
+    para simular cargas y ver los diagramas actualizarse en tiempo real.
+  * IA en Fase 2: Dejar la IA para una segunda etapa es una decisión acertada. 
+    Los cálculos de ingeniería eléctrica deben ser 100% deterministas (fórmulas 
+    matemáticas exactas y tablas normativas). La IA se usará en la Fase 2 únicamente 
+    para traducir los resultados a explicaciones conversacionales personalizadas.
+
+--------------------------------------------------------------------------------
+2. HERRAMIENTAS RECOMENDADAS PARA VISUALIZACIÓN E INTERACCIÓN
+--------------------------------------------------------------------------------
+Para cumplir con el objetivo de que "cualquier persona sin conocimientos previos 
+pueda comprender y aplicar los diagramas", se proponen las siguientes herramientas:
+
+  * React Flow (https://reactflow.dev):
+    - Uso: Para dibujar el diagrama unifilar interactivo.
+    - Razón: Permite crear nodos interactivos (tableros, breakers, cables, cargas) 
+      donde el usuario puede hacer clic para ver detalles, arrastrar y reordenar.
+  * SVG Dinámico en React (Scalable Vector Graphics):
+    - Uso: Para renderizar layouts físicos de tableros de breakers (mostrar de forma 
+      gráfica la caja física del tablero indicando qué breaker va en qué ranura).
+    - Razón: Pesa muy poco, es responsivo y se puede pintar con CSS usando colores 
+      intuitivos (Verde = Seguro, Rojo = Sobrecargado).
+  * React-PDF (https://react-pdf.org):
+    - Uso: Para estructurar el reporte de entrega en PDF directamente en el cliente.
+    - Razón: Permite diseñar páginas limpias y con gráficas visuales comprensibles 
+      para el cliente final (no solo texto aburrido).
+  * Tailwind CSS + Shadcn/ui:
+    - Uso: Sistema de diseño y componentes UI modernos.
+    - Razón: Permite crear un panel (dashboard) muy pulido, con alertas limpias 
+      y explicaciones visuales paso a paso de "cómo instalar cada componente".
+
+--------------------------------------------------------------------------------
+3. MODELO DE DATOS PROPUESTO (PostgreSQL)
+--------------------------------------------------------------------------------
+
+A continuación se muestra el esquema de base de datos relacional para Django ORM:
+
+                  +------------------+
+                  |     Usuario      |
+                  +------------------+
+                            | (1)
+                            |
+                            | (N)
+                  +------------------+
+                  |     Proyecto     |
+                  +------------------+
+                            | (1)
+                            |
+                            | (N)
+                  +------------------+
+                  |     Tablero      |
+                  +------------------+
+                            | (1)
+                            |
+                            | (N)
+                  +------------------+
+                  |     Circuito     |
+                  +------------------+
+                            | (1)
+                            |
+                            | (N)
+                  +------------------+
+                  |      Carga       |
+                  +------------------+
+
+--- Detalle de las Tablas ---
+
+1. PROYECTO (Tabla: core_proyecto)
+   - id: UUID (Primary Key)
+   - nombre: VarChar(100)
+   - ubicacion: VarChar(200)
+   - tipo_proyecto: VarChar(20) [RESIDENCIAL, COMERCIAL, INDUSTRIAL_LIGERO]
+   - normativa: VarChar(15) [RETIE, NEC, IEC]
+   - tension_alimentacion: Decimal (ej. 120.0, 220.0, 208.0)
+   - fases: Integer [1, 2, 3] (fases activas en la acometida)
+   - temperatura_ambiente: Decimal (default: 30.0 °C, usado para corregir calibres)
+   - creado_en: DateTime
+
+2. TABLERO (Tabla: core_tablero)
+   - id: UUID (Primary Key)
+   - proyecto_id: ForeignKey(Proyecto)
+   - nombre: VarChar(50) (ej. "Tablero Principal TD-1")
+   - ubicacion: VarChar(100)
+   - capacidad_barras_amperios: Decimal (ej. 100A, 150A, 200A)
+   - es_subtablero: Boolean (para permitir tableros derivados)
+   - tablero_padre_id: ForeignKey(self, null=True)
+
+3. CIRCUITO (Tabla: core_circuito)
+   - id: UUID (Primary Key)
+   - tablero_id: ForeignKey(Tablero)
+   - numero_circuito: Integer (ej. 1, 2, 3...)
+   - descripcion: VarChar(150) (ej. "Tomas de Cocina")
+   - calibre_conductor: VarChar(10) [null=True] (ej. "12 AWG", calculado o forzado)
+   - material_conductor: VarChar(10) [COBRE, ALUMINIO]
+   - capacidad_breaker: Decimal [null=True] (ej. 20.0 A)
+   - polos_breaker: Integer [1, 2, 3]
+   - fase_asignada: VarChar(2) [A, B, C] (usado para balancear fases)
+   - longitud_metros: Decimal (crítico para caída de tensión)
+   - es_critico: Boolean (ej. motores de arranque pesado o equipos médicos)
+
+4. CARGA (Tabla: core_carga)
+   - id: UUID (Primary Key)
+   - circuito_id: ForeignKey(Circuito)
+   - descripcion: VarChar(100) (ej. "Nevera Samsung")
+   - potencia_vatios: Decimal (ej. 800.0)
+   - cantidad: Integer (default: 1)
+   - factor_potencia: Decimal (default: 0.9)
+   - factor_utilizacion: Decimal (default: 1.0)
+   - es_continua: Boolean (si opera más de 3 horas seguidas)
+
+5. MATERIAL_REFERENCIA (Tabla: core_material_referencia)
+   - id: UUID (Primary Key)
+   - tipo_material: VarChar(50) [CABLE, BREAKER, TUBERIA, TABLERO]
+   - descripcion: VarChar(150)
+   - calibre_o_medida: VarChar(20) (ej. "14 AWG", "1/2 inch")
+   - capacidad_maxima: Decimal
+   - costo_referencia: Decimal (precio regional unitario)
+   - moneda: VarChar(3) (ej. COP, USD, MXN)
+
+--------------------------------------------------------------------------------
+4. DISEÑO DE EXPLICACIÓN Y COMPRENSIÓN DE RESULTADOS ("Cero Código / Cero Teoría")
+--------------------------------------------------------------------------------
+Para lograr que personas sin conocimientos previos puedan aplicar los resultados:
+
+  1. Tarjetas de Resumen Intuitivas (Visual Instruction Cards):
+     En lugar de mostrar solo "Fórmula: I = P / (V * FP)", se presentará una tarjeta 
+     gráfica que dice:
+     "Instalar cable calibre 12 AWG (Cobre) conectado a un Breaker de 20 Amperios".
+  2. Guías de Conexión a Color:
+     Pintar los diagramas unifilares y las listas de materiales usando el estándar 
+     visual de colores del cableado eléctrico de la región elegida. Ej:
+     - Fase: Negro o Rojo
+     - Neutro: Blanco
+     - Tierra: Verde
+  3. Explicación de Alertas tipo Conversación:
+     Si ocurre un error, en vez de un aviso críptico, se mostrará:
+     "⚠️ Cuidado: Tienes demasiados aparatos en la Cocina. Si enciendes el microondas 
+     y la licuadora al mismo tiempo, el breaker se apagará para proteger tu hogar".
+
+================================================================================
+FIN DEL DISEÑO TÉCNICO Y ARQUITECTURA
+================================================================================
