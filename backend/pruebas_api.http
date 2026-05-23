@@ -1,0 +1,138 @@
+# ==============================================================================
+# ELECTROSMART PLATFORM — PRUEBAS DE API HTTP (REST Client)
+# ==============================================================================
+# Este archivo permite probar los endpoints de la API de ElectroSmart de forma
+# interactiva usando la extensión "REST Client" en VS Code.
+#
+# Instrucciones:
+# 1. Asegúrese de que el servidor de Django esté corriendo:
+#    python manage.py runserver
+# 2. Ajuste las variables @base_url y los UUIDs conforme a los registros de su base de datos.
+# ==============================================================================
+
+@base_url = http://127.0.0.1:8000/api/v1
+@content_type = application/json
+@tenant_id = 9e7b2520-fa02-4135-b53f-aef79d377526
+@project_id = 1a7caeca-fa02-4135-b53f-aef79d377526
+
+###
+# 1. OBTENER NORMAS ELÉCTRICAS DISPONIBLES
+GET {{base_url}}/norms/
+Accept: {{content_type}}
+
+###
+# 2. OBTENER VERSIONES DE NORMAS (EJ. NEC 2020)
+GET {{base_url}}/norm-versions/
+Accept: {{content_type}}
+
+###
+# 3. OBTENER NIVELES DE TENSIÓN
+GET {{base_url}}/voltage-levels/
+Accept: {{content_type}}
+
+###
+# 4. OBTENER CONFIGURACIONES DE FASES
+GET {{base_url}}/phase-configs/
+Accept: {{content_type}}
+
+###
+# 5. OBTENER CATÁLOGO DE CONDUCTORES (FILTRADO POR COBRE)
+GET {{base_url}}/conductors/?material=cobre
+Accept: {{content_type}}
+
+###
+# 6. OBTENER CATÁLOGO DE BREAKERS
+GET {{base_url}}/breakers/
+Accept: {{content_type}}
+
+###
+# 7. LISTAR PROYECTOS DEL TENANT
+GET {{base_url}}/projects/
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 8. CREAR NUEVO PROYECTO (BORRADOR)
+# Nota: Cambiar los IDs por los valores obtenidos de los endpoints de catálogos anteriores
+POST {{base_url}}/projects/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "name": "Residencia Campestre Sol",
+  "description": "Diseño eléctrico para casa de campo con acometida monofásica 120V.",
+  "norm_version": "NEC_2020_UUID_HERE",
+  "voltage_level": "120V_UUID_HERE",
+  "phase_config": "MONOFASICA_UUID_HERE",
+  "tenant": "{{tenant_id}}",
+  "user": "USER_UUID_HERE"
+}
+
+###
+# 9. CREAR TABLERO ELÉCTRICO EN EL PROYECTO
+POST {{base_url}}/panels/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "project": "{{project_id}}",
+  "name": "Tablero Principal TD-1",
+  "location": "Garaje principal",
+  "is_subpanel": false
+}
+
+###
+# 10. CREAR CIRCUITO DERIVADO ASOCIADO AL TABLERO
+POST {{base_url}}/circuits/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "panel": "PANEL_UUID_HERE",
+  "circuit_number": 1,
+  "length_meters": "25.50",
+  "is_three_phase": false,
+  "phase_assignment": "A"
+}
+
+###
+# 11. AGREGAR CARGA DE ILUMINACIÓN CONTINUA AL CIRCUITO
+POST {{base_url}}/loads/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "circuit": "CIRCUIT_UUID_HERE",
+  "load_type": "LIGHTING_LOAD_TYPE_UUID_HERE",
+  "name": "Iluminación General Sala",
+  "quantity": 1,
+  "power_watts": "1440.00",
+  "voltage_v": "120.00",
+  "power_factor": "0.95",
+  "is_continuous": true
+}
+
+###
+# 12. DISPARAR MOTOR DE CÁLCULO ELÉCTRICO (BOM y presupuesto recalculados)
+# Endpoint crítico de la Sesión 5
+POST {{base_url}}/projects/{{project_id}}/calculate/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 13. CONSULTAR EL HISTORIAL DE CÁLCULOS DEL PROYECTO
+GET {{base_url}}/calculation-history/?project={{project_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 14. OBTENER LISTA DE MATERIALES CALCULADA AUTOMÁTICAMENTE (BOM)
+GET {{base_url}}/bill-of-materials/?project={{project_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 15. OBTENER PRESUPUESTO CALCULADO Y VERSIONADO
+GET {{base_url}}/budgets/?project={{project_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}

@@ -26,11 +26,15 @@ Convenciones de URL (registradas en urls.py con DefaultRouter):
   GET  /api/v1/documents/               Documentos generados
 """
 
+import logging
+
 from django.shortcuts import get_object_or_404
 from rest_framework import filters, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+
+logger = logging.getLogger(__name__)
 
 from .models import (
     BillOfMaterials,
@@ -296,6 +300,26 @@ class ProjectViewSet(TenantFilterMixin, viewsets.ModelViewSet):
             'status': project.status,
             'panels': panel_data,
         })
+
+    @action(detail=True, methods=['post'], url_path='calculate')
+    def calculate(self, request, pk=None):
+        """
+        Ejecuta el motor de cálculo eléctrico sobre todos los circuitos del proyecto.
+        Persiste los resultados de cálculo, alertas, históricos y recalcula la BOM.
+        """
+        from .services import ElectricalEngineService
+        project = self.get_object()
+        user = request.user if request.user and request.user.is_authenticated else None
+
+        try:
+            results = ElectricalEngineService.calculate_project(project.id, user)
+            return Response(results, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(f"Error calculating project {project.id}: {str(e)}", exc_info=True)
+            return Response(
+                {"error": f"Fallo al calcular el proyecto: {str(e)}"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class ZoneViewSet(TenantFilterMixin, viewsets.ModelViewSet):

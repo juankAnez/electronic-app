@@ -1,0 +1,360 @@
+# ==============================================================================
+# ELECTROSMART PLATFORM — SUITE COMPLETA DE PRUEBAS DEL BACKEND
+# ==============================================================================
+# Este archivo contiene peticiones HTTP para probar el 100% de los endpoints
+# de la API REST de ElectroSmart.
+#
+# Prerrequisitos:
+# 1. Ejecutar el servidor Django: .\venv\Scripts\Activate.ps1; python manage.py runserver
+# 2. Configurar las variables iniciales.
+# ==============================================================================
+
+@base_url = http://127.0.0.1:8000/api/v1
+@content_type = application/json
+@tenant_id = 9e7b2520-fa02-4135-b53f-aef79d377526
+@user_id = 00000000-0000-0000-0000-000000000000
+
+# IDs de los recursos creados para pruebas secuenciales
+@project_id = 1a7caeca-fa02-4135-b53f-aef79d377526
+@zone_id = 2b7caeca-fa02-4135-b53f-aef79d377526
+@panel_id = 3c7caeca-fa02-4135-b53f-aef79d377526
+@circuit_id = 4d7caeca-fa02-4135-b53f-aef79d377526
+@load_id = 5e7caeca-fa02-4135-b53f-aef79d377526
+@budget_id = 6f7caeca-fa02-4135-b53f-aef79d377526
+@bom_item_id = 7a7caeca-fa02-4135-b53f-aef79d377526
+
+
+# ==============================================================================
+# SECCIÓN 1: CATÁLOGOS TÉCNICOS GLOBALES (Solo Lectura)
+# ==============================================================================
+
+###
+# 1.1 Listar Normas
+GET {{base_url}}/norms/
+Accept: {{content_type}}
+
+###
+# 1.2 Listar Versiones de Normas
+GET {{base_url}}/norm-versions/
+Accept: {{content_type}}
+
+###
+# 1.3 Listar Niveles de Tensión
+GET {{base_url}}/voltage-levels/
+Accept: {{content_type}}
+
+###
+# 1.4 Listar Configuraciones de Fase
+GET {{base_url}}/phase-configs/
+Accept: {{content_type}}
+
+###
+# 1.5 Listar Conductores de Cobre en Catálogo
+GET {{base_url}}/conductors/?material=cobre
+Accept: {{content_type}}
+
+###
+# 1.6 Listar Breakers de Catálogo
+GET {{base_url}}/breakers/
+Accept: {{content_type}}
+
+###
+# 1.7 Listar Tipos de Cargas Eléctricas
+GET {{base_url}}/load-types/
+Accept: {{content_type}}
+
+###
+# 1.8 Listar Catálogo de Materiales Comerciales
+GET {{base_url}}/materials/
+Accept: {{content_type}}
+
+
+# ==============================================================================
+# SECCIÓN 2: PROYECTOS (CRUD + SUMMARY + CALCULATE)
+# ==============================================================================
+
+###
+# 2.1 Listar Proyectos del Tenant
+GET {{base_url}}/projects/
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 2.2 Crear Proyecto (Borrador)
+POST {{base_url}}/projects/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "name": "Proyecto Central Hidroeléctrica Alfa",
+  "description": "Fase inicial de diseño de acometidas y subtableros.",
+  "norm_version": "NEC_2020_UUID_REPLACE",
+  "voltage_level": "208V_THREE_PHASE_UUID_REPLACE",
+  "phase_config": "THREE_PHASE_WYE_UUID_REPLACE",
+  "tenant": "{{tenant_id}}",
+  "user": "{{user_id}}"
+}
+
+###
+# 2.3 Detalle del Proyecto por ID
+GET {{base_url}}/projects/{{project_id}}/
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 2.4 Actualización Parcial del Proyecto (PATCH)
+PATCH {{base_url}}/projects/{{project_id}}/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "description": "Diseño eléctrico optimizado para Edificio Alfa."
+}
+
+###
+# 2.5 Resumen Técnico Rápido (Summary)
+GET {{base_url}}/projects/{{project_id}}/summary/
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 2.6 EJECUTAR MOTOR DE CÁLCULO ELÉCTRICO (En lote)
+POST {{base_url}}/projects/{{project_id}}/calculate/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 2.7 Archivar Proyecto (Soft Delete)
+DELETE {{base_url}}/projects/{{project_id}}/
+X-Tenant-ID: {{tenant_id}}
+
+
+# ==============================================================================
+# SECCIÓN 3: ZONAS (CRUD)
+# ==============================================================================
+
+###
+# 3.1 Listar Zonas del Proyecto
+GET {{base_url}}/zones/?project={{project_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 3.2 Crear Zona
+POST {{base_url}}/zones/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "project": "{{project_id}}",
+  "name": "Área de Manufactura",
+  "sort_order": 1
+}
+
+###
+# 3.3 Detalle de Zona
+GET {{base_url}}/zones/{{zone_id}}/
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 3.4 Actualizar Zona (PATCH)
+PATCH {{base_url}}/zones/{{zone_id}}/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "name": "Nave Industrial Principal"
+}
+
+###
+# 3.5 Eliminar Zona
+DELETE {{base_url}}/zones/{{zone_id}}/
+X-Tenant-ID: {{tenant_id}}
+
+
+# ==============================================================================
+# SECCIÓN 4: TABLEROS ELÉCTRICOS (CRUD)
+# ==============================================================================
+
+###
+# 4.1 Listar Tableros
+GET {{base_url}}/panels/?project={{project_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 4.2 Crear Tablero Principal
+POST {{base_url}}/panels/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "project": "{{project_id}}",
+  "zone": "{{zone_id}}",
+  "name": "Tablero Principal TD-General",
+  "location": "Subestación Sótano 1",
+  "is_subpanel": false
+}
+
+###
+# 4.3 Actualizar Tablero (PATCH)
+PATCH {{base_url}}/panels/{{panel_id}}/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "location": "Cabina Eléctrica Sótano 1"
+}
+
+###
+# 4.4 Eliminar Tablero
+DELETE {{base_url}}/panels/{{panel_id}}/
+X-Tenant-ID: {{tenant_id}}
+
+
+# ==============================================================================
+# SECCIÓN 5: CIRCUITOS DERIVADOS (CRUD)
+# ==============================================================================
+
+###
+# 5.1 Listar Circuitos
+GET {{base_url}}/circuits/?project={{project_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 5.2 Crear Circuito Monofásico
+POST {{base_url}}/circuits/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "panel": "{{panel_id}}",
+  "circuit_number": 1,
+  "length_meters": "45.00",
+  "is_three_phase": false,
+  "phase_assignment": "A"
+}
+
+###
+# 5.3 Actualizar Circuito (PATCH)
+PATCH {{base_url}}/circuits/{{circuit_id}}/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "length_meters": "50.00"
+}
+
+###
+# 5.4 Eliminar Circuito
+DELETE {{base_url}}/circuits/{{circuit_id}}/
+X-Tenant-ID: {{tenant_id}}
+
+
+# ==============================================================================
+# SECCIÓN 6: CARGAS ELÉCTRICAS (CRUD)
+# ==============================================================================
+
+###
+# 6.1 Listar Cargas del Circuito
+GET {{base_url}}/loads/?circuit={{circuit_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 6.2 Agregar Carga al Circuito
+POST {{base_url}}/loads/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "circuit": "{{circuit_id}}",
+  "load_type": "LIGHTING_LOAD_TYPE_UUID",
+  "name": "Luminarias LED de Planta",
+  "quantity": 10,
+  "power_watts": "150.00",
+  "voltage_v": "120.00",
+  "power_factor": "0.95",
+  "is_continuous": true
+}
+
+###
+# 6.3 Actualizar Carga (PATCH)
+PATCH {{base_url}}/loads/{{load_id}}/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "power_watts": "180.00"
+}
+
+###
+# 6.4 Eliminar Carga
+DELETE {{base_url}}/loads/{{load_id}}/
+X-Tenant-ID: {{tenant_id}}
+
+
+# ==============================================================================
+# SECCIÓN 7: PRESUPUESTO Y LISTA DE MATERIALES (BOM) (CRUD)
+# ==============================================================================
+
+###
+# 7.1 Listar Lista de Materiales (BOM)
+GET {{base_url}}/bill-of-materials/?project={{project_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 7.2 Crear Item Manual en la BOM
+POST {{base_url}}/bill-of-materials/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "project": "{{project_id}}",
+  "material": "MATERIAL_CATALOG_UUID",
+  "circuit": "{{circuit_id}}",
+  "quantity": "50.0000",
+  "unit_price": "3.5000",
+  "notes": "Tubería conduit PVC de repuesto"
+}
+
+###
+# 7.3 Actualizar Item en la BOM (PATCH)
+PATCH {{base_url}}/bill-of-materials/{{bom_item_id}}/
+Content-Type: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+{
+  "quantity": "60.0000"
+}
+
+###
+# 7.4 Eliminar Item de la BOM
+DELETE {{base_url}}/bill-of-materials/{{bom_item_id}}/
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 7.5 Listar Presupuestos del Proyecto
+GET {{base_url}}/budgets/?project={{project_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+
+# ==============================================================================
+# SECCIÓN 8: HISTORIAL DE CÁLCULO Y DOCUMENTOS (Solo Lectura)
+# ==============================================================================
+
+###
+# 8.1 Consultar Historial Completo de Cálculos
+GET {{base_url}}/calculation-history/?project={{project_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}
+
+###
+# 8.2 Listar Documentos Técnicos Generados
+GET {{base_url}}/documents/?project={{project_id}}
+Accept: {{content_type}}
+X-Tenant-ID: {{tenant_id}}

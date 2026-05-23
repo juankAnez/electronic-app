@@ -1,0 +1,267 @@
+1. Evaluación de la Arquitectura Propuesta
+La estructura core/engine/ dividida en domain, calculators, selectors, validators, rules, catalogs, pipeline, results es correcta en su intención y sigue principios de separación de responsabilidades. Sin embargo, tal como está esbozada carece de la granularidad necesaria para evitar acoplamientos ocultos y para garantizar que el motor pueda evolucionar sin reescrituras masivas.
+
+Fortalezas detectadas:
+
+Desacoplamiento del ORM de Django mediante objetos planos (dataclasses/dicts).
+
+Flujo secuencial que cubre las etapas críticas de un cálculo de capacidad de corriente y caída de tensión.
+
+Separación de catálogos, reglas y validadores.
+
+Debilidades y riesgos:
+
+El pipeline es puramente lineal, sin posibilidad de iteración (necesaria, por ejemplo, para el dimensionamiento por caída de tensión).
+
+No se define una máquina de estados explícita para la ejecución; el “contexto” que viaja entre pasos puede volverse un cajón de sastre mutable.
+
+selectors y validators aparecen disjuntos, pero la selección del conductor debe estar íntimamente acoplada a la validación normativa (ampacidad pre‑ y post‑corrección, límites de terminales).
+
+Ausencia de un módulo de normalización dimensional (unidades, sistemas métrico/imperial, bases de temperatura).
+
+Recomendación de arquitectura refinada (visión de alto nivel):
+
+text
+core/engine/
+├── domain/                  # Dataclasses, enumeraciones, tipos de valor
+├── normative/               # Contexto normativo, versionado de reglas, estrategias por edición
+├── catalogs/                # Proveedores de datos tabulados inmutables
+│   ├── conductors/
+│   ├── breakers/
+│   ├── temperature_factors/
+│   └── grouping_factors/
+├── calculations/            # Funciones puras: corriente, continuidad, caída, corrección
+├── selection/               # Lógica de selección con restricciones (ampacidad, caída, breaker)
+├── validation/              # Validadores normativos post‑selección
+├── pipeline/                # Orquestador de etapas, contexto de ejecución, traza de auditoría
+└── results/                 # Estructuras de salida inmutables y serializables
+Añadiría un UnitSystem transversal y un ExecutionTrace que registre cada decisión con su regla de origen.
+
+2. Errores Conceptuales y Normativos Identificados
+2.1. Carga continua y el factor 1.25
+La aplicación plana I_diseño = I × 1.25 para toda la carga es incorrecta cuando existen cargas no continuas. NEC 210.19(A)(1) exige:
+
+El ampacity base del conductor (antes de factores de corrección) debe ser ≥ (100 % carga no continua + 125 % carga continua).
+
+El ampacity corregida (después de temperatura y agrupamiento) debe ser ≥ la corriente de carga total sin el factor 1.25 (100 % carga no continua + 100 % carga continua).
+
+El motor debe soportar una descomposición de la carga en porciones continuas y no continuas (por ejemplo, un campo continuous_fraction o continuous_current separado).
+
+2.2. Selección del breaker y el “next size up”
+La regla “breaker ≤ ampacidad permitida del conductor” ignora NEC 240.4(B) que permite usar el siguiente tamaño estándar superior al ampacity del conductor (hasta 800 A) siempre que se cumplan ciertas condiciones. En baja tensión es una práctica universal. El motor debe implementar esta regla como opción, con validación adicional.
+
+2.3. Limitación por temperatura de los terminales
+Aunque el conductor tenga aislamiento de 90 °C, si los terminales del equipo son de 75 °C, la ampacidad utilizada para el dimensionamiento final debe limitarse a la columna de 75 °C (NEC 110.14(C)). Esto debe ser una restricción explícita en el selector de conductores y en las validaciones de ampacidad.
+
+2.4. Corrección por temperatura ambiente: referencia 30 °C
+Las tablas de ampacidad NEC están referidas a 30 °C ambiente. El factor de corrección debe aplicarse correctamente, pero el motor debe permitir que el usuario defina una temperatura ambiente de proyecto, y el factor se extrae del catálogo según la clase de aislamiento. Esto ya está planteado, pero hay que mapear las tablas correctamente (NEC 310.15(B)(1) para 0‑2000 V).
+
+2.5. Fórmulas de caída de tensión y factor 1000
+La división por 1000 sugiere que R y X están en Ω/1000 pies y la longitud en pies; para RETIE (sistema métrico) se usan Ω/km y metros. El motor debe abstraer la unidad de longitud e impedancia lineal y garantizar coherencia dimensional.
+
+2.6. Factor de potencia y sinθ
+La expresión sinθ = √(1 − FP²) es válida solo para sistemas sinusoidales sin armónicos. En presencia de cargas no lineales el factor de potencia verdadero difiere del de desplazamiento. Para la versión inicial puede aceptarse, pero hay que documentar la limitación y preparar la arquitectura para incorporar un modelo de distorsión en el futuro.
+
+3. Riesgos de Ingeniería
+Selección subóptima por falta de iteración: Un conductor elegido solo por ampacidad puede tener una caída de tensión excesiva; el pipeline actual no contempla realimentación para incrementar el calibre. Esto puede generar falsos “aprobados” o requerir intervención manual.
+
+Múltiples puntos de decisión implícitos: ¿Qué sucede si ningún breaker disponible cumple simultáneamente I_diseño y ampacidad del conductor? El motor debe tener una estrategia de fallback (notificar al usuario o aplicar el next-size-up).
+
+Precisión numérica en comparaciones: Comparar floats de corriente calculada con límites discretos puede provocar rechazos erróneos por diferencias del orden de 1e‑12. Se requiere definir tolerancias de ingeniería (p. ej., 0.1 A).
+
+4. Patrones de Diseño Recomendados
+Patrón	Aplicación en el motor
+Pipeline / Chain of Responsibility	Cada etapa (IStage) recibe un Context inmutable y retorna uno nuevo con los resultados añadidos. El orquestador (PipelineRunner) ejecuta la secuencia y gestiona la traza.
+Strategy	La familia de reglas normativas (NormativeRules) se inyecta según la edición (NEC 2020, RETIE 2020, futura NEC 2023). También se aplica a la selección del conductor (estrategia por ampacidad simple, por caída de tensión, etc.).
+Builder	Para construir el objeto de resultado complejo (CalculationResult) a partir de las salidas de cada etapa, manteniendo inmutabilidad.
+Specification	Cada regla de validación (ej. Caída de tensión ≤ 3 %) se modela como un objeto Specification que puede combinarse con and, or, not.
+Observer (interno)	Las alertas se recolectan en un colector (AlertCollector) que las etapas notifican sin acoplarse al mecanismo de persistencia.
+Dependency Injection	Los catálogos, reglas y configuraciones se inyectan al pipeline, facilitando pruebas unitarias con dobles de datos.
+5. Versionamiento Normativo
+La clave es aislar la variabilidad. Propongo:
+
+Un NormativeContext que contenga edition (Enum: NEC_2020, RETIE_2013, …), jurisdiction, amendments opcionales (lista de enmiendas locales).
+
+Cada catálogo se carga desde archivos versionados (JSON/YAML) cuyo nombre incluye la edición. Ej: ampacity_nec2020_copper_60C.json.
+
+Las reglas parametrizables (límites de caída, umbrales de temperatura) también se extraen de un repositorio versionado. Si una regla cambia su lógica (no solo parámetros), se utiliza una estrategia diferente. El selector de estrategia resuelve la clase concreta a partir del NormativeContext.
+
+Esto permite que el motor soporte varias normas simultáneamente en diferentes proyectos sin modificar código, solo desplegando nuevos archivos de datos o nuevas clases de estrategia.
+
+6. Implementación del Pipeline
+Definición de interfaz de etapa:
+
+python
+class IPipelineStage(Protocol):
+    def execute(self, ctx: "CalculationContext") -> "CalculationContext":
+        ...
+El CalculationContext es un objeto inmutable (dataclass frozen) que contiene el input_data, los resultados intermedios acumulados y la traza. Para simular inmutabilidad de manera eficiente se puede usar dataclasses.replace().
+
+Etapas propuestas (reordenadas y expandidas):
+
+NormalizationStage – conversión de unidades, valores por defecto según sistema.
+
+LoadDecompositionStage – separa cargas continuas/no continuas si procede.
+
+CurrentCalculationStage – I nominal, I diseño considerando continuidad.
+
+CorrectionFactorsStage – calcula factores de temperatura y agrupamiento.
+
+ConductorSelectionStage – elige el primer calibre cuya ampacidad corregida cumpla con la carga y con la regla de ampacidad base (125 % continua).
+
+TerminalLimitationStage – limita la ampacidad del conductor a la capacidad de los terminales (si aplica).
+
+VoltageDropStage – calcula caída de tensión con R, X reales.
+
+IterativeResizeStage – si la caída supera el límite, recalcula con calibres mayores, repitiendo desde 5 o 7.
+
+BreakerSelectionStage – elige el breaker que proteja al conductor, aplicando regla de next-size-up.
+
+FinalValidationStage – aplica todas las especificaciones (caída, protección, límites térmicos) y genera alertas.
+
+TraceAssemblyStage – consolida la traza completa.
+
+El pipeline se configura con una lista de etapas, lo que permite omitir la iteración si el usuario prefiere un cálculo rápido y recibir un warning.
+
+7. Estructuras de Datos (Dataclasses)
+Entrada normalizada (inmutable)
+
+python
+@dataclass(frozen=True)
+class CircuitInput:
+    system_type: SystemType          # SINGLE_PHASE, THREE_PHASE_WYE, etc.
+    voltage_ln: float                # V
+    frequency: float                 # Hz
+    length: float                    # m (SI after normalization)
+    load_power: float                # W
+    power_factor: float              # 0.0–1.0
+    efficiency: float                # 0.0–1.0
+    continuous_fraction: float       # 0.0–1.0, 1.0 si 100% continua
+    ambient_temperature: float       # °C
+    conductor_material: ConductorMaterial
+    insulation_type: InsulationType
+    terminal_temp_rating: float      # °C (e.g., 75)
+    grouping_current_carrying: int   # número de conductores activos en el mismo conduit
+    normative_context: NormativeContext
+    max_voltage_drop_percent: float  # límite, p.ej. 3.0
+    units: UnitSystem
+Resultado final
+
+python
+@dataclass(frozen=True)
+class CircuitResult:
+    design_current: float
+    corrected_ampacity: float
+    selected_conductor: ConductorSpec
+    selected_breaker: BreakerSpec
+    voltage_drop_percent: float
+    validations: List[ValidationResult]
+    alerts: List[Alert]
+    trace: ExecutionTrace
+Traza
+
+python
+@dataclass(frozen=True)
+class TraceEntry:
+    stage: str
+    inputs: dict
+    outputs: dict
+    decision_rule: str
+    rule_reference: str  # e.g. "NEC 310.15(B)(16)"
+8. Posibles Problemas Matemáticos y de Precisión
+Funciones trigonométricas y FP cercano a 1: Cuando FP → 1, sinθ → 0, no hay problema numérico, pero para FP bajo pueden aparecer redondeos. Se puede usar math.sqrt(max(0, 1 - FP**2)) para evitar negativos por error de redondeo.
+
+Comparación de corrientes: Utilizar math.isclose(a, b, rel_tol=1e-5) para todas las validaciones de umbral.
+
+Cálculos secuenciales de caída de tensión: R y X dependen de la temperatura de operación del conductor (resistencia varía ~0.4%/°C). Para circuitos largos con corriente elevada, la caída calculada con R a 75 °C puede subestimarse si el conductor opera a 90 °C. Como mejora, se podría corregir R por temperatura estimada mediante iteración, pero para la versión actual basta advertir que se usa la resistencia a la temperatura de referencia del catálogo.
+
+Sistema de unidades: El motor debe transformar internamente todo a SI o mantener un sistema híbrido con factores de conversión estrictamente controlados. Recomiendo normalizar a SI internamente y convertir solo en la entrada/salida.
+
+9. Trazabilidad y Auditoría
+El rastreo completo se logra si cada etapa registra:
+
+Identificador único de la ejecución.
+
+Versión exacta del catálogo y reglas utilizadas (hash del contenido).
+
+Parámetros de entrada.
+
+Valores intermedios calculados.
+
+Decisión tomada (p. ej., “Se selecciona calibre 10 AWG porque ampacidad corregida = 28 A ≥ 25.3 A necesarios”).
+
+Referencia normativa específica.
+
+Esta traza se construye de manera incremental en el Context y se empaqueta en el CircuitResult. La capa de servicios Django puede persistirla en un campo JSON para auditoría futura. Así se logra que cualquier cálculo sea reproducible bit a bit (dado que las funciones son puras y los catálogos inmutables).
+
+10. Diseño de Pruebas Unitarias Confiables
+Cada calculador, selector y validador debe probarse de forma aislada con doble de catálogos (catálogos en memoria con pocos registros). Estrategia:
+
+Pruebas de casos de borde normativo: ejemplo: corriente justo en el límite de dos calibres, factor de agrupamiento que cambia al pasar de 3 a 4 conductores.
+
+Pruebas de regresiones conocidas: comparar resultados del motor con cálculos manuales de referencia (planillas de ingeniería verificadas).
+
+Pruebas de inmutabilidad: asegurar que los objetos de entrada no sean modificados durante el cálculo.
+
+Pruebas de pipeline completo con diferentes normas: verificar que cambiar NormativeContext altera los resultados esperados (p. ej., límite de caída RETIE vs NEC).
+
+Pruebas de precisión: inyectar valores con punto flotante extremo y verificar que las alertas y decisiones no se vean afectadas por errores de redondeo.
+
+Pruebas del versionamiento: verificar que al cambiar el catálogo de ampacidad (simulando una nueva edición), el conductor seleccionado cambia automáticamente sin modificar código.
+
+11. Separación Motor / Django
+La separación está perfectamente planteada. Para garantizarla de manera estricta:
+
+El módulo core.engine no debe importar nada de django ni de los modelos de la aplicación.
+
+La comunicación se realiza mediante DTOs (dataclasses) y un EngineFacade con métodos como calculate_circuit(input_data: CircuitInput) -> CircuitResult.
+
+La capa de servicios (services/) es responsable de:
+
+Obtener datos de modelos Django y construir el CircuitInput.
+
+Llamar al motor.
+
+Mapear el CircuitResult a los modelos de persistencia.
+
+Ventaja adicional: el motor puede ejecutarse en batch, en tareas asíncronas e incluso fuera de Django (pruebas, microservicio independiente) sin dependencia del ORM.
+
+12. Crecimiento Futuro (Cortocircuito, Coordinación, etc.)
+El motor se diseñará con una arquitectura abierta para nuevos módulos de cálculo. Las claves:
+
+Dominio extensible: CircuitInput y CircuitResult pueden contener campos opcionales (short_circuit_data, arc_flash_params). Nuevos cálculos serán orquestadores independientes que reutilizan el contexto base.
+
+Pipeline compuesto: Se puede diseñar un AnalysisPipeline que contenga un conjunto de etapas agrupadas: “Dimensionamiento básico”, “Cortocircuito”, “Selectividad”. El usuario selecciona el análisis deseado.
+
+Cálculo de alimentadores: Implicará manejar múltiples circuitos y aplicar factores de demanda (NEC 220). Esto se puede abordar con un FeederInput que agrupe CircuitInput y un DemandFactorStrategy.
+
+Armónicos: Necesitará que el dominio de carga incluya espectro armónico. Los cálculos de corriente neutra y factor de reducción por armónicos se encapsularán en nuevas etapas.
+
+Arco eléctrico: Requerirá datos de la red aguas arriba (potencia de cortocircuito). El motor debe permitir acoplar una fuente de datos externa. La mejor práctica es inyectar un PowerSystemContext que provea estos parámetros sin acoplarse a su origen.
+
+13. Estructuración de Catálogos Técnicos
+Propongo que los catálogos sean archivos de datos versionados en formatos declarativos (JSON, YAML) cargados al inicio y cacheados. Ejemplo:
+
+text
+catalogs/conductors/nec_2020/copper_thhn.json
+Cada archivo contiene una lista de registros con calibre, ampacidad base por temperatura de aislamiento, resistencia AC a 75°C y 90°C, reactancia, etc.
+
+Los catálogos se acceden mediante una interfaz de repositorio (ConductorRepository) que oculta la fuente de datos. Así, en pruebas se puede sustituir por una implementación en memoria. Las reglas que dependen de tablas (factores de temperatura) también se cargan como catálogos.
+
+Para el versionamiento, el repositorio recibe el NormativeContext y selecciona el archivo correcto. Esto evita if gigantes en el código.
+
+14. Mejoras para Alcanzar Nivel Industrial/Comercial
+Gestión de proyectos y cálculos masivos: el motor debe poder procesar múltiples circuitos en batch sin estado compartido, permitiendo paralelismo.
+
+Interfaz de extensión por plugins: si un cliente requiere una regla RETIE específica de una región, debe poder agregarla sin modificar el núcleo. Definir puntos de extensión (hooks) en las etapas de validación.
+
+Simulación y análisis de sensibilidad: el pipeline puede ejecutarse múltiples veces con variaciones de temperatura, longitud o factor de potencia para generar curvas.
+
+Generación de reportes normativos: a partir de la traza, construir automáticamente una memoria de cálculo estructurada.
+
+Internacionalización de unidades y normas: el motor debe soportar la coexistencia de proyectos en diferentes países con diferentes regímenes normativos.
+
+15. Conclusión Global
+El diseño conceptual está bien orientado, pero tal como se presenta contiene omisiones normativas importantes (carga continua compuesta, next‑size‑up, limitación de terminales) y carece de mecanismos de iteración para el dimensionamiento por caída de tensión. La arquitectura propuesta debe refinarse con un contexto inmutable, un pipeline con posibilidad de realimentación local, y una separación estricta de catálogos versionados y reglas inyectables.
+
+Si se implementan las correcciones y patrones sugeridos, ElectroSmart podrá alcanzar la solidez y trazabilidad propias de una herramienta de ingeniería profesional. La total desvinculación del ORM garantiza testabilidad absoluta y prepara el motor para convertirse en un microservicio independiente o en el corazón de una futura plataforma SaaS.
